@@ -5,7 +5,8 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , pictures = require('./public/javascripts/pictures.js');
+  , models = require('./model');
+
 
 var app = module.exports = express.createServer();
 

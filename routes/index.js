@@ -2,9 +2,19 @@
 /*
  * GET home page.
  */
+var models = require('../model');
 
-var pictures = require('../public/javascripts/pictures.js');
+var pictures = [];
+
+models.Picture.find({}, function(err, pics) {
+    if(err) {
+        throw err;
+    }
+    pics.forEach(function(pic) {
+        pictures.push(pic);
+    })
+});
 
 exports.index = function(req, res){
-  res.render('index', { title: 'BreakIt', pictures: pictures.all });
+  res.render('index', { title: 'BreakIt', pictures: pictures });
 };
