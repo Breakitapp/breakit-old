@@ -39,12 +39,22 @@ exports.Location = Location;
 
 var mikko = new User({name: 'Mikko Majuri'});
 
+/*PictureSchema.methods.ordered = function ordered() {
+	var ordered = mongoose.Picture.find().sort({points:-1}).toArray()
+	console.log(ordered);
+	return ordered;
+};*/
+
+/*var mikko = new User({name: 'Mikko Majuri'});
+>>>>>>> Sorting for the rating implemented
+
 mikko.save(function(error){
     if(error){
         res.json(error);
     }
 });
 
+<<<<<<< HEAD
 /*
 var picture1 = new Picture({name: 'images/1.jpg', user: mikko});
 var picture2 = new Picture({name: 'images/2.jpg', user: mikko});
@@ -53,6 +63,13 @@ var picture4 = new Picture({name: 'images/4.jpg', user: mikko});
 var picture5 = new Picture({name: 'images/5.jpg', user: mikko});
 var picture6 = new Picture({name: 'images/6.jpg', user: mikko});
 var picture7 = new Picture({name: 'images/7.jpg', user: mikko});
+=======
+var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000});
+var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 110});
+var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 12});
+var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 1300});
+var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 14});
+>>>>>>> Sorting for the rating implemented
 
 picture1.save(function(error){
     if(error){
@@ -78,6 +95,7 @@ picture5.save(function(error){
     if(error){
         res.json(error);
     }
+<<<<<<< HEAD
 });
 picture6.save(function(error){
     if(error){
@@ -91,3 +109,6 @@ picture7.save(function(error){
 });
 
 */
+=======
+});*/
+>>>>>>> Sorting for the rating implemented

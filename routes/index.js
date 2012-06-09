@@ -5,6 +5,8 @@
 var models = require('../model');
 var pictureModel = require('../models/PictureModel');
 
+
+
 exports.index = function(req, res){
   var pictures = pictureModel.allSorted();
   res.render('index', { title: 'BreakIt', pictures: pictures });
