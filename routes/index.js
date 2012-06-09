@@ -19,15 +19,15 @@ exports.index = function(req, res){
   res.render('index', { title: 'BreakIt', pictures: pictures });
 };
 
-exports.index_post = function(req, res){
-    console.log(req.body._id, req.body.points);
-    pictures.forEach(function(pic) {
-        if(pic._id == req.body._id) {
-            models.Picture.findOne({_id : pic._id}, function(err, pic) {
-                console.log(pic);
-            });
-            models.Picture.update({_id: pic._id}, {$inc: {points : req.body.points}});
+exports.index_post = function(req, res) {
+    var points = parseInt(req.body.points);
+    var pic = req.body._id;
+    console.log(pic, points);
+    models.Picture.update({_id: pic}, {$inc: {'points' : points}}, function(err, doc) {
+        if(err) {
+            throw err;
         }
+        console.log(doc);
     });
     res.redirect('/');
 };

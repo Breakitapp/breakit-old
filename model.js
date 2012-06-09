@@ -20,7 +20,9 @@ mongoose.connect('mongodb://localhost/breakit');
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
 
-
+Picture.prototype.changeScore = function(number) {
+    console.log(number);
+}
 
 exports.User = User;
 exports.Picture = Picture;
