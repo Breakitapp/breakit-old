@@ -15,11 +15,12 @@ var PictureSchema = new Schema({
     points  :   {type: Number, default: 0}
 });
 
-
 mongoose.connect('mongodb://localhost/breakit');
 
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
+
+
 
 exports.User = User;
 exports.Picture = Picture;

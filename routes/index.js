@@ -20,6 +20,14 @@ exports.index = function(req, res){
 };
 
 exports.index_post = function(req, res){
-    console.log(req.body);
+    console.log(req.body._id, req.body.points);
+    pictures.forEach(function(pic) {
+        if(pic._id == req.body._id) {
+            models.Picture.findOne({_id : pic._id}, function(err, pic) {
+                console.log(pic);
+            });
+            models.Picture.update({_id: pic._id}, {$inc: {points : req.body.points}});
+        }
+    });
     res.redirect('/');
 };

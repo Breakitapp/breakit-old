@@ -3,8 +3,9 @@ p Welcome to #{title}
 for picture in pictures
   img(src=picture.name, class='stream')
   br
-  div(class='vote')
+  div(class='vote', data='#{picture._id}', points='1')
+    p=picture.points
     p upvote
-  div(class='vote')
+  div(class='vote', data='#{picture._id}', points='-1')
     p downvote
   br
