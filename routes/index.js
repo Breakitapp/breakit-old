@@ -6,15 +6,16 @@ var models = require('../model');
 
 var pictures = [];
 
-models.Picture.find({}, function(err, pics) {
-    if(err) {
+exports.index = function(req, res){
+  res.render('index', { title: 'BreakIt', pictures: pictures });
+};
+
+
+models.Picture.find().sort('points', 'descending').run(function (err, pics){
+	if(err) {
         throw err;
     }
     pics.forEach(function(pic) {
         pictures.push(pic);
     })
 });
-
-exports.index = function(req, res){
-  res.render('index', { title: 'BreakIt', pictures: pictures });
-};
