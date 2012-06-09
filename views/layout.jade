@@ -11,8 +11,9 @@ html
     });
     $(document).ready(function() {
       $('.vote').click(function() {
-        $.post('/');
+        $.post('/', {_id : $(this).attr('data'), points: $(this).attr('points')});
       });
     });
+
 
 
