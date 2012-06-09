@@ -11,7 +11,8 @@ var UserSchema = new Schema({
 
 var PictureSchema = new Schema({
     name    :   {type: String, index: true},
-    user    :   [User]
+    user    :   [User],
+    points  :   {type: Number, default: 0}
 });
 
 

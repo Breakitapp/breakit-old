@@ -3,10 +3,16 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
-    script(type='text/javascript')
-        function changeScore(img, score) {
-            console.log('lol');
-            alert(img + ' score changed with: ' + score);
-        }
   body!= body
+  script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
+  script(type='text/javascript')
+    $.ajaxSetup ({
+      cache: false
+    });
+    $(document).ready(function() {
+      $('.vote').click(function() {
+        $.post('/');
+      });
+    });
+
+

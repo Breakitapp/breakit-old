@@ -18,3 +18,8 @@ models.Picture.find({}, function(err, pics) {
 exports.index = function(req, res){
   res.render('index', { title: 'BreakIt', pictures: pictures });
 };
+
+exports.index_post = function(req, res){
+    console.log(req.body);
+    res.redirect('/');
+};
