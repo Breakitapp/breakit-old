@@ -31,13 +31,13 @@ mikko.save(function(error){
     }
 });
 
-var picture1 = new Picture({name: 'images/_MG_3225.JPG', user: mikko});
-var picture2 = new Picture({name: 'images/_MG_3247.JPG', user: mikko});
-var picture3 = new Picture({name: 'images/_MG_3249.JPG', user: mikko});
-var picture4 = new Picture({name: 'images/_MG_3254.JPG', user: mikko});
-var picture5 = new Picture({name: 'images/_MG_3275.JPG', user: mikko});
-var picture6 = new Picture({name: 'images/_MG_3295.JPG', user: mikko});
-var picture7 = new Picture({name: 'images/_MG_3345.JPG', user: mikko});
+var picture1 = new Picture({name: 'images/1.jpg', user: mikko});
+var picture2 = new Picture({name: 'images/2.jpg', user: mikko});
+var picture3 = new Picture({name: 'images/3.jpg', user: mikko});
+var picture4 = new Picture({name: 'images/4.jpg', user: mikko});
+var picture5 = new Picture({name: 'images/5.jpg', user: mikko});
+var picture6 = new Picture({name: 'images/6.jpg', user: mikko});
+var picture7 = new Picture({name: 'images/7.jpg', user: mikko});
 
 picture1.save(function(error){
     if(error){
