@@ -33,16 +33,6 @@ var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
 var Location = mongoose.model('Location', LocationSchema);
 
-// Model functions
-
-Picture.prototype.changeScore = function(number) {
-    console.log(number);
-}
-
-Picture.prototype.all = function() {
-
-};
-
 exports.User = User;
 exports.Picture = Picture;
 exports.Location = Location;

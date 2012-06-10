@@ -3,20 +3,10 @@
  * GET home page.
  */
 var models = require('../model');
-
-var pictures = [];
-
-models.Picture.find().sort('points', 'descending').run(function (err, pics){
-    if(err) {
-        throw err;
-    }
-    // add all pics to array
-    pics.forEach(function(pic) {
-        pictures.push(pic);
-    })
-});
+var pictureModel = require('../models/PictureModel');
 
 exports.index = function(req, res){
+  var pictures = pictureModel.allSorted();
   res.render('index', { title: 'BreakIt', pictures: pictures });
 };
 
