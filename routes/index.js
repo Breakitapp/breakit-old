@@ -16,33 +16,41 @@ models.Picture.find().sort('points', 'descending').run(function (err, pics){
     })
 });
 
+
+
 exports.index = function(req, res){
 
   res.render('index', { title: 'BreakIt', pictures: pictures });
 };
 
+exports.test = function(req, res){
+	console.log(req.body);
+	console.log(req.body.testkey);
+	console.log("test3");
+	
+	// get the location of the user
+	// get the pictures
+	// calculate relative points to the pictures
+	 models.Picture.update({_id: pic}, {$inc: {'points' : points}}, function(err, doc) {
+	        if(err) {
+	            throw err;
+	        }
+	        
+	res.render('index', { title: 'BreakIt', pictures: pictures });
+};
 
 exports.index_post = function(req, res) {
     var points = parseInt(req.body.points);
     var pic = req.body._id;
     var score_ = 0;
     //console.log(pic, points);
+
     models.Picture.update({_id: pic}, {$inc: {'points' : points}}, function(err, doc) {
         if(err) {
             throw err;
         }
     });
 
-    exports.test = function(req, res){
-        console.log(req.body);
-        console.log(req.body.testkey);
-        console.log("test3");
-        // get the location of the user
-        // get the pictures
-        // calculate relative points to the pictures
-        
-        res.render('index', { title: 'BreakIt', pictures: pictures });
-      };
       
     models.Picture.find({'_id': pic}, {'points': 1}, function(err, score) {
         if(err) {

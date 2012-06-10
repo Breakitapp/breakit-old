@@ -36,9 +36,9 @@ app.configure('production', function(){
 });
 
 // Routes
+app.post('/test', routes.test);
 app.get('/', routes.index);
 app.post('/', routes.index_post);
-app.post('/test', routes.test);
 
 
 app.listen(3000);
