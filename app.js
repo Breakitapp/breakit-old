@@ -17,11 +17,16 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  //CSS
   app.use(require('stylus').middleware({ src: __dirname + '/public' }));
+  // When application gets a post the router looks at the url and does the right thing
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
 
+// different configuration
+
+// testing available
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
@@ -31,7 +36,6 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/', routes.index);
 app.post('/', routes.index_post);
 

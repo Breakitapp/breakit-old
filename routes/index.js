@@ -10,6 +10,7 @@ models.Picture.find({}, function(err, pics) {
     if(err) {
         throw err;
     }
+    // add all pics to array
     pics.forEach(function(pic) {
         pictures.push(pic);
     })
@@ -18,6 +19,7 @@ models.Picture.find({}, function(err, pics) {
 exports.index = function(req, res){
   res.render('index', { title: 'BreakIt', pictures: pictures });
 };
+
 
 exports.index_post = function(req, res) {
     var points = parseInt(req.body.points);
