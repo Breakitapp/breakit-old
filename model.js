@@ -23,7 +23,7 @@ var User = mongoose.model('User', UserSchema);
 
 exports.User = User;
 exports.Picture = Picture;
-/*
+
 var mikko = new User({name: 'Mikko Majuri'});
 
 mikko.save(function(error){
@@ -32,6 +32,7 @@ mikko.save(function(error){
     }
 });
 
+/*
 var picture1 = new Picture({name: 'images/1.jpg', user: mikko});
 var picture2 = new Picture({name: 'images/2.jpg', user: mikko});
 var picture3 = new Picture({name: 'images/3.jpg', user: mikko});
@@ -75,4 +76,5 @@ picture7.save(function(error){
         res.json(error);
     }
 });
+
 */
