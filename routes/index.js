@@ -17,7 +17,6 @@ models.Picture.find().sort('points', 'descending').run(function (err, pics){
 });
 
 exports.index = function(req, res){
-
   res.render('index', { title: 'BreakIt', pictures: pictures });
 };
 

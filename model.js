@@ -5,6 +5,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+// Schemas
+
 var UserSchema = new Schema({
     name    :   {type: String, index: true}
 });
@@ -18,22 +20,32 @@ var PictureSchema = new Schema({
     name    :   {type: String, index: true},
     user    :   [User],
     points  :   {type: Number, default: 0},
-    points  :   {type: Number, default: 0},
     location:   [Location]
 });
 
+// Database connection
+
 mongoose.connect('mongodb://localhost/breakit');
+
+// Models
 
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
 var Location = mongoose.model('Location', LocationSchema);
 
+// Model functions
+
 Picture.prototype.changeScore = function(number) {
     console.log(number);
 }
 
+Picture.prototype.all = function() {
+
+};
+
 exports.User = User;
 exports.Picture = Picture;
+exports.Location = Location;
 
 var mikko = new User({name: 'Mikko Majuri'});
 
