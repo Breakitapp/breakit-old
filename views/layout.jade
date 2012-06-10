@@ -7,11 +7,16 @@ html
   script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
   script(type='text/javascript')
     $.ajaxSetup ({
-      cache: false
-    });
+          cache: false
+        });
     $(document).ready(function() {
       $('.vote').click(function() {
-        $.post('/', {_id : $(this).attr('data'), points: $(this).attr('points')});
+        var this_ = $(this);
+        $.post('/',
+         {_id : $(this).attr('data'), points: $(this).attr('points')},
+         function(score) {
+           $(this_).siblings('.points').text(score.score);
+        });
       });
     });
 

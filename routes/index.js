@@ -22,12 +22,20 @@ exports.index = function(req, res){
 exports.index_post = function(req, res) {
     var points = parseInt(req.body.points);
     var pic = req.body._id;
-    console.log(pic, points);
+    var score_ = 0;
+    //console.log(pic, points);
     models.Picture.update({_id: pic}, {$inc: {'points' : points}}, function(err, doc) {
         if(err) {
             throw err;
         }
-        console.log(doc);
     });
-    res.redirect('/');
+    models.Picture.find({'_id': pic}, {'points': 1}, function(err, score) {
+        if(err) {
+            throw err;
+        }
+        score_ = score[0].points;
+        console.log(score_);
+        res.send({score: score_});
+    });
+
 };
