@@ -31,6 +31,18 @@ exports.index_post = function(req, res) {
             throw err;
         }
     });
+
+    exports.test = function(req, res){
+        console.log(req.body);
+        console.log(req.body.testkey);
+        console.log("test3");
+        // get the location of the user
+        // get the pictures
+        // calculate relative points to the pictures
+        
+        res.render('index', { title: 'BreakIt', pictures: pictures });
+      };
+      
     models.Picture.find({'_id': pic}, {'points': 1}, function(err, score) {
         if(err) {
             throw err;
