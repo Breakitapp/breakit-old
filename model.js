@@ -5,6 +5,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+// Schemas
+
 var UserSchema = new Schema({
     name    :   {type: String, index: true}
 });
@@ -18,21 +20,22 @@ var PictureSchema = new Schema({
     name    :   {type: String, index: true},
     user    :   [User],
     points  :   {type: Number, default: 0},
-    location:   [LocationSchema]
+    location:   [Location]
 });
 
+// Database connection
+
 mongoose.connect('mongodb://localhost/breakit');
+
+// Models
 
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
 var Location = mongoose.model('Location', LocationSchema);
 
-Picture.prototype.changeScore = function(number) {
-    console.log(number);
-}
-
 exports.User = User;
 exports.Picture = Picture;
+exports.Location = Location;
 
 /*PictureSchema.methods.ordered = function ordered() {
 	var ordered = mongoose.Picture.find().sort({points:-1}).toArray()
