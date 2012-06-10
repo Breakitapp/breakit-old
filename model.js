@@ -18,7 +18,6 @@ var PictureSchema = new Schema({
     name    :   {type: String, index: true},
     user    :   [User],
     points  :   {type: Number, default: 0},
-    points  :   {type: Number, default: 0},
     location:   [Location]
 });
 

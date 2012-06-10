@@ -31,11 +31,16 @@ exports.test = function(req, res){
 	// get the location of the user
 	// get the pictures
 	// calculate relative points to the pictures
-	 models.Picture.update({_id: pic}, {$inc: {'points' : points}}, function(err, doc) {
-	        if(err) {
-	            throw err;
-	        }
-	        
+
+// for each picture in pictures
+// get the location x 
+// get the location y = testkey 	
+// distance: 	d = sqrt( (x2 - x1)^2 + (y2 -y1)^2
+// if d > 100 => reduce the points by multiplying by 0,5
+// if d > 200 => reduce the points by multiplying by 0,3
+	
+// 
+	
 	res.render('index', { title: 'BreakIt', pictures: pictures });
 };
 
