@@ -40,6 +40,8 @@ exports.Picture = Picture;
 };*/
 
 /*var mikko = new User({name: 'Mikko Majuri'});
+=======
+var mikko = new User({name: 'Mikko Majuri'});
 
 mikko.save(function(error){
     if(error){
@@ -52,6 +54,7 @@ var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 110});
 var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 12});
 var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 1300});
 var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 14});
+
 
 picture1.save(function(error){
     if(error){
