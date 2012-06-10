@@ -25,6 +25,7 @@ mongoose.connect('mongodb://localhost/breakit');
 
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
+var Location = mongoose.model('Location', LocationSchema);
 
 Picture.prototype.changeScore = function(number) {
     console.log(number);
