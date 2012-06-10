@@ -6,7 +6,7 @@ var models = require('../model');
 
 var pictures = [];
 
-models.Picture.find({}, function(err, pics) {
+models.Picture.find().sort('points', 'descending').run(function (err, pics){
     if(err) {
         throw err;
     }
@@ -34,7 +34,6 @@ exports.index_post = function(req, res) {
             throw err;
         }
         score_ = score[0].points;
-        console.log(score_);
         res.send({score: score_});
     });
 
