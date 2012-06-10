@@ -9,16 +9,24 @@ var UserSchema = new Schema({
     name    :   {type: String, index: true}
 });
 
+var LocationSchema = new Schema({
+    longitude:  {type: Number, default: 0.0},
+    latitude :  {type: Number, default: 0.0}
+});
+
 var PictureSchema = new Schema({
     name    :   {type: String, index: true},
     user    :   [User],
-    points  :   {type: Number, default: 0}
+    points  :   {type: Number, default: 0},
+    points  :   {type: Number, default: 0},
+    location:   [Location]
 });
 
 mongoose.connect('mongodb://localhost/breakit');
 
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
+var Location = mongoose.model('Location', LocationSchema);
 
 Picture.prototype.changeScore = function(number) {
     console.log(number);
