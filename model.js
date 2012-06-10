@@ -36,7 +36,7 @@ var Location = mongoose.model('Location', LocationSchema);
 exports.User = User;
 exports.Picture = Picture;
 exports.Location = Location;
-
+/*
 var mikko = new User({name: 'Mikko Majuri'});
 
 mikko.save(function(error){
@@ -45,14 +45,16 @@ mikko.save(function(error){
     }
 });
 
-/*
-var picture1 = new Picture({name: 'images/1.jpg', user: mikko});
-var picture2 = new Picture({name: 'images/2.jpg', user: mikko});
-var picture3 = new Picture({name: 'images/3.jpg', user: mikko});
-var picture4 = new Picture({name: 'images/4.jpg', user: mikko});
-var picture5 = new Picture({name: 'images/5.jpg', user: mikko});
-var picture6 = new Picture({name: 'images/6.jpg', user: mikko});
-var picture7 = new Picture({name: 'images/7.jpg', user: mikko});
+var location1 = new Location({});
+var location2 = new Location({longitude: 64, latitude: 63});
+
+var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 30, location: location1});
+var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 30, location: location2});
+var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 100, location: location1});
+var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 100, location: location2});
+var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 300, location: location1});
+var picture6 = new Picture({name: 'images/6.jpg', user: mikko, points: 300, location: location2});
+var picture7 = new Picture({name: 'images/7.jpg', user: mikko, points: 10, location: location1});
 
 picture1.save(function(error){
     if(error){
@@ -89,5 +91,4 @@ picture7.save(function(error){
         res.json(error);
     }
 });
-
 */
