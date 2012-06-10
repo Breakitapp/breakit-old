@@ -3,6 +3,9 @@ p Welcome to #{title}
 for picture in pictures
   img(src=picture.name, class='stream')
   br
-  button(type='button', onclick='changePoints(#{picture.id}, 1)') +
-  button(type='button', onclick='changePoints(#{picture.id}, 1)') -
+  div(class='vote', data='#{picture._id}', points='1')
+    p=picture.points
+    p upvote
+  div(class='vote', data='#{picture._id}', points='-1')
+    p downvote
   br
