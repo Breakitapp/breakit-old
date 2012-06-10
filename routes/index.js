@@ -23,12 +23,4 @@ exports.index_post = function(req, res) {
             throw err;
         }
     });
-    models.Picture.find({'_id': pic}, {'points': 1}, function(err, score) {
-        if(err) {
-            throw err;
-        }
-        score_ = score[0].points;
-        res.send({score: score_});
-    });
-
 };
