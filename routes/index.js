@@ -12,7 +12,7 @@ exports.index = function(req, res){
 
 
 models.Picture.find().sort('points', 'descending').run(function (err, pics){
-	if(err) {
+    if(err) {
         throw err;
     }
     // add all pics to array
@@ -36,5 +36,4 @@ exports.index_post = function(req, res) {
             throw err;
         }
     });
-    res.redirect('/');
 };
