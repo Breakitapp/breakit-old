@@ -3,27 +3,17 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
-  script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
-  script(type='text/javascript', src='javascripts/jquery.bpopup-min.js')
-  script(type='text/javascript')
-    $.ajaxSetup ({
-          cache: false
-        });
-    $(document).ready(function() {
-      $('.vote').click(function() {
-        var this_ = $(this);
-        $.post('/',
-         {_id : $(this).attr('data'), points: $(this).attr('points')},
-         function(score) {
-           $(this_).siblings('.points').text(score.score);
-        });
-      });
-      $('a').click(function() {
+    block scripts
+      script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
+      script(type='text/javascript', src='javascripts/jquery.bpopup-min.js')
+      script(type='text/javascript')
+        $.ajaxSetup ({
+              cache: false
+            });
+        $('a').click(function() {
         $('.popUp').bPopup({
           contentContainer:'.content',
           loadUrl: 'index.jade'});
-      });
-    });
-  
-  body!= body
-
+        });
+  body
+    block contents
