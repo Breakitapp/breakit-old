@@ -12,8 +12,8 @@ var UserSchema = new Schema({
 });
 
 var LocationSchema = new Schema({
-    longitude:  {type: Number, default: 0.0},
-    latitude :  {type: Number, default: 0.0}
+	longitude:  {type: Number, default: 0.0},
+	latitude :  {type: Number, default: 0.0}
 });
 
 var PictureSchema = new Schema({
@@ -36,6 +36,7 @@ var Location = mongoose.model('Location', LocationSchema);
 exports.User = User;
 exports.Picture = Picture;
 exports.Location = Location;
+
 /*
 var mikko = new User({name: 'Mikko Majuri'});
 

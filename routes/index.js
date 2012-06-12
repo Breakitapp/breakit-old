@@ -38,7 +38,6 @@ exports.index_post = function(req, res) {
             throw err;
         }
     });
-
       
     models.Picture.find({'_id': pic}, {'points': 1}, function(err, score) {
         if(err) {
@@ -47,5 +46,15 @@ exports.index_post = function(req, res) {
         score_ = score[0].points;
         res.send({score: score_});
     });
-
 };
+
+exports.index_fbshare = function(req,res) {
+  res.render('fbshare', {title: 'FBShare'});
+};
+
+exports.index_splashscreen = function(req,res) {
+	res.render('splash_screen', {title: 'Home Screen'});
+}
+exports.popUp = function(req, res) {
+    res.render('test', {title: 'Test'});
+}

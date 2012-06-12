@@ -1,35 +1,51 @@
-h1= title
-p Welcome to #{title}
-script(type='text/javascript', src='/javascripts/detectBrowser.js')
-script(type='text/javascript')
-  var b = BrowserDetect.browser
-  if(!isAndroid) {
-  jQuery(".test1").append(" THIS IS NOT A ANDROID USER AGENT");
-  }
-  else {
-  console.log('Geolocation is not supported for this Browser/OS version yet.');
-  }
-  if (navigator.geolocation) {
-  console.log('Geolocation is supported!');
-  var startPos;
-  navigator.geolocation.getCurrentPosition(function(position) {
-  startPos = position;
-  jQuery("#location_latitude").append(startPos.coords.latitude);
-  jQuery("#location_longitude").append(startPos.coords.longitude);
-  jQuery.post('/test', {testkey:startPos.coords.longitude+' '+startPos.coords.latitude});
-  }
-  )
-  }
-  
-h1 Testing
+extends layout
 
-for picture in pictures
-  img(src=picture.name, class='stream')
-  br
-  div
-    p(class='points') #{picture.points}
-    div(class='vote', data='#{picture._id}', points='1')
-      p upvote
-    div(class='vote', data='#{picture._id}', points='-1')
-      p downvote
-  br
+block append scripts
+  script(type='text/javascript')
+    $(document).ready(function() {
+        $('.vote').click(function() {
+          var this_ = $(this);
+          $.post('/',
+           {_id : $(this).attr('id'), points: $(this).attr('points')},
+           function(score) {
+             $(this_).siblings('.points').text(score.score);
+          });
+        });
+      });
+
+  script(type='text/javascript', src='/javascripts/detectBrowser.js')
+  script(type='text/javascript')
+    var b = BrowserDetect.browser
+    if(!isAndroid) {
+    jQuery(".test1").append(" THIS IS NOT A ANDROID USER AGENT");
+    }
+    else {
+    console.log('Geolocation is not supported for this Browser/OS version yet.');
+    }
+    
+    if (navigator.geolocation) {
+    console.log('Geolocation is supported!');
+    var startPos;
+    navigator.geolocation.getCurrentPosition(function(position) {
+    startPos = position;
+    jQuery("#location_latitude").append(startPos.coords.latitude);
+    jQuery("#location_longitude").append(startPos.coords.longitude);
+    jQuery.post('/test', {testkey:startPos.coords.longitude+' '+startPos.coords.latitude});
+    }
+    )
+    }
+  
+block contents
+  h1= title
+  p Welcome to #{title}
+  h1 Testing
+  for picture in pictures
+    img(src=picture.name, class='stream')
+    br
+    div
+      p(class='points') #{picture.points}
+      div(class='vote', id=picture._id, points='1')
+        p upvote
+      div(class='vote', id=picture._id, points='-1')
+        p downvote
+    br

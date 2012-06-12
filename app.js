@@ -15,6 +15,7 @@ var app = module.exports = express.createServer();
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.set('view options', { layout: false });
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   //CSS
@@ -36,9 +37,13 @@ app.configure('production', function(){
 });
 
 // Routes
-app.post('/test', routes.test);
+
 app.get('/', routes.index);
 app.post('/', routes.index_post);
+app.post('/test', routes.test);
+app.get('/share', routes.index_fbshare); // For Facebook share (views/fbshare.jade)
+app.get('/splash_screen',routes.index_splashscreen); // For Splash Screen (views/splashscren)
+app.get('/popup', routes.popUp);
 
 
 app.listen(3000);
