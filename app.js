@@ -36,8 +36,9 @@ app.configure('production', function(){
 });
 
 // Routes
-app.get('/share', routes.index_fbshare);
+app.get('/share', routes.index_fbshare); // For Facebook share (views/fbshare.jade)
 app.get('/', routes.index);
+app.get('/splash_screen',routes.index_splashscreen); // For Splash Screen (views/splashscren)
 app.post('/', routes.index_post);
 app.get('/popup', routes.popUp);
 

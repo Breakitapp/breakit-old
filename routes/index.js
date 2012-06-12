@@ -25,6 +25,10 @@ exports.index_post = function(req, res) {
 exports.index_fbshare = function(req,res) {
   res.render('fbshare', {title: 'FBShare'});
 };
+
+exports.index_splashscreen = function(req,res) {
+	res.render('splash_screen', {title: 'Home Screen'});
+}
 exports.popUp = function(req, res) {
     res.render('test', {title: 'Test'});
 }
