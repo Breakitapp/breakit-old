@@ -14,15 +14,16 @@ exports.index = function(req, res){
 
 exports.test = function(req, res){
 		console.log(req.body);
-		console.log(req.body.testkey);
-		var location = new models.Location({longitude: 100, latitude: 125});
+		// THIS TEST KEY IS THE LOCATION OF BROWSER (USER AGENT = PHONE)
+		console.log('testkey:'+req.body.testkey);
+		
+		// CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
+		// AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
+		var helsinki = new models.Location({longitude: 60.17083, latitude: 24.9375});
 		
 		console.log("type: "+ typeof(req.body.testkey));
-		console.log("type2: "+ typeof(location));		
-		console.log("type long: "+ typeof(location.longitude));				
-		console.log("long: "+ (location.longitude));		
 		
-		var pictures = pictureModel.relSorted(location);
+		var pictures = pictureModel.relSorted(helsinki);
 		
 		res.render('index', { title: 'BreakIt', pictures: pictures });
 	};
