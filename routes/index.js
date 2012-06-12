@@ -3,13 +3,19 @@
  * GET home page.
  */
 var models = require('../model');
-var pictureModel = require('../models/PictureModel');
+var async = require('async');
+require('../models/PictureModel');
 
 exports.index = function(req, res){
-  var pictures = pictureModel.allSorted();
-  res.render('index', { title: 'BreakIt', pictures: pictures });
+  // create a sync task for database related queries
+  async.parallel([models.Picture.allSorted],
+      function(err, results){
+          if(err) {
+              throw err;
+          }
+          res.render('index', { title: 'BreakIt', pictures: results[0] });
+      });
 };
-
 
 exports.index_post = function(req, res) {
     var points = parseInt(req.body.points);

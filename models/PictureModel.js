@@ -1,26 +1,22 @@
 // Model functions
 
 var models = require('../model');
+var async = require('async');
 
-var pictures = [];
-
-models.Picture.prototype.changeScore = function(number) {
+models.Picture.changeScore = function(number) {
     console.log(number);
 }
 
-models.Picture.prototype.allSorted = function() {
+models.Picture.allSorted = function(callback) {
+    var pictures = [];
     models.Picture.find().sort('points', 'descending').run(function (err, pics){
         if(err) {
             throw err;
         }
-        //clear the array
-        pictures = [];
-        // add all pics to array
+        // push pictures from object to an array
         pics.forEach(function(pic) {
             pictures.push(pic);
         })
+        callback(null, pictures);
     });
-    return pictures;
 };
-
-exports.allSorted = models.Picture.prototype.allSorted;
