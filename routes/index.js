@@ -25,3 +25,6 @@ exports.index_post = function(req, res) {
 exports.index_fbshare = function(req,res) {
   res.render('fbshare', {title: 'FBShare'});
 };
+exports.popUp = function(req, res) {
+    res.render('test', {title: 'Test'});
+}

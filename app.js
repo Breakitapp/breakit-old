@@ -39,6 +39,7 @@ app.configure('production', function(){
 app.get('/share', routes.index_fbshare);
 app.get('/', routes.index);
 app.post('/', routes.index_post);
+app.get('/popup', routes.popUp);
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
