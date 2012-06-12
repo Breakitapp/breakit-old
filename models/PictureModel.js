@@ -31,8 +31,15 @@ var relsortedPics = [];
  
  sortedPics = this.allSorted();
  sortedPics.forEach(function(pic) {
+	 console.log("pic: "+ pic);
+	 console.log("pic location: "+ pic.location);
+	 console.log("pic location: "+ typeof(pic.location));
+		
+	 console.log("pic location long: "+ pic.location.longitude);
+	 console.log("pic location lat: "+ pic.location.latitude);
+	 
 	 var relPic = relativePoints(viewer_location,pic);
-	 //console.log("relPic: "+ relPic);
+	 console.log("relPic: "+ relPic);
  })
 
  relsortedPics.sort(function compare(a,b) {
@@ -49,10 +56,12 @@ return relsortedPics;
 }
 
 var relativePoints = function(viewerLocation, picture) {
+	console.log('PICTURE: '+picture);
 	
 	var absolute_points = picture.points;
 	var viewerLocation = viewerLocation;
 	var picLocation = picture.location;	
+	console.log('PICTURE LOCATION: '+picLocation);
 	
 	console.log("type viewerloc: ",(viewerLocation.longitude));
 	
@@ -62,6 +71,7 @@ var relativePoints = function(viewerLocation, picture) {
 	var picLatNum = parseInt(picLocation.latitude);
 	console.log('viewLongNum: '+viewLongNum);
 	console.log('picLongNum: '+picLongNum);
+	console.log('picLocation longitude: '+picLocation.longitude);
 	
 	var R = 6371; // km
 
