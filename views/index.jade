@@ -1,14 +1,29 @@
-h1= title
-p Welcome to #{title}
-h1 Testing
+extends layout
 
-for picture in pictures
-  img(src=picture.name, class='stream')
-  br
-  div
-    p(class='points') #{picture.points}
-    div(class='vote', data='#{picture._id}', points='1')
-      p upvote
-    div(class='vote', data='#{picture._id}', points='-1')
-      p downvote
-  br
+block append scripts
+  script(type='text/javascript')
+    $(document).ready(function() {
+        $('.vote').click(function() {
+          var this_ = $(this);
+          $.post('/',
+           {_id : $(this).attr('id'), points: $(this).attr('points')},
+           function(score) {
+             $(this_).siblings('.points').text(score.score);
+          });
+        });
+      });
+
+block contents
+  h1= title
+  p Welcome to #{title}
+  h1 Testing
+  for picture in pictures
+    img(src=picture.name, class='stream')
+    br
+    div
+      p(class='points') #{picture.points}
+      div(class='vote', id=picture._id, points='1')
+        p upvote
+      div(class='vote', id=picture._id, points='-1')
+        p downvote
+    br
