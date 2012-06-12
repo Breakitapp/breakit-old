@@ -5,13 +5,10 @@
 var models = require('../model');
 var pictureModel = require('../models/PictureModel');
 
-
-
 exports.index = function(req, res){
   var pictures = pictureModel.allSorted();
   res.render('index', { title: 'BreakIt', pictures: pictures });
 };
-
 
 exports.index_post = function(req, res) {
     var points = parseInt(req.body.points);
@@ -23,4 +20,8 @@ exports.index_post = function(req, res) {
             throw err;
         }
     });
+};
+
+exports.index_fbshare = function(req,res) {
+  res.render('fbshare', {title: 'FBShare'});
 };

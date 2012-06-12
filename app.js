@@ -36,6 +36,7 @@ app.configure('production', function(){
 });
 
 // Routes
+app.get('/share', routes.index_fbshare);
 app.get('/', routes.index);
 app.post('/', routes.index_post);
 
