@@ -30,3 +30,7 @@ exports.index_post = function(req, res) {
     });
 
 };
+
+exports.popUp = function(req, res) {
+    res.render('test', {title: 'Test'});
+}
