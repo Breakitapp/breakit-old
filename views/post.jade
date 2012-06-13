@@ -1,0 +1,12 @@
+div(class='post')
+  h1 Headline of the picture
+  p Location
+  img(src=picture.name, class='stream')
+  br
+  div
+    p(class='points') #{picture.points}
+    div(class='vote', id=picture._id, points='1')
+      img(class='voteButton', src='images/up.png')
+    div(class='vote', id=picture._id, points='-1')
+      img(class='voteButton left', src='images/down.png')
+  br
