@@ -36,16 +36,6 @@ block append scripts
     }
   
 block contents
-  h1= title
-  p Welcome to #{title}
-  h1 Testing
-  for picture in pictures
-    img(src=picture.name, class='stream')
-    br
-    div
-      p(class='points') #{picture.points}
-      div(class='vote', id=picture._id, points='1')
-        p upvote
-      div(class='vote', id=picture._id, points='-1')
-        p downvote
-    br
+
+  include navigation
+  include newsFeed

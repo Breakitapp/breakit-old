@@ -30,7 +30,7 @@ exports.test = function(req, res){
 		
 		console.log("type: "+ typeof(req.body.testkey));
 		
-		var pictures = pictureModel.relSorted(helsinki);
+		var pictures = PictureModel.relSorted(helsinki);
 		
 		res.render('index', { title: 'BreakIt', pictures: pictures });
 	};
@@ -68,5 +68,5 @@ exports.popUp = function(req, res) {
 }
 
 exports.footer = function(req, res) {
-	res.render('footer');
+	res.render('footer', {title: 'Footer'});
 }
