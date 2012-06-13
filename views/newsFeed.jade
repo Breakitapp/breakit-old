@@ -1,0 +1,10 @@
+for picture in pictures
+    img(src=picture.name, class='stream')
+    br
+    div
+      p(class='points') #{picture.points}
+      div(class='vote', id=picture._id, points='1')
+        p upvote
+      div(class='vote', id=picture._id, points='-1')
+        p downvote
+    br
