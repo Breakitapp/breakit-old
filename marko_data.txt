@@ -1,4 +1,4 @@
-- TO LAYOUT.JADE:
+- TO INDEX.JADE:
 
 script(type='text/javascript', src='/javascripts/detectBrowser.js')
 script(type='text/javascript')

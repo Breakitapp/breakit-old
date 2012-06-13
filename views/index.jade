@@ -13,7 +13,30 @@ block append scripts
         });
       });
 
+  script(type='text/javascript', src='/javascripts/detectBrowser.js')
+  script(type='text/javascript')
+    var b = BrowserDetect.browser
+    if(!isAndroid) {
+    jQuery(".test1").append(" THIS IS NOT A ANDROID USER AGENT");
+    }
+    else {
+    console.log('Geolocation is not supported for this Browser/OS version yet.');
+    }
+    
+    if (navigator.geolocation) {
+    console.log('Geolocation is supported!');
+    var startPos;
+    navigator.geolocation.getCurrentPosition(function(position) {
+    startPos = position;
+    jQuery("#location_latitude").append(startPos.coords.latitude);
+    jQuery("#location_longitude").append(startPos.coords.longitude);
+    jQuery.post('/test', {testkey:startPos.coords.longitude+' '+startPos.coords.latitude});
+    }
+    )
+    }
+  
 block contents
+
   include navigation
   include newsFeed
   include footer
