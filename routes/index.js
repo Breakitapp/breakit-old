@@ -66,3 +66,7 @@ exports.index_splashscreen = function(req,res) {
 exports.popUp = function(req, res) {
     res.render('test', {title: 'Test'});
 }
+
+exports.footer = function(req, res) {
+	res.render('footer');
+}

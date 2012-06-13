@@ -44,6 +44,7 @@ app.post('/test', routes.test);
 app.get('/share', routes.index_fbshare); // For Facebook share (views/fbshare.jade)
 app.get('/splash_screen',routes.index_splashscreen); // For Splash Screen (views/splashscren)
 app.get('/popup', routes.popUp);
+app.get('/footer', routes.footer);
 
 
 app.listen(3000);

@@ -102,4 +102,3 @@ var relativePoints = function(viewerLocation, picture) {
 
 exports.allSorted = models.Picture.prototype.allSorted;
 exports.relSorted = models.Picture.prototype.relativeSort;
-};
