@@ -2,8 +2,8 @@
 /*
  * GET home page.
  */
-var models = require('../model');
-var async = require('async');
+var models = require('../model')
+  , async = require('async');
 require('../models/PictureModel');
 
 exports.index = function(req, res){
@@ -13,7 +13,7 @@ exports.index = function(req, res){
           if(err) {
               throw err;
           }
-          res.render('index', { title: 'BreakIt', pictures: results[0] });
+          res.render('index', { req: req, title: 'BreakIt', pictures: results[0] });
       });
 };
 
@@ -34,5 +34,4 @@ exports.index_post = function(req, res) {
         score_ = score[0].points;
         res.send({score: score_});
     });
-
 };

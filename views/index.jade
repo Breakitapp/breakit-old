@@ -1,6 +1,7 @@
 extends layout
 
 block append scripts
+  include twitter
   script(type='text/javascript')
     $(document).ready(function() {
         $('.vote').click(function() {
@@ -21,6 +22,7 @@ block contents
     img(src=picture.name, class='stream')
     br
     div
+      a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet
       p(class='points') #{picture.points}
       div(class='vote', id=picture._id, points='1')
         p upvote

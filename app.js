@@ -5,13 +5,12 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , models = require('./model');
-
+  , models = require('./model')
+  , mongoose = require('mongoose');
 
 var app = module.exports = express.createServer();
 
 // Configuration
-
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
@@ -26,7 +25,6 @@ app.configure(function(){
 });
 
 // different configuration
-
 // testing available
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
@@ -38,7 +36,11 @@ app.configure('production', function(){
 
 // Routes
 app.get('/', routes.index);
+app.get('/twitter_test', routes.twitter_test);
 app.post('/', routes.index_post);
 
+// Server startup
 app.listen(3000);
+// Database connection
+mongoose.connect('mongodb://localhost/breakit');
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
