@@ -10,10 +10,24 @@ div(class='container', id='nav-bottom-line')
       img(src='images/logos/breakit.png', id='nav-logo')
     div(class='fourcol')
       div(class='navbutton')
+        //this will host a clickable image that gets the local picture feed and
+        //asks for it to be rendered in newsFeed
         p local feed
       div(class='navbutton')
+        //this will host a clickable image that gets the breaking picture feed and
+        //asks for it to be rendered in newsFeed
         p breaking news
       div(class='navbutton')
+        //this will host a clickable image that gets the my picture feed and
+        //asks for it to be rendered in newsFeed
         p my feed
     div(class='fourcol last')
-      p register and search
+      div(id='nav-search', class='navbutton')
+        //this will host a search-function
+        p search
+      div(id='nav-register', class='navbutton')
+        //this will take the user to the register-page or popup a register window
+        p register
+      div(id='nav-login', class='navbutton')
+        //this will take the user to the login-page or popup a login window
+        p login
