@@ -1,7 +1,6 @@
 // Model functions
 
 var models = require('../model');
-var async = require('async');
 
 models.Picture.changeScore = function(number) {
     console.log(number);

@@ -23,11 +23,12 @@ var PictureSchema = new Schema({
     location:   [Location]
 });
 
-// Database connection
-
-mongoose.connect('mongodb://localhost/breakit');
-
 // Models
+PictureSchema.on('init', function(model) {
+  model.prototype.url = function(req) {
+    return "http://" + req.headers.host + "/#" +  this._id;
+  };
+});
 
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
