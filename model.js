@@ -12,8 +12,8 @@ var UserSchema = new Schema({
 });
 
 var LocationSchema = new Schema({
-	longitude:  {type: Number, default: 0.0},
-	latitude :  {type: Number, default: 0.0}
+    longitude:  {type: Number, default: 0.0000000},
+    latitude :  {type: Number, default: 0.0000000}
 });
 
 var PictureSchema = new Schema({
@@ -38,13 +38,24 @@ exports.Picture = Picture;
 exports.Location = Location;
 
 /*
-var picture1 = new Picture({name: 'images/1.jpg', user: mikko});
-var picture2 = new Picture({name: 'images/2.jpg', user: mikko});
-var picture3 = new Picture({name: 'images/3.jpg', user: mikko});
-var picture4 = new Picture({name: 'images/4.jpg', user: mikko});
-var picture5 = new Picture({name: 'images/5.jpg', user: mikko});
-var picture6 = new Picture({name: 'images/6.jpg', user: mikko});
-var picture7 = new Picture({name: 'images/7.jpg', user: mikko});
+var mikko = new User({name: 'Mikko Majuri'});
+
+mikko.save(function(error){
+    if(error){
+        res.json(error);
+    }
+});
+
+var helsinki = new Location({longitude: 60.17083, latitude: 24.9375});
+var turku = new Location({longitude: 60.4500, latitude: 22.2500});
+
+var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000, location: helsinki});
+var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 500, location: turku});
+var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 2000, location: helsinki});
+var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 100, location: turku});
+var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 4000, location: helsinki});
+var picture6 = new Picture({name: 'images/6.jpg', user: mikko, points: 300, location: turku});
+var picture7 = new Picture({name: 'images/7.jpg', user: mikko, points: 10, location: helsinki});
 
 picture1.save(function(error){
     if(error){
@@ -81,5 +92,5 @@ picture7.save(function(error){
         res.json(error);
     }
 });
-
 */
+

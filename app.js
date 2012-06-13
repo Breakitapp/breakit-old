@@ -37,11 +37,14 @@ app.configure('production', function(){
 });
 
 // Routes
-app.get('/share', routes.index_fbshare); // For Facebook share (views/fbshare.jade)
+
 app.get('/', routes.index);
-app.get('/splash_screen',routes.index_splashscreen); // For Splash Screen (views/splashscren)
 app.post('/', routes.index_post);
+app.post('/test', routes.test);
+app.get('/share', routes.index_fbshare); // For Facebook share (views/fbshare.jade)
+app.get('/splash_screen',routes.index_splashscreen); // For Splash Screen (views/splashscren)
 app.get('/popup', routes.popUp);
+
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
