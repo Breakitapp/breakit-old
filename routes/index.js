@@ -2,11 +2,9 @@
 /*
  * GET home page.
  */
-var models = require('../model');
-var async = require('async');
+var models = require('../model')
+  , async = require('async');
 require('../models/PictureModel');
-
-
 
 exports.index = function(req, res){
   // create a sync task for database related queries
@@ -15,7 +13,7 @@ exports.index = function(req, res){
           if(err) {
               throw err;
           }
-          res.render('index', { title: 'BreakIt', pictures: results[0] });
+          res.render('index', { req: req, title: 'BreakIt', pictures: results[0] });
       });
 };
 
@@ -34,6 +32,7 @@ exports.test = function(req, res){
 		
 		res.render('index', { title: 'BreakIt', pictures: pictures });
 	};
+
 
 exports.index_post = function(req, res) {
     var points = parseInt(req.body.points);
@@ -61,8 +60,9 @@ exports.index_fbshare = function(req,res) {
 };
 
 exports.index_splashscreen = function(req,res) {
-	res.render('splash_screen', {title: 'Home Screen'});
-}
+  res.render('splash_screen', {title: 'Home Screen'});
+};
+
 exports.popUp = function(req, res) {
     res.render('test', {title: 'Test'});
 }
@@ -70,3 +70,4 @@ exports.popUp = function(req, res) {
 exports.footer = function(req, res) {
 	res.render('footer', {title: 'Footer'});
 }
+

@@ -1,6 +1,7 @@
 extends layout
 
 block append scripts
+  include twitter
   script(type='text/javascript')
     $(document).ready(function() {
         $('.vote').click(function() {
@@ -30,12 +31,11 @@ block append scripts
     startPos = position;
     jQuery("#location_latitude").append(startPos.coords.latitude);
     jQuery("#location_longitude").append(startPos.coords.longitude);
-    jQuery.post('/test', {testkey:startPos.coords.longitude+' '+startPos.coords.latitude});
+    jQuery.post('/test', {testkey:startPos.coords.longitude+ " "+startPos.coords.latitude});
     }
     )
     }
   
 block contents
-
   include navigation
   include newsFeed
