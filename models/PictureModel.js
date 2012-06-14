@@ -3,7 +3,7 @@
 var models = require('../model');
 
 models.Picture.changeScore = function(number) {
-    console.log(number);
+    //console.log(number);
 };
 
 models.Picture.allSorted = function(callback) {
@@ -36,8 +36,8 @@ models.Picture.prototype.relativeSort = function(viewer_location) {
          });
          console.log(sortedPics)
          sortedPics.forEach(function(pic) {
-             console.log("pic: "+ pic);
              var relPic = relativePoints(viewer_location,pic);
+             relsortedPics.push(pic);
              //console.log("relPic: "+ relPic);
          });
      });
@@ -56,18 +56,26 @@ models.Picture.prototype.relativeSort = function(viewer_location) {
 };
 
 var relativePoints = function(viewerLocation, picture) {
-	console.log('PICTURE: '+picture);
-	
+
+    var toRad = function(deg) {
+        return deg*(Math.PI/180);
+    };
+
 	var absolute_points = picture.points;
 	var viewerLocation = viewerLocation;
 	var picLocation = picture.location[0];	
 	
 	var R = 6371; // km
 
-	console.log('R' + R);
+    var dLat = toRad((viewerLocation.latitude-picLocation.latitude));
+    var dLon = toRad((viewerLocation.longitude-picLocation.longitude));
+    var lat1 = toRad(viewerLocation.latitude);
+    var lat2 = toRad(picLocation.latitude);
 
-	console.log('viewer location: ' + viewerLocation.latitude + ' '+ viewerLocation.longitude);
-	console.log('picture location: ' + picLocation.latitude + ' '+ picLocation.longitude);
+	//console.log('R' + R);
+
+	//console.log('viewer location: ' + viewerLocation.latitude + ' '+ viewerLocation.longitude);
+	//console.log('picture location: ' + picLocation.latitude + ' '+ picLocation.longitude);
 	
 	// Uses haversine formula to calculate distance from degrees
 	// http://www.movable-type.co.uk/scripts/latlong.html
@@ -91,14 +99,16 @@ var relativePoints = function(viewerLocation, picture) {
 	console.log('a'+a);
 	console.log('c'+c);
 	
-	console.log('DISTANCE: '+distance);
+	//console.log('DISTANCE: '+distance);
 	
-	var multiplier = 1;
+	var multiplier;
 	console.log(distance);
-	if(distance != 0) {
-	multiplier = 10/distance;
-	}
-	
+	if(distance !== 0) {
+	    multiplier = 10/distance;
+	} else {
+        multiplier = 1;
+    }
+	console.log(multiplier);
 	var picture_ = picture;
 	picture_.points = (multiplier*absolute_points);
 	console.log('Absolute points'+absolute_points);
