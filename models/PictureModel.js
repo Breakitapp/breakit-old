@@ -4,7 +4,7 @@ var models = require('../model');
 
 models.Picture.changeScore = function(number) {
     console.log(number);
-}
+};
 
 models.Picture.allSorted = function(callback) {
     var pictures = [];
@@ -15,7 +15,7 @@ models.Picture.allSorted = function(callback) {
         // push pictures from object to an array
         pics.forEach(function(pic) {
             pictures.push(pic);
-        })
+        });
         callback(null, pictures);
     });
     return pictures;
@@ -23,29 +23,37 @@ models.Picture.allSorted = function(callback) {
 
 models.Picture.prototype.relativeSort = function(viewer_location) {
 
-console.log("test 4");
-var sortedPics = [];
-var relsortedPics = [];
- 
- sortedPics = this.allSorted();
- sortedPics.forEach(function(pic) {
-	 //console.log("pic: "+ pic);	 
-	 var relPic = relativePoints(viewer_location,pic);
-	 //console.log("relPic: "+ relPic);
- })
+    console.log("test 4");
+    var sortedPics = [];
+    var relsortedPics = [];
 
- relsortedPics.sort(function compare(a,b) {
-  if (a.points < b.points)
-     return -1;
-  if (a.points > b.points)
-    return 1; 
-  return 0;
-})
+     models.Picture.find({}, function(err, pics) {
+         if(err){
+             throw err;
+         }
+         pics.forEach(function(pic) {
+             sortedPics.push(pic);
+         });
+         console.log(sortedPics)
+         sortedPics.forEach(function(pic) {
+             console.log("pic: "+ pic);
+             var relPic = relativePoints(viewer_location,pic);
+             //console.log("relPic: "+ relPic);
+         });
+     });
 
-//console.log("return: "+ relsortedPics);
+     relsortedPics.sort(function compare(a,b) {
+      if (a.points < b.points)
+         return -1;
+      if (a.points > b.points)
+        return 1;
+      return 0;
+    });
 
-return relsortedPics;
-}
+    //console.log("return: "+ relsortedPics);
+
+    return relsortedPics;
+};
 
 var relativePoints = function(viewerLocation, picture) {
 	console.log('PICTURE: '+picture);

@@ -3,8 +3,8 @@
  * GET home page.
  */
 var models = require('../model')
-  , async = require('async');
-require('../models/PictureModel');
+  , async = require('async')
+  , picture = require('../models/PictureModel');
 
 exports.index = function(req, res){
   // create a sync task for database related queries
@@ -18,20 +18,20 @@ exports.index = function(req, res){
 };
 
 exports.test = function(req, res){
-		console.log(req.body);
-		// THIS TEST KEY IS THE LOCATION OF BROWSER (USER AGENT = PHONE)
-		console.log('testkey:'+req.body.testkey);
-		
-		// CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
-		// AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
-		var helsinki = new models.Location({longitude: 60.17083, latitude: 24.9375});
-		
-		console.log("type: "+ typeof(req.body.testkey));
-		
-		var pictures = PictureModel.relSorted(helsinki);
-		
-		res.render('index', { title: 'BreakIt', pictures: pictures });
-	};
+    console.log(req.body);
+    // THIS TEST KEY IS THE LOCATION OF BROWSER (USER AGENT = PHONE)
+    console.log('testkey:'+req.body.testkey);
+
+    // CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
+    // AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
+    var helsinki = new models.Location({longitude: 60.17083, latitude: 24.9375});
+
+    console.log("type: "+ typeof(req.body.testkey));
+
+    var pictures = picture.relSorted(helsinki);
+
+    res.render('index', { title: 'BreakIt', pictures: pictures });
+};
 
 
 exports.index_post = function(req, res) {
@@ -70,4 +70,3 @@ exports.popUp = function(req, res) {
 exports.footer = function(req, res) {
 	res.render('footer', {title: 'Footer'});
 }
-
