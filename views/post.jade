@@ -4,10 +4,28 @@ div(class='post')
   img(src=picture.name, class='stream')
   br
   div
-    a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet
-    p(class='points') #{picture.points}
+    // Title or Name of the Picture
+    p(class='titlePost') #{picture.name} 
+    // Location
+    p(class='locationPost') #{picture.location[0]} 
+    // The PICTURE
+    p(class='picturePost') #{picture.pic} 
     div(class='vote', id=picture._id, points='1')
-      img(class='voteButton', src='images/up.png')
+      img(class='voteButton up', src='images/up.png')
     div(class='vote', id=picture._id, points='-1')
-      img(class='voteButton left', src='images/down.png')
+      img(class='voteButton down', src='images/down.png')
+    p(class='votePoints') #{picture.points}
+    // comment button 
+    div(class='comment')
+      img(class='commentButton',src='images/comment.png') 
+    // number of comments
+    p(class='numComment') #{picture.numberOfComment} 
+    // the user who uploaded the pic
+    p(class='poster') #{picture.user[0]} 
+    // story(description) related to the pic
+    p(class='postStory') #{picture.story} 
+    div(class='readFullStory')
+      img(class='readFullStory',src='images/readFullStory.png')
+    a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet
+    // a(href="http://facebook.com/") // for the facebook
   br
