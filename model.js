@@ -6,9 +6,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 // Schemas
+function toLower (v) {
+	  return v.toLowerCase();
+	}
 
 var UserSchema = new Schema({
-    name    :   {type: String, index: true}
+    name    :   {type: String, index: true},
+	email   :   {type: String, set: toLower}
 });
 
 var LocationSchema = new Schema({

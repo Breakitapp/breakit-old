@@ -62,9 +62,23 @@ exports.index_fbshare = function(req,res) {
   res.render('fbshare', {title: 'FBShare'});
 };
 
+var emails = [];
+
 exports.index_splashscreen = function(req,res) {
-  res.render('splash_screen', {title: 'Home Screen'});
+	if (emails.length > 0) {
+		res.render('splashscreen_confirm', {title: 'Confirm'});
+	}  
+	res.render('splash_screen', {title: 'Home Screen'});
 };
+
+exports.index_splashscreen_post = function(req, res) {
+	var email = req.body.email_field;
+	var user = new models.User({email: email}) ;
+	emails.push(email);
+	//console.log(user);
+	//console.log(emails);
+	res.redirect('back');
+}
 
 exports.popUp = function(req, res) {
     res.render('test', {title: 'Test'});
