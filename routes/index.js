@@ -74,6 +74,9 @@ exports.index_splashscreen = function(req,res) {
 exports.index_splashscreen_post = function(req, res) {
 	var email = req.body.email_field;
 	var user = new models.User({email: email}) ;
+	user.save(function(err) {
+		if(err) throw err;
+	});
 	emails.push(email);
 	//console.log(user);
 	//console.log(emails);

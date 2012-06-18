@@ -12,7 +12,8 @@ function toLower (v) {
 
 var UserSchema = new Schema({
     name    :   {type: String, index: true},
-	email   :   {type: String, set: toLower}
+	email   :   {type: String, set: toLower},
+    date	:	{type: Date, default: Date.now}
 });
 
 var LocationSchema = new Schema({
