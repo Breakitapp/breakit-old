@@ -6,7 +6,8 @@
 var express = require('express')
   , routes = require('./routes')
   , models = require('./model')
-  , mongoose = require('mongoose');
+  , mongoose = require('mongoose')
+  , formidable = require('formidable');
 
 var app = module.exports = express.createServer();
 
@@ -44,6 +45,8 @@ app.get('/share', routes.index_fbshare); // For Facebook share (views/fbshare.ja
 app.get('/splash_screen',routes.index_splashscreen); // For Splash Screen (views/splashscren)
 app.get('/popup', routes.popUp);
 app.get('/footer', routes.footer);
+app.post('/users/id/pictures/upload', routes.upload);
+app.get('/upload', routes.picture);
 
 
 // Server startup

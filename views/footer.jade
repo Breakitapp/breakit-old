@@ -1,11 +1,12 @@
-extends layout
-
-block append contents
-  div(id='footer-wrapper')
-    div(id='twitter-id')
-      img(src='/images/1.jpg',class='button-dimension')
-    div(id='blog-id')
-      img(src='/images/2.jpg',class='button-dimension')
-    div(id='contact-id')
-      img(src='/images/3.jpg',class='button-dimension')
-    
+div(class='container', id='footer')
+  div(class='row')
+    div(class='fourcol')
+      //
+      div(class='footer-button')
+        p follow on twitter
+    div(class='fourcol')
+      div(class='footer-button')
+        p read our blog
+    div(class='fourcol last')
+      div(class='footer-button')
+        p contact us directly
