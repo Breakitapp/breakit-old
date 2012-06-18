@@ -4,7 +4,10 @@
  */
 var models = require('../model')
   , async = require('async')
-  , picture = require('../models/PictureModel');
+  , picture = require('../models/PictureModel')
+  , formidable = require('formidable')
+  , format = require('util').format
+  , fs = require('fs');
 
 exports.index = function(req, res){
   // create a sync task for database related queries
@@ -65,8 +68,24 @@ exports.index_splashscreen = function(req,res) {
 
 exports.popUp = function(req, res) {
     res.render('test', {title: 'Test'});
-}
+};
 
 exports.footer = function(req, res) {
 	res.render('footer', {title: 'Footer'});
-}
+};
+
+exports.upload = function(req, res) {
+    var tmp_path = req.files.image.path;
+    var target_path = './public/images/' + req.files.image.name;
+    fs.readFile(tmp_path, function(err, data) {
+        if(err) throw err;
+        fs.writeFile(target_path, data, function(err) {
+            if(err) throw err;
+            res.redirect('back');
+        })
+    });
+};
+
+exports.picture = function(req, res) {
+    res.render('upload', {title: 'uploadtest'});
+};
