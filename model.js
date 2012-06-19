@@ -43,8 +43,9 @@ var Location = mongoose.model('Location', LocationSchema);
 exports.User = User;
 exports.Picture = Picture;
 exports.Location = Location;
-
+ 
 /*
+
 var mikko = new User({name: 'Mikko Majuri'});
 
 mikko.save(function(error){
@@ -99,4 +100,5 @@ picture7.save(function(error){
         res.json(error);
     }
 });
+
 */

@@ -34,7 +34,6 @@ models.Picture.prototype.relativeSort = function(viewer_location) {
         pics.forEach(function(pic) {
             sortedPics.push(pic);
         });
-        console.log(sortedPics)
         sortedPics.forEach(function(pic) {
             var relPic = relativePoints(viewer_location,pic);
             relsortedPics.push(pic);
@@ -65,6 +64,7 @@ var relativePoints = function(viewerLocation, picture) {
     var viewerLocation = viewerLocation;
     var picLocation = picture.location[0];
 
+    //console.log(picLocation);
     var R = 6371; // km
 
     var dLat = toRad((viewerLocation.latitude-picLocation.latitude));
@@ -84,10 +84,10 @@ var relativePoints = function(viewerLocation, picture) {
     // Currently when viewer: Helsinki and pic: Helsinki, the distance is 0km which is correct
     // TURKU - HELSINKI DISTANCE IS SMTH 7000 which is not correct
 
-    console.log('dLat'+dLat);
+/*    console.log('dLat'+dLat);
     console.log('dLon'+dLon);
     console.log('lat1'+lat1);
-    console.log('lat2'+lat1);
+    console.log('lat2'+lat1);*/
 
     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
         Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
@@ -96,24 +96,24 @@ var relativePoints = function(viewerLocation, picture) {
     var distance = R * c;
 
 
-    console.log('a'+a);
-    console.log('c'+c);
+ //   console.log('a'+a);
+ //   console.log('c'+c);
 
     //console.log('DISTANCE: '+distance);
 
     var multiplier;
-    console.log(distance);
+//    console.log(distance);
     if(distance !== 0) {
         multiplier = 10/distance;
     } else {
         multiplier = 1;
     }
-    console.log(multiplier);
+ //   console.log(multiplier);
     var picture_ = picture;
     picture_.points = (multiplier*absolute_points);
-    console.log('Absolute points'+absolute_points);
+ /*   console.log('Absolute points'+absolute_points);
     console.log('Picture points'+picture_.points);
-    console.log(picture_);
+    console.log(picture_);*/
     return picture_;
 }
 
