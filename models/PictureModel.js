@@ -1,10 +1,15 @@
-// Model functions
+/*****
+ * Model for pictures
+ * BreakIt 0.0.2
+ *
+ * @type {*}
+ */
+
+// requires the models
 
 var models = require('../model');
 
-models.Picture.changeScore = function(number) {
-    //console.log(number);
-};
+// Function for finding all pictures sorted by points
 
 models.Picture.allSorted = function(callback) {
     var pictures = [];
@@ -21,11 +26,16 @@ models.Picture.allSorted = function(callback) {
     return pictures;
 };
 
+// Function that sort the pictures relative to the viewers location
+// 21.06. Does not return a valid array, because of asynchronity
+// TODO Get the function to wait for the sorting before returning the picture-array
+
 models.Picture.prototype.relativeSort = function(viewer_location) {
 
-    console.log("test 4");
     var sortedPics = [];
     var relsortedPics = [];
+
+    // Finds all the pictures
 
     models.Picture.find({}, function(err, pics) {
         if(err){
@@ -34,6 +44,8 @@ models.Picture.prototype.relativeSort = function(viewer_location) {
         pics.forEach(function(pic) {
             sortedPics.push(pic);
         });
+
+        //Changes the score of the picture depending on the location of the viewer
         sortedPics.forEach(function(pic) {
             var relPic = relativePoints(viewer_location,pic);
             relsortedPics.push(pic);
@@ -41,6 +53,7 @@ models.Picture.prototype.relativeSort = function(viewer_location) {
         });
     });
 
+    // Orders the pictures again.
     relsortedPics.sort(function compare(a,b) {
         if (a.points < b.points)
             return -1;
@@ -53,6 +66,8 @@ models.Picture.prototype.relativeSort = function(viewer_location) {
 
     return relsortedPics;
 };
+
+// A function that calculates the points of a picture relative to the location of the viewer
 
 var relativePoints = function(viewerLocation, picture) {
 
@@ -115,7 +130,7 @@ var relativePoints = function(viewerLocation, picture) {
     console.log('Picture points'+picture_.points);
     console.log(picture_);*/
     return picture_;
-}
+};
 
 exports.allSorted = models.Picture.prototype.allSorted;
 exports.relSorted = models.Picture.prototype.relativeSort;

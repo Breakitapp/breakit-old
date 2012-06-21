@@ -37,17 +37,15 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.index);
-app.get('/twitter_test', routes.twitter_test);
-app.post('/', routes.index_post);
-app.post('/test', routes.test);
-app.get('/splash_screen',routes.index_splashscreen); // For Splash Screen (views/splashscren)
-app.post('/splash_screen',routes.index_splashscreen_post); // For Splash Screen (views/splashscren)
-app.get('/share', routes.index_fbshare); // For Facebook share (views/fbshare.jade)
-app.get('/popup', routes.popUp);
-app.get('/footer', routes.footer);
-app.post('/users/id/pictures/upload', routes.upload);
+app.get('/', routes.index)
+app.post('/', routes.location_refresh);
+app.post('/update', routes.update_score);
+app.get('/splash_screen',routes.splash_screen); // For Splash Screen (views/splashscren)
+app.post('/splash_screen',routes.splash_screen_post); // For Splash Screen (views/splashscren)
+
+//Waiting for picture upload logic
 app.get('/upload', routes.picture);
+app.post('/users/id/pictures/upload', routes.upload);
 
 
 // Server startup

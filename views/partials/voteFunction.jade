@@ -1,0 +1,11 @@
+script(type='text/javascript')
+    $(document).ready(function() {
+        $('.vote').click(function() {
+          var this_ = $(this);
+          $.post('/update',
+           {_id : $(this).attr('id'), points: $(this).attr('points')},
+           function(score) {
+             $(this_).siblings('.votePoints').text(score.score);
+          });
+        });
+      });

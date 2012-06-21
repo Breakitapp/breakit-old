@@ -6,15 +6,5 @@ html
     link(rel='stylesheet', href='/stylesheets/1140.css')
     block scripts
       script(type='text/javascript', src='http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js')
-      script(type='text/javascript', src='javascripts/jquery.bpopup-min.js')
-      script(type='text/javascript')
-        $.ajaxSetup ({
-              cache: false
-            });
-        $('a').click(function() {
-        $('.popUp').bPopup({
-          contentContainer:'.content',
-          loadUrl: 'index.jade'});
-        });
   body
     block contents

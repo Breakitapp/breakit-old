@@ -1,13 +1,19 @@
-
-/*
- * GET home page.
+/*****
+ * Routes for BreakIt 0.0.2
+ *
+ * @type {*}
  */
+
+//Module dependencies
+
 var models = require('../model')
   , async = require('async')
   , picture = require('../models/PictureModel')
   , formidable = require('formidable')
   , format = require('util').format
   , fs = require('fs');
+
+// Get homepage
 
 exports.index = function(req, res){
   // create a sync task for database related queries
@@ -20,7 +26,9 @@ exports.index = function(req, res){
       });
 };
 
-exports.test = function(req, res){
+//Refresh homepage with the location of the viewer
+
+exports.location_refresh = function(req, res){
    // console.log(req.body);
     // THIS TEST KEY IS THE LOCATION OF BROWSER (USER AGENT = PHONE)
     // console.log('testkey:'+req.body.testkey);
@@ -36,12 +44,12 @@ exports.test = function(req, res){
     res.render('index', { title: 'BreakIt', pictures: pictures });
 };
 
+//Update the score of a pic after a post from front-end. Return the new score
 
-exports.index_post = function(req, res) {
+exports.update_score = function(req, res) {
     var points = parseInt(req.body.points);
     var pic = req.body._id;
     var score_ = 0;
-    //console.log(pic, points);
 
     models.Picture.update({_id: pic}, {$inc: {'points' : points}}, function(err, doc) {
         if(err) {
@@ -58,38 +66,24 @@ exports.index_post = function(req, res) {
     });
 };
 
-exports.index_fbshare = function(req,res) {
-  res.render('fbshare', {title: 'FBShare'});
-};
+//Splash screen routing.
 
-var emails = [];
-
-exports.index_splashscreen = function(req,res) {
-	if (emails.length > 0) {
-		res.render('splashscreen_confirm', {title: 'Confirm'});
-	}  
+exports.splash_screen = function(req,res) {
 	res.render('splash_screen', {title: 'Home Screen'});
 };
 
-exports.index_splashscreen_post = function(req, res) {
+//Post to splas screen creates a new user with the email entered. The user is saved and a confirm is rendered
+
+exports.splash_screen_post = function(req, res) {
 	var email = req.body.email_field;
 	var user = new models.User({email: email}) ;
 	user.save(function(err) {
 		if(err) throw err;
 	});
-	emails.push(email);
-	//console.log(user);
-	//console.log(emails);
-	res.redirect('back');
-}
-
-exports.popUp = function(req, res) {
-    res.render('test', {title: 'Test'});
+	res.render('splash_screen_confirm', {title: 'Confirm'});
 };
 
-exports.footer = function(req, res) {
-	res.render('footer', {title: 'Footer'});
-};
+//A route waiting for the implementation of picture posting.
 
 exports.upload = function(req, res) {
     var tmp_path = req.files.image.path;
@@ -102,6 +96,8 @@ exports.upload = function(req, res) {
         })
     });
 };
+
+//For testing the upload functionality
 
 exports.picture = function(req, res) {
     res.render('upload', {title: 'uploadtest'});
