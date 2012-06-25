@@ -45,7 +45,7 @@ app.post('/splash_screen',routes.splash_screen_post); // For Splash Screen (view
 
 //Waiting for picture upload logic
 app.get('/upload', routes.picture);
-app.post('/users/id/pictures/upload', routes.upload);
+app.post('/upload', routes.upload);
 
 
 // Server startup

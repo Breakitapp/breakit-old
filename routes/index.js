@@ -95,6 +95,11 @@ exports.upload = function(req, res) {
             res.redirect('back');
         })
     });
+	var location = new models.Location({});
+	var picture = new models.Picture({name: req.files.image.name, location : location});
+	picture.save(function(err) {
+		if(err) throw err;
+	});
 };
 
 //For testing the upload functionality
