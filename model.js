@@ -23,6 +23,7 @@ var LocationSchema = new Schema({
 
 var PictureSchema = new Schema({
     name    :   {type: String, index: true},
+		headline:		{type: String},
     user    :   [User],
     points  :   {type: Number, default: 0},
     location:   [Location],

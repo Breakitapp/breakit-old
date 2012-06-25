@@ -1,5 +1,6 @@
 div(class='post threecol')
-  h1 Headline of the picture
+	if(picture.headline)
+  h1=picture.headline
   p Location
   img(src=picture.name, class='stream')
   div
