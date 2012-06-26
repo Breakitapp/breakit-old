@@ -120,8 +120,8 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
     var viewerLocationLong = viewerLocationLong;
     var viewerLocationLat = viewerLocationLat;
 
-    var picLocationLongitude = picture.longitude[0];
-    var picLocationLatitude = picture.latitude[0];
+    var picLocationLongitude = picture.longitude;
+    var picLocationLatitude = picture.latitude;
     //console.log(picLocation);
     var R = 6371; // km
 
