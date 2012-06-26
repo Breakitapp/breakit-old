@@ -102,7 +102,7 @@ exports.upload = function(req, res) {
 	var latitude = parseFloat(req.body.latitude);
 	var longitude = parseFloat(req.body.longitude);
 	var picture = new models.Picture({
-			name: 'images/' + req.files.image.name + ".jpeg", 
+			name: 'images/' + req.files.image.name + '.jpeg', 
 			headline: req.body.headline, 
 			latitude : req.body.latitude,
 			longitude: req.body.longitude});
