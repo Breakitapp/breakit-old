@@ -40,12 +40,10 @@ exports.location_refresh = function(req, res){
     var helsinki_lat = 24.9375;
     async.parallel([function(callback) {
 			var pictures = picture.relSorted(helsinki_long, helsinki_lat, function(pics) {
-				console.log(pics);
 				callback(null, pics);
 			});
 		}],
 		function(err, results){
-			console.log(results[0],"callback parallel");
         if(err) {
             throw err;
         }
