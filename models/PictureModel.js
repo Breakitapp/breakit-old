@@ -7,7 +7,8 @@
 
 // requires the models
 
-var models = require('../model');
+var models = require('../model'),
+	async = require('async');
 
 // Function for finding all pictures sorted by points
 
@@ -29,63 +30,76 @@ models.Picture.allSorted = function(callback) {
 // Function that sort the pictures relative to the viewers location
 // 21.06. Does not return a valid array, because of asynchronity
 // TODO Get the function to wait for the sorting before returning the picture-array
+/*var myfunc1 = function(callback) {
+	var a = 1;
+	console.log ("In my func1");
+	callback(null, 'test');
+};
+var myfunc2 = function(callback) {
+	var b = 2;
+	console.log ("In my func2");
+	callback(null, 'test');
 
-models.Picture.prototype.relativeSort = function(viewer_location) {
-
-    var sortedPics = [];
-    var relsortedPics = [];
+};*/
+models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat) {
+	/*console.log("Rel Sort");
 
     // Finds all the pictures
-
-    models.Picture.find({}, function(err, pics) {
-        if(err){
-            throw err;
-        }
-        pics.forEach(function(pic) {
-            sortedPics.push(pic);
-        });
-
-        //Changes the score of the picture depending on the location of the viewer
-        sortedPics.forEach(function(pic) {
-            var relPic = relativePoints(viewer_location,pic);
-            relsortedPics.push(pic);
-            //console.log("relPic: "+ relPic);
-        });
-    });
-
+    async.series([myfunc1, myfunc2],
+    	function(err, results){
+    		if(err) {
+    			throw err;
+    		}
+    	console.log("call back func");
+    	});*/
+	    var sortedPics = [];
+	    var relsortedPics = [];
+    	models.Picture.find({},function(err, pics){
+    		if(err){
+    			throw err;
+    		}
+    		pics.forEach(function(pic) {
+    			sortedPics.push(pic);
+    		});
+    		//Changes the score of the picture depending on the location of the viewer
+    		sortedPics.forEach(function(pic) {
+            	var relPic = relativePoints(viewer_location_long, viewer_location_lat, pic);
+            	relsortedPics.push(pic);
+       //     	console.log("relPic: "+ relPic);
+        	});
+    	}) 
+        	
+    	relsortedPics.sort(function compare(a,b){
+    		if (a.points < b.points)
+    			return -1;
+    		if (a.points > b.points)
+    			return 1;
+    		return 0;
+    	})  
     // Orders the pictures again.
-    relsortedPics.sort(function compare(a,b) {
-        if (a.points < b.points)
-            return -1;
-        if (a.points > b.points)
-            return 1;
-        return 0;
-    });
-
-    //console.log("return: "+ relsortedPics);
-
-    return relsortedPics;
 };
 
 // A function that calculates the points of a picture relative to the location of the viewer
 
-var relativePoints = function(viewerLocation, picture) {
+var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 
     var toRad = function(deg) {
         return deg*(Math.PI/180);
     };
 
     var absolute_points = picture.points;
-    var viewerLocation = viewerLocation;
-    var picLocation = picture.location[0];
+    var viewerLocationLong = viewerLocationLong;
+    var viewerLocationLat = viewerLocationLat;
 
+    var picLocationLongitude = picture.longitude[0];
+    var picLocationLatitude = picture.latitude[0];
     //console.log(picLocation);
     var R = 6371; // km
 
-    var dLat = toRad((viewerLocation.latitude-picLocation.latitude));
-    var dLon = toRad((viewerLocation.longitude-picLocation.longitude));
-    var lat1 = toRad(viewerLocation.latitude);
-    var lat2 = toRad(picLocation.latitude);
+    var dLat = toRad((viewerLocationLat-picLocationLatitude));
+    var dLon = toRad((viewerLocationLong-picLocationLongitude));
+    var lat1 = toRad(viewerLocationLat);
+    var lat2 = toRad(picLocationLatitude);
 
     //console.log('R' + R);
 

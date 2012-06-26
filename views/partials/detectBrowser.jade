@@ -14,7 +14,7 @@ script(type='text/javascript', src='/javascripts/detectBrowser.js')
       navigator.geolocation.getCurrentPosition(function(position) {
         startPos = position;
         jQuery("#location_latitude").append(startPos.coords.latitude);
-        Query("#location_longitude").append(startPos.coords.longitude);
+        jQuery("#location_longitude").append(startPos.coords.longitude);
         jQuery.post('/', {testkey:startPos.coords.longitude+ " "+startPos.coords.latitude});
       });
     }
