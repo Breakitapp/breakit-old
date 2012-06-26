@@ -42,8 +42,60 @@ var myfunc2 = function(callback) {
 
 };*/
 models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat) {
-	/*console.log("Rel Sort");
-
+	var long = viewer_location_long.longitude;
+	var lat = viewer_location_lat.latitude;
+	console.log("Rel Sort");
+	console.log(viewer_location_long, viewer_location_lat, long, lat);
+	var sortedPics = [];
+	var relsortedPics = [];
+	
+	async.series(
+		[function(callback){
+			console.log("waterfall function 1");
+			models.Picture.find({},function(err, pics){
+				console.log("waterfall function 1 query");
+    		if(err){
+    			throw err;
+    		}
+    		pics.forEach(function(pic) {
+    			sortedPics.push(pic);
+    		});
+				callback(null, sortedPics);
+			});
+		},
+		//Changes the score of the picture depending on the location of the viewer
+    function(callback) {
+			console.log("waterfall function 2");
+			sortedPics.forEach(function(pic) {
+				console.log("waterfall function 2 change score");
+				var relPic = relativePoints(long, lat, pic);
+	    	relsortedPics.push(pic);
+				//console.log("relPic: "+ relPic);
+    	});
+			callback(null, relsortedPics);
+		},
+   	 // Orders the pictures again.
+		 function(callback){
+			console.log("waterfall function 3");
+			relsortedPics.sort(function compare(a,b){
+				console.log("waterfall function 3 sort");
+    		if (a.points > b.points)
+    			return -1;
+    		if (a.points < b.points)
+    			return 1;
+    		return 0;
+    	})
+			callback(null, relsortedPics);
+		}
+		],
+		function(err, results) {
+			//console.log("moi", results);
+			//console.log(results[2]);
+			return results[2];
+		}
+	);
+};
+/*
     // Finds all the pictures
     async.series([myfunc1, myfunc2],
     	function(err, results){
@@ -52,32 +104,10 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
     		}
     	console.log("call back func");
     	});*/
-	    var sortedPics = [];
-	    var relsortedPics = [];
-    	models.Picture.find({},function(err, pics){
-    		if(err){
-    			throw err;
-    		}
-    		pics.forEach(function(pic) {
-    			sortedPics.push(pic);
-    		});
-    		//Changes the score of the picture depending on the location of the viewer
-    		sortedPics.forEach(function(pic) {
-            	var relPic = relativePoints(viewer_location_long, viewer_location_lat, pic);
-            	relsortedPics.push(pic);
-       //     	console.log("relPic: "+ relPic);
-        	});
-    	}) 
+    	
+    		
         	
-    	relsortedPics.sort(function compare(a,b){
-    		if (a.points < b.points)
-    			return -1;
-    		if (a.points > b.points)
-    			return 1;
-    		return 0;
-    	})  
-    // Orders the pictures again.
-};
+    	
 
 // A function that calculates the points of a picture relative to the location of the viewer
 
