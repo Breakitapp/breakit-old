@@ -16,11 +16,6 @@ var UserSchema = new Schema({
     date	:	{type: Date, default: Date.now}
 });
 
-/* var LocationSchema = new Schema({
-    longitude:  {type: Number, default: 0.0000000},
-    latitude :  {type: Number, default: 0.0000000}
-}); */
-
 var PictureSchema = new Schema({
     name    :   {type: String, index: true},
 		headline:		{type: String},

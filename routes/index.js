@@ -98,7 +98,7 @@ exports.upload = function(req, res) {
 	console.log(req.body);
 	console.log(req.files);
     var tmp_path = req.files.image.path;
-    var target_path = './public/images/' + req.files.image.name;
+    var target_path = './public/images/' + req.files.image.name + '.jpeg';
     fs.readFile(tmp_path, function(err, data) {
         if(err) throw err;
         fs.writeFile(target_path, data, function(err) {
@@ -108,8 +108,11 @@ exports.upload = function(req, res) {
     });
 	var latitude = parseFloat(req.body.latitude);
 	var longitude = parseFloat(req.body.longitude);
-	var location = new models.Location({longitude: req.body.longitude, latitude: req.body.latitude});
-	var picture = new models.Picture({name: 'images/' + req.files.image.name, headline: req.body.headline, location : location});
+	var picture = new models.Picture({
+			name: 'images/' + req.files.image.name + '.jpeg', 
+			headline: req.body.headline, 
+			latitude : req.body.latitude,
+			longitude: req.body.longitude});
 	picture.save(function(err) {
 		if(err) throw err;
 	});
