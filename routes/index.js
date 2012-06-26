@@ -36,22 +36,21 @@ exports.location_refresh = function(req, res){
     // CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
     // AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
 		// TODO THIS IS WRONG AND TOO COMPLICATED, SHOULD BE CHANGED
-    var helsinki_long = new models.Picture({longitude: 60.17083});
-    var helsinki_lat = new models.Picture({latitude: 24.9375});
-    async.waterfall([function(callback) {
-				var pictures = picture.relSorted(helsinki_long, helsinki_lat);
-				callback(null, pictures);
-			},
-			function(pictures, callback) {
-				console.log("inside async callback",pictures);
-				res.render('index', { req: req, title: 'BreakIt', pictures: pictures });
-				callback(null,"rendered");
-			}],
-			function(err, results) {
-				if(err) throw err;
-				console.log(results);
-			}
-		);
+    var helsinki_long = 60.17083;
+    var helsinki_lat = 24.9375;
+    async.parallel([function(callback) {
+			var pictures = picture.relSorted(helsinki_long, helsinki_lat, function(pics) {
+				console.log(pics);
+				callback(null, pics);
+			});
+		}],
+		function(err, results){
+			console.log(results[0],"callback parallel");
+        if(err) {
+            throw err;
+        }
+        res.render('index', { req: req, title: 'BreakIt', pictures: results[0] });
+    });
 };
 
 //Update the score of a pic after a post from front-end. Return the new score

@@ -41,11 +41,9 @@ var myfunc2 = function(callback) {
 	callback(null, 'test');
 
 };*/
-models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat) {
-	var long = viewer_location_long.longitude;
-	var lat = viewer_location_lat.latitude;
+models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, callback) {
 	console.log("Rel Sort");
-	console.log(viewer_location_long, viewer_location_lat, long, lat);
+	console.log(viewer_location_long, viewer_location_lat);
 	var sortedPics = [];
 	var relsortedPics = [];
 	
@@ -68,7 +66,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
 			console.log("waterfall function 2");
 			sortedPics.forEach(function(pic) {
 				console.log("waterfall function 2 change score");
-				var relPic = relativePoints(long, lat, pic);
+				var relPic = relativePoints(viewer_location_long, viewer_location_lat, pic);
 	    	relsortedPics.push(pic);
 				//console.log("relPic: "+ relPic);
     	});
@@ -91,6 +89,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
 		function(err, results) {
 			//console.log("moi", results);
 			//console.log(results[2]);
+			callback(results[2]);
 			return results[2];
 		}
 	);
