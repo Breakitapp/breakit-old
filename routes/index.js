@@ -97,7 +97,7 @@ exports.upload = function(req, res) {
             res.redirect('back');
         })
     });
-	var location = new models.Location({});
+	var location = new models.Location({longitude: req.body.longitude, latitude: req.body.latitude});
 	var picture = new models.Picture({name: 'images/' + req.files.image.name, headline: req.body.headline, location : location});
 	picture.save(function(err) {
 		if(err) throw err;
