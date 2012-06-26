@@ -22,6 +22,7 @@ exports.index = function(req, res){
           if(err) {
               throw err;
           }
+          console.log ("In the Index");
           res.render('index', { req: req, title: 'BreakIt', pictures: results[0] });
       });
 };
@@ -35,11 +36,12 @@ exports.location_refresh = function(req, res){
 
     // CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
     // AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
-    var helsinki = new models.Location({longitude: 60.17083, latitude: 24.9375});
+    var helsinki_long = new models.Picture({longitude: 60.17083});
+    var helsinki_lat = new models.Picture({latitude: 24.9375});
+    
+    console.log("In the Location");
 
-    // console.log("type: "+ typeof(req.body.testkey));
-
-    var pictures = picture.relSorted(helsinki);
+    var pictures = picture.relSorted(helsinki_long, helsinki_lat);
 
     res.render('index', { title: 'BreakIt', pictures: pictures });
 };
