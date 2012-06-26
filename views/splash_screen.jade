@@ -18,44 +18,26 @@ script(type='text/javascript')
       jQuery("#location_longitude").append(startPos.coords.longitude);
       console.log(startPos.coords.latitude);
       console.log(startPos.coords.longitude);
-      loadMap();
       loadAdd();
     });
   }});
-  
-  var loadMap = function() {
-    var myOptions = {
-      center: new google.maps.LatLng(startPos.coords.longitude, startPos.coords.latitude),
-      zoom: 3,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    map = new google.maps.Map(document.getElementById("map_canvas"),
-      myOptions);
-  };
-  // $('document').ready(function() {loadMap();});
-  
+    
   var loadAdd = function() {
-  gcoder = new google.maps.Geocoder();
-  latlng = new google.maps.LatLng(startPos.coords.latitude, startPos.coords.longitude);
-  gcoder.geocode({'latLng': latlng}, function(results, status) {
+    map = new google.maps.Map(document.getElementById("map_canvas"));    
+    gcoder = new google.maps.Geocoder();
+    latlng = new google.maps.LatLng(startPos.coords.latitude, startPos.coords.longitude);
+    gcoder.geocode({'latLng': latlng}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[1]) {
-          map.setZoom(11);
-          marker = new google.maps.Marker({
-              position: latlng,
-              map: map
-          });
-          infowindow.setContent(results[1].formatted_address);
-          infowindow.open(map, marker);
+        document.getElementById("map_canvas").innerHTML= "You are located in :  " + results[1].formatted_address;
         }
       } else {
         alert("Geocoder failed due to: " + status);
       }
     });
-
    }
    
-div(id='map_canvas', style='height: 500px; width: 350px; background-color: #990000;')
+div(id='map_canvas')
     
 form(name='input', method='post', action= '/splash_screen')
   input(type='email', name='email_field', value='email here');
