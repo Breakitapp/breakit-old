@@ -91,7 +91,7 @@ exports.upload = function(req, res) {
 	console.log(req.body);
 	console.log(req.files);
     var tmp_path = req.files.image.path;
-    var target_path = './public/images/' + req.files.image.name;
+    var target_path = './public/images/' + req.files.image.name + '.jpeg';
     fs.readFile(tmp_path, function(err, data) {
         if(err) throw err;
         fs.writeFile(target_path, data, function(err) {
