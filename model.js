@@ -99,7 +99,5 @@ picture7.save(function(error){
         res.json(error);
     }
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 */
