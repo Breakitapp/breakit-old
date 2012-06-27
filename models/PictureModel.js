@@ -30,8 +30,6 @@ models.Picture.allSorted = function(callback) {
 // Function that sort the pictures relative to the viewers location
 
 models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, callback) {
-	console.log("Rel Sort");
-	console.log(viewer_location_long, viewer_location_lat);
 	var sortedPics = [];
 	var relsortedPics = [];
 	
@@ -157,9 +155,9 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
  //   console.log(multiplier);
     var picture_ = picture;
     picture_.points = (multiplier*absolute_points);
+		picture_.distance = distance;
  //   console.log('Absolute points'+absolute_points);
     //console.log('Picture points'+picture_.points);
-    //console.log(picture_);
     return picture_;
 };
 
