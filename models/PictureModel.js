@@ -157,9 +157,10 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
  //   console.log(multiplier);
     var picture_ = picture;
     picture_.points = (multiplier*absolute_points);
+		picture_.distance = distance;
  //   console.log('Absolute points'+absolute_points);
     //console.log('Picture points'+picture_.points);
-    //console.log(picture_);
+    console.log(picture_);
     return picture_;
 };
 

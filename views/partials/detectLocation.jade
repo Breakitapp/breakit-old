@@ -17,7 +17,6 @@ script(type='text/javascript')
       console.log(startPos.coords.latitude);
       console.log(startPos.coords.longitude);
       $.post('/', {lon: startPos.coords.longitude, lat: startPos.coords.latitude}, function(data) {
-        alert(data);
         $('#newsfeed').html(data);
       });
     });

@@ -111,7 +111,8 @@ exports.upload = function(req, res) {
 			name: 'images/' + req.files.image.name + '.jpeg', 
 			headline: req.body.headline, 
 			latitude : req.body.latitude,
-			longitude: req.body.longitude});
+			longitude: req.body.longitude,
+			location_name: req.body.location_name});
 	picture.save(function(err) {
 		if(err) throw err;
 	});
