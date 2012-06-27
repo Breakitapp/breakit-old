@@ -40,6 +40,8 @@ var User = mongoose.model('User', UserSchema);
 exports.User = User;
 exports.Picture = Picture;
 //exports.Location = Location;
+
+
 /*
 var mikko = new User({name: 'Mikko Majuri'});
 
@@ -98,5 +100,6 @@ picture7.save(function(error){
         res.json(error);
     }
 });
+<<<<<<< HEAD
 
 */
