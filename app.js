@@ -37,7 +37,7 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.location_refresh);
+app.get('/', routes.index);
 app.post('/', routes.location_refresh);
 app.post('/update', routes.update_score);
 app.get('/splash_screen',routes.splash_screen); // For Splash Screen (views/splashscren)

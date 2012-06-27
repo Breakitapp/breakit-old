@@ -36,8 +36,8 @@ exports.location_refresh = function(req, res){
     // CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
     // AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
 		// TODO THIS IS WRONG AND TOO COMPLICATED, SHOULD BE CHANGED
-    var lat = req.body.latitude;
-		var lon = req.body.longitude
+    var lat = req.body.lat;
+		var lon = req.body.lon
 		console.log(lat, lon);
     async.parallel([function(callback) {
 			var pictures = picture.relSorted(lon, lat, function(pics) {
@@ -48,7 +48,7 @@ exports.location_refresh = function(req, res){
         if(err) {
             throw err;
         }
-        res.render('index', { req: req, title: 'BreakIt', pictures: results[0] });
+        res.render('newsFeed', {req: req, pictures: results[0] });
     });
 };
 
