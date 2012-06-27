@@ -16,13 +16,9 @@ var UserSchema = new Schema({
     date	:	{type: Date, default: Date.now}
 });
 
-/* var LocationSchema = new Schema({
-    longitude:  {type: Number, default: 0.0000000},
-    latitude :  {type: Number, default: 0.0000000}
-}); */
-
 var PictureSchema = new Schema({
     name    :   {type: String, index: true},
+		headline:		{type: String},
     user    :   [User],
     points  :   {type: Number, default: 0},
     longitude:  {type: Number, default: 0.0000000},
@@ -44,7 +40,7 @@ var User = mongoose.model('User', UserSchema);
 exports.User = User;
 exports.Picture = Picture;
 //exports.Location = Location;
-
+/*
 var mikko = new User({name: 'Mikko Majuri'});
 
 mikko.save(function(error){
@@ -102,3 +98,5 @@ picture7.save(function(error){
         res.json(error);
     }
 });
+
+*/

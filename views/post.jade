@@ -1,5 +1,12 @@
 div(class='post threecol')
-  h1 Headline of the picture
+  if(picture.headline)
+    h1=picture.headline
+    h2 LOCATION
+    p=picture.latitude
+    p=picture.longitude
+  else
+    h1 HEADLINE OF PICTURE
+    p PICTURE LOCATION
   img(src=picture.name, class='stream')
   div
     div(class='vote', id=picture._id, points='1')

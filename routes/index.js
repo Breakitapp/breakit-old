@@ -22,7 +22,6 @@ exports.index = function(req, res){
           if(err) {
               throw err;
           }
-          console.log ("In the Index");
           res.render('index', { req: req, title: 'BreakIt', pictures: results[0] });
       });
 };
@@ -36,14 +35,21 @@ exports.location_refresh = function(req, res){
 
     // CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
     // AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
-    var helsinki_long = new models.Picture({longitude: 60.17083});
-    var helsinki_lat = new models.Picture({latitude: 24.9375});
-    
-    console.log("In the Location");
-
-    var pictures = picture.relSorted(helsinki_long, helsinki_lat);
-
-    res.render('index', { title: 'BreakIt', pictures: pictures });
+		// TODO THIS IS WRONG AND TOO COMPLICATED, SHOULD BE CHANGED
+    var lat = req.body.lat;
+		var lon = req.body.lon
+		console.log(lat, lon);
+    async.parallel([function(callback) {
+			var pictures = picture.relSorted(lon, lat, function(pics) {
+				callback(null, pics);
+			});
+		}],
+		function(err, results){
+        if(err) {
+            throw err;
+        }
+        res.render('newsFeed', {req: req, pictures: results[0] });
+    });
 };
 
 //Update the score of a pic after a post from front-end. Return the new score
@@ -88,8 +94,10 @@ exports.splash_screen_post = function(req, res) {
 //A route waiting for the implementation of picture posting.
 
 exports.upload = function(req, res) {
+	console.log(req.body);
+	console.log(req.files);
     var tmp_path = req.files.image.path;
-    var target_path = './public/images/' + req.files.image.name;
+    var target_path = './public/images/' + req.files.image.name + '.jpeg';
     fs.readFile(tmp_path, function(err, data) {
         if(err) throw err;
         fs.writeFile(target_path, data, function(err) {
@@ -97,6 +105,16 @@ exports.upload = function(req, res) {
             res.redirect('back');
         })
     });
+	var latitude = parseFloat(req.body.latitude);
+	var longitude = parseFloat(req.body.longitude);
+	var picture = new models.Picture({
+			name: 'images/' + req.files.image.name + '.jpeg', 
+			headline: req.body.headline, 
+			latitude : req.body.latitude,
+			longitude: req.body.longitude});
+	picture.save(function(err) {
+		if(err) throw err;
+	});
 };
 
 //For testing the upload functionality

@@ -15,6 +15,6 @@ script(type='text/javascript', src='/javascripts/detectBrowser.js')
         startPos = position;
         jQuery("#location_latitude").append(startPos.coords.latitude);
         jQuery("#location_longitude").append(startPos.coords.longitude);
-        jQuery.post('/', {testkey:startPos.coords.longitude+ " "+startPos.coords.latitude});
+        jQuery.post('/', {longitude: startPos.coords.longitude, latitude: startPos.coords.latitude});
       });
     }

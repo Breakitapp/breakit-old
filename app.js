@@ -37,7 +37,7 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.location_refresh);
+app.get('/', routes.index);
 app.post('/', routes.location_refresh);
 app.post('/update', routes.update_score);
 app.get('/splash_screen',routes.splash_screen); // For Splash Screen (views/splashscren)
@@ -45,7 +45,7 @@ app.post('/splash_screen',routes.splash_screen_post); // For Splash Screen (view
 
 //Waiting for picture upload logic
 app.get('/upload', routes.picture);
-app.post('/users/id/pictures/upload', routes.upload);
+app.post('/upload', routes.upload);
 
 
 // Server startup
