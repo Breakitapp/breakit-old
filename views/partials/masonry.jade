@@ -1,0 +1,14 @@
+script(type='text/javascript', src='/javascripts/jquery.masonry.min.js')
+script(type='text/javascript')
+  $(function() {
+    var $container = $('#newsfeed');
+
+    $container.imagesLoaded(function() {
+      $container.masonry({
+        itemSelector : '.post',
+        columnWidth  : function(containerWidth) {
+          return containerWidth/12;
+        }
+      });
+    });
+  });
