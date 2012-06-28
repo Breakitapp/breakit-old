@@ -94,7 +94,8 @@ exports.splash_screen_post = function(req, res) {
 //A route waiting for the implementation of picture posting.
 
 exports.upload = function(req, res) {
-	console.log("the user uploaded a picture, with the specs : " + req.body);
+	console.log("the user uploaded a picture, with the specs : ");
+	console.log(req.body);
     var tmp_path = req.files.image.path;
     var target_path = './public/images/' + req.files.image.name + '.jpeg';
     fs.readFile(tmp_path, function(err, data) {
