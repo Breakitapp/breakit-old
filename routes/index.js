@@ -107,12 +107,15 @@ exports.upload = function(req, res) {
     });
 	var latitude = parseFloat(req.body.latitude);
 	var longitude = parseFloat(req.body.longitude);
+	 
 	var picture = new models.Picture({
 			name: 'images/' + req.files.image.name + '.jpeg', 
 			headline: req.body.headline, 
 			latitude : req.body.latitude,
 			longitude: req.body.longitude,
-			location_name: req.body.location_name});
+			location_name: req.body.location_name,
+			story:req.body.story
+			});
 	picture.save(function(err) {
 		if(err) throw err;
 	});
