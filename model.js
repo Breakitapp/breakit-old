@@ -20,7 +20,7 @@ var PictureSchema = new Schema({
     name    :   	{type: String, index: true},
 		headline:			{type: String},
     user    :   	[User],
-    points  :   	{type: Number, default: 0},
+    points  :   	{type: Number, default: 1},
     longitude: 		{type: Number, default: 0.0000000},
     latitude :  	{type: Number, default: 0.0000000},
 		location_name:{type: String},	 
