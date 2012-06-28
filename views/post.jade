@@ -7,12 +7,12 @@ div(class='post threecol')
   else
     h1 HEADLINE OF PICTURE
     p PICTURE LOCATION
-    p #{picture.distance} meters
+    p #{picture.distance} meters away from you
   img(src=picture.name, class='stream')
   div
     div(class='vote', id=picture._id, points='1')
       img(class='voteButton up', src='images/up.png')
     div(class='vote', id=picture._id, points='-1')
       img(class='voteButton down', src='images/down.png')
-    p(class='votePoints') #{picture.points}
-    a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet
+    //p(class='votePoints') #{picture.points}
+    //a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet
