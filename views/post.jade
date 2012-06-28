@@ -2,16 +2,12 @@ div(class='post threecol')
   if(picture.headline)
     h1=picture.headline
     if(picture.location_name)
-      h3 Happened @ {picture.location_name}
-    p #{picture.distance} meters
-    p #{picture.latitude} latitude
-    p #{picture.longitude} longitude
+      h3 Happened near #{picture.location_name}
+    p #{picture.distance} meters away from you
   else
     h1 HEADLINE OF PICTURE
     p PICTURE LOCATION
     p #{picture.distance} meters
-    p #{picture.latitude} latitude
-    p #{picture.longitude} longitude
   img(src=picture.name, class='stream')
   div
     div(class='vote', id=picture._id, points='1')
