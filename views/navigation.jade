@@ -1,8 +1,5 @@
 div(class='container', id='nav-top-line')
-  div(class='row')
-    div(class='fourcol')
-    div(class='fourcol')
-    div(class='fourcol last')
+
 div(class='container', id='nav-bottom-line')
   div(class='row')
     div(class='fourcol')
@@ -22,12 +19,14 @@ div(class='container', id='nav-bottom-line')
         //asks for it to be rendered in newsFeed
         p my feed
     div(class='fourcol last')
-      div(id='nav-search', class='navbutton')
-        //this will host a search-function
-        p search
-      div(id='nav-register', class='navbutton')
-        //this will take the user to the register-page or popup a register window
-        p register
-      div(id='nav-login', class='navbutton')
+      div(id='nav-login', class='navbutton-login')
         //this will take the user to the login-page or popup a login window
         p login
+      div(id='nav-register', class='navbutton-register')
+        //this will take the user to the register-page or popup a register window
+        p register
+      div(id='nav-search', class='navbutton-search')
+        //this will host a search-function
+        p search
+      
+      

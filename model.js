@@ -39,8 +39,9 @@ var User = mongoose.model('User', UserSchema);
 
 exports.User = User;
 exports.Picture = Picture;
- 
 
+
+/*
 var mikko = new User({name: 'Mikko Majuri'});
 
 mikko.save(function(error){
@@ -54,7 +55,7 @@ var turku_long = 60.4500;
 var helsinki_lat = 24.9375;
 var turku_lat = 22.2500;
 
-/*
+
 var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000, longitude: helsinki_long, latitude: helsinki_lat});
 var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 500, longtude: turku_long, latitude: turku_lat});
 var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 2000, longitude: helsinki_long, latitude: helsinki_lat});
@@ -98,4 +99,5 @@ picture7.save(function(error){
         res.json(error);
     }
 });
+
 */

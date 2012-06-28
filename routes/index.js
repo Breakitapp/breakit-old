@@ -38,7 +38,7 @@ exports.location_refresh = function(req, res){
 		// TODO THIS IS WRONG AND TOO COMPLICATED, SHOULD BE CHANGED
     var lat = req.body.lat;
 		var lon = req.body.lon
-		console.log(lat, lon);
+		console.log("the location of the viewer " + lat +" latitude and " +  lon + " longitude");
     async.parallel([function(callback) {
 			var pictures = picture.relSorted(lon, lat, function(pics) {
 				callback(null, pics);
@@ -94,8 +94,7 @@ exports.splash_screen_post = function(req, res) {
 //A route waiting for the implementation of picture posting.
 
 exports.upload = function(req, res) {
-	console.log(req.body);
-	console.log(req.files);
+	console.log("the user uploaded a picture, with the specs : " + req.body);
     var tmp_path = req.files.image.path;
     var target_path = './public/images/' + req.files.image.name + '.jpeg';
     fs.readFile(tmp_path, function(err, data) {
