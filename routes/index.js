@@ -17,6 +17,8 @@ var models = require('../model')
 
 exports.index = function(req, res){
   // create a sync task for database related queries
+	//TODO Should be thought of again, since now all pictures have only 1 point
+	
   async.parallel([models.Picture.allSorted],
       function(err, results){
           if(err) {
@@ -63,6 +65,7 @@ exports.update_score = function(req, res) {
         if(err) {
             throw err;
         }
+				console.log("changed the score of "+pic+" with " + points);
     });
       
     models.Picture.find({'_id': pic}, {'points': 1}, function(err, score) {

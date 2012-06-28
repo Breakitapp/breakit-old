@@ -54,15 +54,16 @@ var helsinki_long = 60.17083;
 var turku_long = 60.4500;
 var helsinki_lat = 24.9375;
 var turku_lat = 22.2500;
+var story = "Nice boobs!";
 
 
-var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000, longitude: helsinki_long, latitude: helsinki_lat});
-var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 500, longtude: turku_long, latitude: turku_lat});
-var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 2000, longitude: helsinki_long, latitude: helsinki_lat});
-var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 100, longtude: turku_long, latitude: turku_lat});
-var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 4000, longitude: helsinki_long, latitude: helsinki_lat});
-var picture6 = new Picture({name: 'images/6.jpg', user: mikko, points: 300, longtude: turku_long, latitude: turku_lat});
-var picture7 = new Picture({name: 'images/7.jpg', user: mikko, points: 10, longitude: helsinki_long, latitude: helsinki_lat});
+var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000, longitude: helsinki_long, latitude: helsinki_lat, story: story});
+var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 500, longitude: turku_long, latitude: turku_lat, story: story});
+var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 2000, longitude: helsinki_long, latitude: helsinki_lat, story: story});
+var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 100, longitude: turku_long, latitude: turku_lat, story: story});
+var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 4000, longitude: helsinki_long, latitude: helsinki_lat, story: story});
+var picture6 = new Picture({name: 'images/6.jpg', user: mikko, points: 300, longitude: turku_long, latitude: turku_lat, story: story});
+var picture7 = new Picture({name: 'images/7.jpg', user: mikko, points: 10, longitude: helsinki_long, latitude: helsinki_lat, story: story});
 
 picture1.save(function(error){
     if(error){
@@ -99,5 +100,4 @@ picture7.save(function(error){
         res.json(error);
     }
 });
-
 */

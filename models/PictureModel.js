@@ -47,7 +47,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
 				callback(null, sortedPics);
 			});
 		},
-		//Changes the score of the picture depending on the location of the viewer
+		//Calculates the distance from the viewer to the picture
     function(callback) {
 			//console.log("waterfall function 2");
 			sortedPics.forEach(function(pic) {
@@ -58,14 +58,14 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
     	});
 			callback(null, relsortedPics);
 		},
-   	 // Orders the pictures again.
+   	 // Orders the pictures again based on distance.
 		 function(callback){
 			//console.log("waterfall function 3");
 			relsortedPics.sort(function compare(a,b){
 				//console.log("waterfall function 3 sort");
-    		if (a.points > b.points)
+    		if (a.distance < b.distance)
     			return -1;
-    		if (a.points < b.points)
+    		if (a.distance > b.distance)
     			return 1;
     		return 0;
     	})
@@ -144,7 +144,7 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
  //   console.log('c'+c);
 
   //  console.log('DISTANCE: '+distance);
-
+	/* MULTIPLIER REMOVED BECAUSE THE PICTURES ARE RANKED ONLY BY DISTANCE
     var multiplier;
 //    console.log(distance);
     if(distance !== 0) {
@@ -153,9 +153,9 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
         multiplier = 1;
     }
  //   console.log(multiplier);
-    var picture_ = picture;
-    picture_.points = (multiplier*absolute_points);
-		picture_.distance = Math.floor(distance);
+		picture_.points = (multiplier*absolute_points);*/
+    var picture_ = picture; 
+		picture_.distance = Math.floor(distance*1000);
  //   console.log('Absolute points'+absolute_points);
     //console.log('Picture points'+picture_.points);
     //console.log(picture_);
