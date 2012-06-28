@@ -18,14 +18,16 @@ var models = require('../model')
 exports.index = function(req, res){
   // create a sync task for database related queries
 	//TODO Should be thought of again, since now all pictures have only 1 point
+
+  res.render('landing', {req: req, title: 'Welcome to BreakIt'});
 	
-  async.parallel([models.Picture.allSorted],
+  /*async.parallel([models.Picture.allSorted],
       function(err, results){
           if(err) {
               throw err;
           }
           res.render('index', { req: req, title: 'BreakIt', pictures: results[0] });
-      });
+      });*/
 };
 
 //Refresh homepage with the location of the viewer
@@ -50,7 +52,7 @@ exports.location_refresh = function(req, res){
         if(err) {
             throw err;
         }
-        res.render('newsFeed', {req: req, pictures: results[0] });
+        res.render('index', {req: req, title: 'BreakIT', pictures: results[0] });
     });
 };
 
