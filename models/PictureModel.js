@@ -139,7 +139,25 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var distance = R * c;
 
-
+	//To display the distance in appropriate manner eg. under 1km = 343meters
+	//													<10km = 5.5km
+	//													>10 =14km
+	var picture_ = picture; 
+		//picture_.distance = Math.floor(distance*1000);
+	if(distance <1){
+		picture_.distance = Math.floor(distance*1000);
+	}
+	else if(distance >1 && distance < 10 ){
+		picture_.distance = Math.floor(distance*10)/10;
+		
+	}
+	else{
+		picture_.distance = Math.floor(distance);
+	}
+		
+	
+	
+	
  //   console.log('a'+a);
  //   console.log('c'+c);
 
@@ -154,8 +172,7 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
     }
  //   console.log(multiplier);
 		picture_.points = (multiplier*absolute_points);*/
-    var picture_ = picture; 
-		picture_.distance = Math.floor(distance*1000);
+    
  //   console.log('Absolute points'+absolute_points);
     //console.log('Picture points'+picture_.points);
     //console.log(picture_);
