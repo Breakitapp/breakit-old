@@ -150,3 +150,7 @@ exports.register_new = function(req, res) {
 	res.send(user.fName + ': thank you for registering!');
   //res.redirect('back');
 }
+
+exports.picture = function(req, res) {
+	res.render('upload');
+}
