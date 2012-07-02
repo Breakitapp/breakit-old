@@ -1,0 +1,22 @@
+form(action='/registration', method='post')
+  label New user registration
+  br
+  label First name:
+    input(type='text', name='fName')
+  br
+  label Last name:
+    input(type='text', name='lName')
+  br
+  label Nickname:
+    input(type='text', name='nName')
+  br
+  label Phone:
+    select(name='phone')
+      option(value='iPhone 3') iPhone 3 
+      option(value='iPhone 3S') iPhone 3S
+      option(value='iPhone 4') iPhone 4
+      option(value='iPhone 4S') iPhone 4S
+      option(value='android') android
+      option(value='nokia') nokia
+  p
+    input(type='submit', value='Register')
