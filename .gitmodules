@@ -1,0 +1,3 @@
+[submodule "breakitiphoneclient"]
+	path = breakitiphoneclient
+	url = git@bitbucket.org:binits012/breakitiphoneclient.git
