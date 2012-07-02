@@ -101,21 +101,13 @@ exports.splash_screen_post = function(req, res) {
 exports.upload = function(req, res) {
 	console.log("the user uploaded a picture, with the specs : ");
 	console.log(req.body);
-    var tmp_path = req.files.image.path;
-    var target_path = './public/images/' + req.files.image.name + '.jpeg';
-    fs.readFile(tmp_path, function(err, data) {
-        if(err) throw err;
-        fs.writeFile(target_path, data, function(err) {
-            if(err) throw err;
-            res.redirect('back');
-        })
-    });
+  
 	var latitude = parseFloat(req.body.latitude);
 	var longitude = parseFloat(req.body.longitude);
 	 
 	var picture = new models.Picture({
-			name: 'images/' + req.files.image.name + '.jpeg', 
-			headline: req.body.headline, 
+			name: 'images/' + this.id + '.jpeg', 
+			headline: req.body.headline,
 			latitude : req.body.latitude,
 			longitude: req.body.longitude,
 			location_name: req.body.location_name,
@@ -124,6 +116,17 @@ exports.upload = function(req, res) {
 	picture.save(function(err) {
 		if(err) throw err;
 	});
+	
+	var tmp_path = req.files.image.path;
+  var target_path = './public/images/' + picture.id + '.jpeg';
+	console.log(target_path);
+  fs.readFile(tmp_path, function(err, data) {
+      if(err) throw err;
+      fs.writeFile(target_path, data, function(err) {
+          if(err) throw err;
+          res.redirect('back');
+      })
+  });
 };
 
 //For testing the upload functionality
