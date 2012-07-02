@@ -145,14 +145,14 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 	var picture_ = picture; 
 		//picture_.distance = Math.floor(distance*1000);
 	if(distance <1){
-		picture_.distance = Math.floor(distance*1000);
+		picture_.distance = Math.floor(distance*1000)+'meters';
 	}
 	else if(distance >1 && distance < 10 ){
-		picture_.distance = Math.floor(distance*10)/10;
+		picture_.distance = Math.floor(distance*10)/10 +'km' ;
 		
 	}
 	else{
-		picture_.distance = Math.floor(distance);
+		picture_.distance = Math.floor(distance)+'km';
 	}
 		
 	
