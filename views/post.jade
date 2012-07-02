@@ -3,11 +3,11 @@ div(class='post fourcol')
     h1=picture.headline
     if(picture.location_name)
       h3 Happened near #{picture.location_name}
-    p #{picture.distance} meters away from you
+    p #{picture.distance} away from you
   else
     h1 HEADLINE OF PICTURE
     p PICTURE LOCATION
-    p #{picture.distance} meters away from you
+    p #{picture.distance} away from you
   img.stream(src=picture.name)
   div.story 
     p=picture.story
