@@ -11,9 +11,11 @@ function toLower (v) {
 	}
 
 var UserSchema = new Schema({
-    name    :   {type: String, index: true},
-	email   :   {type: String, set: toLower},
-    date	:	{type: Date, default: Date.now}
+    fName    :   {type: String},
+		lName    :   {type: String},
+    nName    :   {type: String},
+		email	   :   {type: String, set: toLower},
+    date		 :	{type: Date, default: Date.now}
 });
 
 var PictureSchema = new Schema({

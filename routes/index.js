@@ -138,5 +138,15 @@ exports.registration = function(req, res) {
 
 exports.register_new = function(req, res) {
 	console.log(req.body);
-	res.send('thank you for registering!');
+  var user = new models.User({
+		fName		:		req.body.fName,
+		lName		:		req.body.lName,
+		nName		:		req.body.nName,
+		email		:		req.body.email
+  });
+	user.save(function(err) {
+		if(err) throw err;
+	});
+	res.send(user.fName + ': thank you for registering!');
+  //res.redirect('back');
 }
