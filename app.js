@@ -43,9 +43,13 @@ app.post('/update', routes.update_score);
 app.get('/splash_screen',routes.splash_screen); // For Splash Screen (views/splashscren)
 app.post('/splash_screen',routes.splash_screen_post); // For Splash Screen (views/splashscren)
 
-//Waiting for picture upload logic
+//Picture upload
 app.get('/upload', routes.picture);
 app.post('/upload', routes.upload);
+
+//User registration
+app.get('/registration', routes.registration);
+app.post('/registration', routes.register_new);
 
 
 // Server startup

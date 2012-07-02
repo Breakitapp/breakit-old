@@ -96,7 +96,8 @@ exports.splash_screen_post = function(req, res) {
 	res.render('splash_screen_confirm', {title: 'Confirm'});
 };
 
-//A route waiting for the implementation of picture posting.
+//Takes the uploaded picture, creates a new mongo-document based on it
+//Saves the uploaded picture with a name based on the mongoId of the pic
 
 exports.upload = function(req, res) {
 	console.log("the user uploaded a picture, with the specs : ");
@@ -129,8 +130,13 @@ exports.upload = function(req, res) {
   });
 };
 
-//For testing the upload functionality
+//User registration routes
 
-exports.picture = function(req, res) {
-    res.render('upload', {title: 'uploadtest'});
-};
+exports.registration = function(req, res) {
+	res.render('registration', {title: 'Register a new BreakIt-user'});
+}
+
+exports.register_new = function(req, res) {
+	console.log(req.body);
+	res.send('thank you for registering!');
+}
