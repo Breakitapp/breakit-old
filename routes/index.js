@@ -40,7 +40,7 @@ exports.location_refresh = function(req, res){
     // CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
     // AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
 		// TODO THIS IS WRONG AND TOO COMPLICATED, SHOULD BE CHANGED
-		var date = Date.now():
+		var date = Date.now();
     var lat = req.body.lat;
 		var lon = req.body.lon
 		console.log(date + ": the location of the viewer " + lat +" latitude and " +  lon + " longitude");
@@ -101,6 +101,7 @@ exports.splash_screen_post = function(req, res) {
 //Saves the uploaded picture with a name based on the mongoId of the pic
 
 exports.upload = function(req, res) {
+  var date = Date.now();
 	console.log(date + ": the user uploaded a picture, with the specs : ");
 	console.log(req.body);
   
