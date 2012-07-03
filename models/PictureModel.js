@@ -30,6 +30,7 @@ models.Picture.allSorted = function(callback) {
 // Function that sort the pictures relative to the viewers location
 
 models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, callback) {
+	console.log('in rel sort');
 	var sortedPics = [];
 	var relsortedPics = [];
 	
@@ -70,13 +71,27 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
     		return 0;
     	})
 			callback(null, relsortedPics);
+		},
+		//Changes the distance from meter to km and rounds when needed
+		function(callback) {
+			relsortedPics.forEach(function(pic) {
+				if(pic.distance <1){
+					pic.distance = Math.floor(pic.distance*1000)+' meters';
+				}					else if(pic.distance >1 && pic.distance < 10 ){
+					pic.distance = Math.floor(pic.distance*10)/10 +' km' ;	
+				}
+				else{
+					pic.distance = Math.floor(pic.distance)+' km';
+				}
+			});
+			callback(null, relsortedPics);
 		}
 		],
 		function(err, results) {
 			//console.log("moi", results);
-			//console.log(results[2]);
-			callback(results[2]);
-			return results[2];
+			//console.log(results[3]);
+			callback(results[3]);
+			return results[3];
 		}
 	);
 };
@@ -143,20 +158,8 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 	//													<10km = 5.5km
 	//													>10 =14km
 	var picture_ = picture; 
-		//picture_.distance = Math.floor(distance*1000);
-	if(distance <1){
-		picture_.distance = Math.floor(distance*1000)+'meters';
-	}
-	else if(distance >1 && distance < 10 ){
-		picture_.distance = Math.floor(distance*10)/10 +'km' ;
-		
-	}
-	else{
-		picture_.distance = Math.floor(distance)+'km';
-	}
-		
-	
-	
+	picture_.distance = distance;
+
 	
  //   console.log('a'+a);
  //   console.log('c'+c);
