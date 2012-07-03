@@ -30,11 +30,12 @@ var PictureSchema = new Schema({
 });
 
 // Models
+/*
 PictureSchema.on('init', function(model) {
   model.prototype.url = function(req) {
     return "http://" + req.headers.host + "/#" +  this._id;
   };
-});
+});*/
 
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);

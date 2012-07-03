@@ -106,6 +106,7 @@ exports.splash_screen_post = function(req, res) {
 
 //Takes the uploaded picture, creates a new mongo-document based on it
 //Saves the uploaded picture with a name based on the mongoId of the pic
+//TODO naming the picture seems a little spaggethi, should be looked at
 
 exports.upload = function(req, res) {
   var dt = new Date();
@@ -123,19 +124,21 @@ exports.upload = function(req, res) {
 	var longitude = parseFloat(req.body.longitude);
 	 
 	var picture = new models.Picture({
-			name: 'images/' + this.id + '.jpeg', 
+			//name: 'images/' + _id + '.jpeg', 
 			headline: req.body.headline,
 			latitude : req.body.latitude,
 			longitude: req.body.longitude,
 			location_name: req.body.location_name,
 			story:req.body.story
 			});
+  //console.log(picture);
+	picture.name = 'images/' + picture._id + '.jpeg';
 	picture.save(function(err) {
 		if(err) throw err;
 	});
 	
 	var tmp_path = req.files.image.path;
-  var target_path = './public/images/' + picture.id + '.jpeg';
+  var target_path = './public/images/' + picture._id + '.jpeg';
 	console.log(target_path);
   console.log(picture.name);
   fs.readFile(tmp_path, function(err, data) {
