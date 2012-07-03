@@ -40,21 +40,28 @@ exports.location_refresh = function(req, res){
     // CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
     // AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
 		// TODO THIS IS WRONG AND TOO COMPLICATED, SHOULD BE CHANGED
-		var date = Date.now();
-    var lat = req.body.lat;
-		var lon = req.body.lon
-		console.log(date + ": the location of the viewer " + lat +" latitude and " +  lon + " longitude");
-    async.parallel([function(callback) {
-			var pictures = picture.relSorted(lon, lat, function(pics) {
-				callback(null, pics);
-			});
-		}],
-		function(err, results){
-        if(err) {
-            throw err;
-        }
-        res.render('index', {req: req, title: 'BreakIT', pictures: results[0] });
-    });
+	var dt = new Date();
+	var second = dt.getSeconds();
+	var minute = dt.getMinutes();
+	var hour = dt.getHours();
+	var month = dt.getMonth()+1;
+	var day = dt.getDate();
+	var year = dt.getFullYear();
+	var date = year + '/' + month + '/' + day + ' : ' + hour + ':' + minute + ':' + second;
+  var lat = req.body.lat;
+	var lon = req.body.lon
+	console.log(date + " : the location of the viewer " + lat +" latitude and " +  lon + " longitude");
+  async.parallel([function(callback) {
+		var pictures = picture.relSorted(lon, lat, function(pics) {
+			callback(null, pics);
+		});
+	}],
+	function(err, results){
+      if(err) {
+          throw err;
+      }
+      res.render('index', {req: req, title: 'BreakIT', pictures: results[0] });
+  });
 };
 
 //Update the score of a pic after a post from front-end. Return the new score
@@ -101,8 +108,15 @@ exports.splash_screen_post = function(req, res) {
 //Saves the uploaded picture with a name based on the mongoId of the pic
 
 exports.upload = function(req, res) {
-  var date = Date.now();
-	console.log(date + ": the user uploaded a picture, with the specs : ");
+  var dt = new Date();
+	var second = dt.getSeconds();
+	var minute = dt.getMinutes();
+	var hour = dt.getHours();
+	var month = dt.getMonth()+1;
+	var day = dt.getDate();
+	var year = dt.getFullYear();
+	var date = year + '/' + month + '/' + day + ' : ' + hour + ':' + minute + ':' + second;
+	console.log(date + " : the user uploaded a picture, with the specs : ");
 	console.log(req.body);
   
 	var latitude = parseFloat(req.body.latitude);
