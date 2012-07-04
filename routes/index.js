@@ -187,3 +187,13 @@ exports.register_new = function(req, res) {
 exports.picture = function(req, res) {
 	res.render('upload');
 }
+
+//Feedback
+
+exports.feedback = function(req.res) {
+	console.log(req.body);
+	var feedback = new models.Feedback({
+		feedback : req.body
+	});
+	res.send('thank you for your feedback');
+}

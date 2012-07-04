@@ -32,6 +32,11 @@ var PictureSchema = new Schema({
 		date		 :	{type: Date, default: Date.now}
 });
 
+var FeedbackSchema = new Schema({
+		feedback : {type: String},
+		date : {type: Date, default: Date.now}
+});
+
 // Models
 
 PictureSchema.on('init', function(model) {
@@ -42,6 +47,7 @@ PictureSchema.on('init', function(model) {
 
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
+var Feedback = mongoose.model('Feedback', FeedbackSchema);
 
 exports.User = User;
 exports.Picture = Picture;

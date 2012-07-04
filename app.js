@@ -51,6 +51,9 @@ app.post('/upload', routes.upload);
 app.get('/registration', routes.registration);
 app.post('/registration', routes.register_new);
 
+//Feedback
+app.post('/feedback', routes.feedback);
+
 
 // Server startup
 app.listen(3000);
