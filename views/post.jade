@@ -4,12 +4,12 @@ div(class='post fourcol')
     if(picture.location_name)
       h3 Happened near #{picture.location_name}
     p #{picture.distance} away from you
-    p=picture.date
+    p #{picture.timeSince} minutes ago
   else
     h1 HEADLINE OF PICTURE
     p PICTURE LOCATION
     p #{picture.distance} away from you
-    p=picture.date
+    p #{picture.timeSince} minutes ago
   img.stream(src=picture.name)
   div.story 
     p=picture.story

@@ -49,18 +49,30 @@ exports.location_refresh = function(req, res){
 	var year = dt.getFullYear();
 	var date = year + '/' + month + '/' + day + ' : ' + hour + ':' + minute + ':' + second;
   var lat = req.body.lat;
-	var lon = req.body.lon
+	var lon = req.body.lon;
 	console.log(date + " : the location of the viewer " + lat +" latitude and " +  lon + " longitude");
-  async.parallel([function(callback) {
+
+  async.waterfall([function(callback) {
 		var pictures = picture.relSorted(lon, lat, function(pics) {
 			callback(null, pics);
 		});
-	}],
-	function(err, results){
+	},
+		function(pics, callback) {
+			for(var i = 0; i < pics.length; i++) {
+				var picDate = new Date(pics[i].date);
+				var timeSincePic = dt - picDate;
+				timeSincePic = Math.floor(timeSincePic/60000);
+				console.log(timeSincePic);
+				pics[i].timeSince = timeSincePic;
+			}
+			callback(null, pics);
+	}
+	],
+	function(err, result){
       if(err) {
           throw err;
       }
-      res.render('index', {req: req, title: 'BreakIT', pictures: results[0] });
+      res.render('index', {req: req, title: 'BreakIT', pictures: result });
   });
 };
 
@@ -129,7 +141,8 @@ exports.upload = function(req, res) {
 			latitude : req.body.latitude,
 			longitude: req.body.longitude,
 			location_name: req.body.location_name,
-			story:req.body.story
+			story:req.body.story,
+			user: req.body.user
 			});
   //console.log(picture);
 	picture.name = 'images/' + picture._id + '.jpeg';
