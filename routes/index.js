@@ -190,7 +190,7 @@ exports.picture = function(req, res) {
 
 //Feedback
 
-exports.feedback = function(req.res) {
+exports.feedback = function(req, res) {
 	console.log(req.body);
 	var feedback = new models.Feedback({
 		feedback : req.body
