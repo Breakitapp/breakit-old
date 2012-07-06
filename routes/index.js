@@ -25,7 +25,9 @@ exports.index = function(req, res){
 //Refresh homepage with the location of the viewer
 
 exports.location_refresh = function(req, res){
-	console.log(req.originalUrl);
+	//console.log(req.originalUrl);
+
+//	console.log(req.query);		
 	
 	var lat = req.query['lat'];
 	var lon = req.query['lon'];
@@ -44,8 +46,9 @@ exports.location_refresh = function(req, res){
 	//This is a crude logging mechanism, that writes the date and location of a viewer. is done only on the first load
 	if(page == 0) {
 		console.log(date + " : the location of the viewer " + lat +" latitude and " +  lon + " longitude");
-		page++;
 	}
+	page++;
+	
 	
 
   async.waterfall([function(callback) {
@@ -74,7 +77,12 @@ exports.location_refresh = function(req, res){
       if(err) {
           throw err;
       }
-      res.render('index', {req: req, title: 'BreakIT', pictures: result, lat: lat, lon: lon, page: page });
+			if(page==1) {
+      	res.render('index', {req: req, title: 'BreakIT', pictures: result, lat: lat, lon: lon, page: page });
+			} else {
+				console.log('page is ' + page);
+				res.render('index', {req :  req, title: 'BreakIT', pictures: result, lat: lat, lon: lon, page: page});
+			}
   });
 };
 

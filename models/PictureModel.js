@@ -30,6 +30,7 @@ models.Picture.allSorted = function(callback) {
 // Function that sort the pictures relative to the viewers location
 
 models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, page, callback) {
+	console.log('rel sort');	
 	console.log(viewer_location_long, viewer_location_lat, page);
 	var allPics = [];
 	var relsortedPics = [];
@@ -37,7 +38,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
 	async.series(
 		[function(callback){
 			//console.log("waterfall function 1");
-			models.Picture.find().skip((15*page)-15).limit(15).exec(function(err, pics){
+			models.Picture.find().skip((20*page)-20).limit(20).exec(function(err, pics){
 				//console.log("waterfall function 1 query");
     		if(err){
     			throw err;
@@ -46,7 +47,6 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
     			allPics.push(pic);
     		});
 				callback(null, allPics);
-				console.log('length of allpics ' + allPics.length);
 			});
 		},
 		//Calculates the distance from the viewer to the picture

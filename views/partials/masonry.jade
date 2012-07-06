@@ -5,7 +5,6 @@ script(type='text/javascript')
     var $container = $('#newsfeed');
 
     $container.imagesLoaded(function(){
-      alert('imagesLoaded');
       $container.masonry({
         itemSelector: '.post',
         columnWidth: function (containerWidth) {
@@ -14,36 +13,35 @@ script(type='text/javascript')
       });
     });
 
-    $('#page-nav a').click(function(){
-      $.get('/home', {
-        lat : $(this).attr('lat'), 
-        lon : $(this).attr('lon'), 
-        page : parseInt($(this).attr('page'))+1
-      });
-    });
+    //$('#page-nav a').click(function(){
+      //$.get('/home', {
+        //lat : $(this).attr('lat'), 
+        //lon : $(this).attr('lon'), 
+        //page : parseInt($(this).attr('page'))+1
+      //});
+    //});
 
-    $container.infinitescroll({
-      navSelector  : '#page-nav',    // selector for the paged navigation 
-      nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
-      itemSelector : '.post',     // selector for all items you'll retrieve
-      loading: {
-          finishedMsg: 'No more pages to load.',
-          img: 'http://i.imgur.com/6RMhx.gif'
-        }
-      },
+    //$container.infinitescroll({
+      //navSelector  : '#page-nav',    // selector for the paged navigation 
+      //nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
+      //itemSelector : '.post',     // selector for all items you'll retrieve
+     // loading: {
+       //   finishedMsg: 'No more pages to load.',
+         // img: 'http://i.imgur.com/6RMhx.gif'
+        //}
+      //},
       // trigger Masonry as a callback
       
-      function( newElements ) {
+      //function( newElements ) {
         // hide new items while they are loading
-        console.log('lololo');
-        alert('lololo');
-        var $newElems = $( newElements ).css({ opacity: 0 });
+        //var $newElems = $( newElements ).css({ opacity: 1 });
+        //$container.masonry( 'appended', $newElems, true ); 
         // ensure that images load before adding to masonry layout
-        $newElems.imagesLoaded(function(){
+       // $newElems.imagesLoaded(function(){
           // show elems now they're ready
-          $newElems.animate({ opacity: 1 });
-          $container.masonry( 'appended', $newElems, true ); 
-        });
-      }
-    );
-  });
+         // $newElems.animate({ opacity: 1 });
+          //$container.masonry( 'appended', $newElems, true ); 
+      //  });
+     // }
+    //);
+  //});
