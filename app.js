@@ -38,10 +38,12 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', routes.index);
-app.post('/', routes.location_refresh);
+app.get('/home', routes.location_refresh);
 app.post('/update', routes.update_score);
 app.get('/splash_screen',routes.splash_screen); // For Splash Screen (views/splashscren)
 app.post('/splash_screen',routes.splash_screen_post); // For Splash Screen (views/splashscren)
+
+app.get('/test', routes.test);
 
 //Picture upload
 app.get('/upload', routes.picture);

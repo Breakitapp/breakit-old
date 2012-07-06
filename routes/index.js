@@ -11,35 +11,27 @@ var models = require('../model')
   , picture = require('../models/PictureModel')
   , formidable = require('formidable')
   , format = require('util').format
-  , fs = require('fs');
+  , fs = require('fs')
+	,	url = require('url');
 
 // Get homepage
 
 exports.index = function(req, res){
-  // create a sync task for database related queries
-	//TODO Should be thought of again, since now all pictures have only 1 point
-
+	//renders the landing page. not the most elegant solution, propably needs refactoring
   res.render('landing', {req: req, title: 'Welcome to BreakIt'});
 	
-  /*async.parallel([models.Picture.allSorted],
-      function(err, results){
-          if(err) {
-              throw err;
-          }
-          res.render('index', { req: req, title: 'BreakIt', pictures: results[0] });
-      });*/
 };
 
 //Refresh homepage with the location of the viewer
 
 exports.location_refresh = function(req, res){
-   // console.log(req.body);
-    // THIS TEST KEY IS THE LOCATION OF BROWSER (USER AGENT = PHONE)
-    // console.log('testkey:'+req.body.testkey);
+	console.log(req.originalUrl);
+	
+	var lat = req.query['lat'];
+	var lon = req.query['lon'];
+	var page = req.query['page'];
 
-    // CHANGE THE HARD CODED HELSINKI KEY TO USE CURRENT LOCATION OF THE BROWSER
-    // AFTER THE LOCATION LOGIC IS ACCURATE USING HELSINKI AND TURKU TEST CASES
-		// TODO THIS IS WRONG AND TOO COMPLICATED, SHOULD BE CHANGED
+	//This finds the time. Is used to compare how long ago the picture has been posted
 	var dt = new Date();
 	var second = dt.getSeconds();
 	var minute = dt.getMinutes();
@@ -48,12 +40,16 @@ exports.location_refresh = function(req, res){
 	var day = dt.getDate();
 	var year = dt.getFullYear();
 	var date = year + '/' + month + '/' + day + ' : ' + hour + ':' + minute + ':' + second;
-  var lat = req.body.lat;
-	var lon = req.body.lon;
-	console.log(date + " : the location of the viewer " + lat +" latitude and " +  lon + " longitude");
+
+	//This is a crude logging mechanism, that writes the date and location of a viewer. is done only on the first load
+	if(page == 0) {
+		console.log(date + " : the location of the viewer " + lat +" latitude and " +  lon + " longitude");
+		page++;
+	}
+	
 
   async.waterfall([function(callback) {
-		var pictures = picture.relSorted(lon, lat, function(pics) {
+		var pictures = picture.relSorted(lon, lat, page, function(pics) {
 			callback(null, pics);
 		});
 	},
@@ -62,7 +58,13 @@ exports.location_refresh = function(req, res){
 				var picDate = new Date(pics[i].date);
 				var timeSincePic = dt - picDate;
 				timeSincePic = Math.floor(timeSincePic/60000);
-				console.log(timeSincePic);
+				if(timeSincePic >= 60) {
+					timeSincePic = Math.floor(timeSincePic/60) + ' hours';
+				} else if (10 < timeSincePic < 60) {
+					timeSincePic = Math.floor(timeSincePic/5) + ' minutes';
+				} else {
+					timeSincePic += ' minutes';
+				}
 				pics[i].timeSince = timeSincePic;
 			}
 			callback(null, pics);
@@ -72,7 +74,7 @@ exports.location_refresh = function(req, res){
       if(err) {
           throw err;
       }
-      res.render('index', {req: req, title: 'BreakIT', pictures: result });
+      res.render('index', {req: req, title: 'BreakIT', pictures: result, lat: lat, lon: lon, page: page });
   });
 };
 
@@ -196,4 +198,11 @@ exports.feedback = function(req, res) {
 		feedback : req.body
 	});
 	res.send('thank you for your feedback');
+}
+
+//for testing
+
+exports.test = function(req, res) {
+	console.log(req.query['lon'], req.query['lat']);
+	res.render('upload')
 }

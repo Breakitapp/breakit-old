@@ -5,12 +5,23 @@ script(type='text/javascript')
     var $container = $('#newsfeed');
 
     $container.imagesLoaded(function(){
+      alert('imagesLoaded');
       $container.masonry({
         itemSelector: '.post',
-        columnWidth: 100
+        columnWidth: function (containerWidth) {
+          return containerWidth/12;
+        }
       });
     });
-    
+
+    $('#page-nav a').click(function(){
+      $.get('/home', {
+        lat : $(this).attr('lat'), 
+        lon : $(this).attr('lon'), 
+        page : parseInt($(this).attr('page'))+1
+      });
+    });
+
     $container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
@@ -21,6 +32,7 @@ script(type='text/javascript')
         }
       },
       // trigger Masonry as a callback
+      
       function( newElements ) {
         // hide new items while they are loading
         console.log('lololo');

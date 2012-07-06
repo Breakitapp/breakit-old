@@ -9,9 +9,7 @@ script(type='text/javascript')
         startPos = position;
         $("#location_latitude").append(startPos.coords.latitude);
         $("#location_longitude").append(startPos.coords.longitude);
-        console.log(startPos.coords.latitude);
-        console.log(startPos.coords.longitude);
-        $.post('/', {lon: startPos.coords.longitude, lat: startPos.coords.latitude}, function(data) {
+        $.get('/home', {lon: startPos.coords.longitude, lat: startPos.coords.latitude, page : 0}, function(data) {
           $('body').html(data);
         });
       });

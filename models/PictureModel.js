@@ -10,7 +10,7 @@
 var models = require('../model'),
 	async = require('async');
 
-// Function for finding all pictures sorted by points
+// Function for finding all pictures sorted by points DEPRECATED
 
 models.Picture.allSorted = function(callback) {
     var pictures = [];
@@ -29,28 +29,30 @@ models.Picture.allSorted = function(callback) {
 
 // Function that sort the pictures relative to the viewers location
 
-models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, callback) {
-	var sortedPics = [];
+models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, page, callback) {
+	console.log(viewer_location_long, viewer_location_lat, page);
+	var allPics = [];
 	var relsortedPics = [];
 	
 	async.series(
 		[function(callback){
 			//console.log("waterfall function 1");
-			models.Picture.find({},function(err, pics){
+			models.Picture.find().skip((15*page)-15).limit(15).exec(function(err, pics){
 				//console.log("waterfall function 1 query");
     		if(err){
     			throw err;
     		}
     		pics.forEach(function(pic) {
-    			sortedPics.push(pic);
+    			allPics.push(pic);
     		});
-				callback(null, sortedPics);
+				callback(null, allPics);
+				console.log('length of allpics ' + allPics.length);
 			});
 		},
 		//Calculates the distance from the viewer to the picture
     function(callback) {
 			//console.log("waterfall function 2");
-			sortedPics.forEach(function(pic) {
+			allPics.forEach(function(pic) {
 				//console.log("waterfall function 2 change score");
 				var relPic = relativePoints(viewer_location_long, viewer_location_lat, pic);
 	    	relsortedPics.push(relPic);
@@ -87,26 +89,11 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
 		}
 		],
 		function(err, results) {
-			//console.log("moi", results);
-			//console.log(results[3]);
 			callback(results[3]);
 			return results[3];
 		}
 	);
 };
-/*
-    // Finds all the pictures
-    async.series([myfunc1, myfunc2],
-    	function(err, results){
-    		if(err) {
-    			throw err;
-    		}
-    	console.log("call back func");
-    	});*/
-    	
-    		
-        	
-    	
 
 // A function that calculates the points of a picture relative to the location of the viewer
 
@@ -122,18 +109,12 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 
     var picLocationLongitude = picture.longitude;
     var picLocationLatitude = picture.latitude;
-    //console.log(picLocation);
     var R = 6371; // km
 
     var dLat = toRad((viewerLocationLat-picLocationLatitude));
     var dLon = toRad((viewerLocationLong-picLocationLongitude));
     var lat1 = toRad(viewerLocationLat);
     var lat2 = toRad(picLocationLatitude);
-
-    //console.log('R' + R);
-
-    //console.log('viewer location: ' + viewerLocationLat + ' '+ viewerLocationLong);
-    //console.log('picture location: ' + picLocationLongitude + ' '+ picLocationLatitude);
 
     // Uses haversine formula to calculate distance from degrees
     // http://www.movable-type.co.uk/scripts/latlong.html
@@ -142,10 +123,6 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
     // Currently when viewer: Helsinki and pic: Helsinki, the distance is 0km which is correct
     // TURKU - HELSINKI DISTANCE IS SMTH 7000 which is not correct
 
-/*    console.log('dLat'+dLat);
-    console.log('dLon'+dLon);
-    console.log('lat1'+lat1);
-    console.log('lat2'+lat1);*/
 
     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
         Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
@@ -153,31 +130,9 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
     var distance = R * c;
 
-	//To display the distance in appropriate manner eg. under 1km = 343meters
-	//													<10km = 5.5km
-	//													>10 =14km
-	var picture_ = picture; 
-	picture_.distance = distance;
+		var picture_ = picture; 
+		picture_.distance = distance;
 
-	
- //   console.log('a'+a);
- //   console.log('c'+c);
-
-  //  console.log('DISTANCE: '+distance);
-	/* MULTIPLIER REMOVED BECAUSE THE PICTURES ARE RANKED ONLY BY DISTANCE
-    var multiplier;
-//    console.log(distance);
-    if(distance !== 0) {
-        multiplier = 10/distance;
-    } else {
-        multiplier = 1;
-    }
- //   console.log(multiplier);
-		picture_.points = (multiplier*absolute_points);*/
-    
- //   console.log('Absolute points'+absolute_points);
-    //console.log('Picture points'+picture_.points);
-    //console.log(picture_);
     return picture_;
 };
 
