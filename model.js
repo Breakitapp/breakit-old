@@ -51,6 +51,7 @@ var Feedback = mongoose.model('Feedback', FeedbackSchema);
 
 exports.User = User;
 exports.Picture = Picture;
+exports.Feedback = Feedback; 
 
 /*
 
