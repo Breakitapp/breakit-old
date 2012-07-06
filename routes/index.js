@@ -201,9 +201,12 @@ exports.picture = function(req, res) {
 //Feedback
 
 exports.feedback = function(req, res) {
-	console.log(req);
-	var feedback = new models.Feedback({
-		feedback : req.body
+	console.log('user sent a feedback with :' + req.body);
+	var fb = new models.Feedback({
+		feedback : req.body.feedback
+	});
+  fb.save(function(err) {
+		if(err) throw err;
 	});
 	res.send('thank you for your feedback');
 }
