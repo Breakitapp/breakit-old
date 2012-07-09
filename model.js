@@ -10,26 +10,32 @@ function toLower (v) {
 	  return v.toLowerCase();
 	}
 
+var CommentSchema = new Schema({
+		comment		: 	{type: String},
+		date		  :		{type: Date, default: Date.now}
+});
+
 var UserSchema = new Schema({
     fName    :   {type: String},
 		lName    :   {type: String},
     nName    :   {type: String},
 		email	   :   {type: String, set: toLower},
-    date		 :	{type: Date, default: Date.now}
+    date		 :	 {type: Date, default: Date.now}
 });
 
 //TODO link picture with user.
 
 var PictureSchema = new Schema({
-    name    :   	{type: String, index: true},
-		headline:			{type: String},
-    user    :   	{type: String},
-    points  :   	{type: Number, default: 1},
-    longitude: 		{type: Number, default: 0.0000000},
-    latitude :  	{type: Number, default: 0.0000000},
-		location_name:{type: String},	 
-    story	:	{type: String, index: true},
-		date		 :	{type: Date, default: Date.now}
+    name    			:   	{type: String, index: true},
+		headline			:			{type: String},
+    user    			:   	{type: String},
+    points  			:   	{type: Number, default: 1},
+    longitude			: 		{type: Number, default: 0.0000000},
+    latitude			: 	 	{type: Number, default: 0.0000000},
+		location_name	:			{type: String},	 
+    story					:			{type: String, index: true},
+		date		 			:			{type: Date, default: Date.now},
+		comments			:			[Comment]
 });
 
 var FeedbackSchema = new Schema({
@@ -48,9 +54,12 @@ PictureSchema.on('init', function(model) {
 var Picture = mongoose.model('Picture', PictureSchema);
 var User = mongoose.model('User', UserSchema);
 var Feedback = mongoose.model('Feedback', FeedbackSchema);
+var Comment = mongoose.model('Comment', CommentSchema);
 
 exports.User = User;
 exports.Picture = Picture;
+exports.Feedback = Feedback;
+exports.Comment = Comment;
 
 /*
 
