@@ -29,8 +29,7 @@ models.Picture.allSorted = function(callback) {
 
 // Function that sort the pictures relative to the viewers location
 
-models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, page, callback) {
-	console.log('rel sort');	
+models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, page, callback) {	
 	console.log(viewer_location_long, viewer_location_lat, page);
 	var allPics = [];
 	var relsortedPics = [];

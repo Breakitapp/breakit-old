@@ -1,5 +1,4 @@
 div(class='post fourcol')
-  p picture is on page #{page}
   if(picture.headline)
     h1=picture.headline
     if(picture.location_name)
@@ -15,7 +14,16 @@ div(class='post fourcol')
   div.story 
     p=picture.story
   div.comments
-    a(href='picture/'+'#{picture._id}')
+    a(href='/picture/'+'#{picture._id}')
       p=picture.comments.length
+    if(show_comments) 
+      for comment in picture.comments
+        p=comment.date
+        p=comment.comment
+      form(action='/comment', method='post')
+        input(type='hidden', name='pic_id', value='#{picture._id}')
+        label Add your comment
+        textarea(name='comment', cols='20', rows='4')
+        input(type='Submit', value='Comment')
     //p(class='votePoints') #{picture.points}
     //a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet

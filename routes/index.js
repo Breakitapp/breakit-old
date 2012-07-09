@@ -78,10 +78,23 @@ exports.location_refresh = function(req, res){
           throw err;
       }
 			if(page==1) {
-      	res.render('index', {req: req, title: 'BreakIT', pictures: result, lat: lat, lon: lon, page: page });
+      	res.render('index', {
+					req: req, 
+					title: 'BreakIT', 
+					pictures: result, 
+					lat: lat, 
+					lon: lon, 
+					page: page, 
+					show_comments : null});
 			} else {
-				console.log('page is ' + page);
-				res.render('index', {req :  req, title: 'BreakIT', pictures: result, lat: lat, lon: lon, page: page});
+				res.render('index', {
+					req :  req, 
+					title: 'BreakIT', 
+					pictures: result, 
+					lat: lat, 
+					lon: lon, 
+					page: page,
+					show_comments : null});
 			}
   });
 };
@@ -217,3 +230,48 @@ exports.test = function(req, res) {
 	console.log(req.query['lon'], req.query['lat']);
 	res.render('upload')
 }
+
+// Get a post
+exports.get_post = function(req, res) {
+	async.series([
+		function(callback) {
+			models.Picture.findById(req.params.id, function(err, pic){
+				if(err) throw err;
+				callback(null, pic);
+			});
+		}
+	],
+		function(err, results) {
+			res.render('post', {picture : results[0], show_comments : 1});
+		}
+	);
+}
+
+exports.comment = function(req,res) {
+	console.log(req.body);
+	async.series([
+		function(callback) {
+			var comment = new models.Comment({comment : req.body.comment})
+			comment.save(function(err) {
+				if(err) throw err;
+			});
+			callback(null, comment);
+		},
+		function(callback) {
+			models.Picture.findById(req.body.pic_id, function(err, pic){
+				console.log(pic);
+				if(err) throw err;
+				callback(null, pic);
+			});
+		}
+	],
+		function(err, results) {
+			results[1].comments.push(results[0]);
+			results[1].save(function(err) {
+				if(err) throw err;
+			});
+			console.log(results[1]);
+			res.send('a new comment added' + results[0]);
+		}
+	);
+} 

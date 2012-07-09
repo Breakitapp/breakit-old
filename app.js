@@ -56,6 +56,9 @@ app.post('/registration', routes.register_new);
 //Feedback
 app.post('/feedback', routes.feedback);
 
+//Comments
+app.get('/picture/:id', routes.get_post);
+app.post('/comment', routes.comment)
 
 // Server startup
 app.listen(3000);
