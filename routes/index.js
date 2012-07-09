@@ -259,7 +259,6 @@ exports.comment = function(req,res) {
 		},
 		function(callback) {
 			models.Picture.findById(req.body.pic_id, function(err, pic){
-				console.log(pic);
 				if(err) throw err;
 				callback(null, pic);
 			});
@@ -271,7 +270,8 @@ exports.comment = function(req,res) {
 				if(err) throw err;
 			});
 			console.log(results[1]);
-			res.send('a new comment added' + results[0]);
+			//res.send('a new comment added ' + results[0]);
+			res.redirect('back');
 		}
 	);
 } 
