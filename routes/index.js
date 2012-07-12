@@ -242,7 +242,7 @@ exports.get_post = function(req, res) {
 		}
 	],
 		function(err, results) {
-			res.render('post', {picture : results[0], show_comments : 1});
+			res.render('comment', {picture : results[0]});
 		}
 	);
 }
