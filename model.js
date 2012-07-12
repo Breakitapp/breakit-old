@@ -30,13 +30,14 @@ var PictureSchema = new Schema({
 		headline			:			{type: String},
     user    			:   	{type: String},
     points  			:   	{type: Number, default: 1},
-    longitude			: 		{type: Number, default: 0.0000000},
-    latitude			: 	 	{type: Number, default: 0.0000000},
+		loc						:			{lon: Number, lat: Number},
 		location_name	:			{type: String},	 
     story					:			{type: String, index: true},
 		date		 			:			{type: Date, default: Date.now},
 		comments			:			[Comment]
 });
+
+PictureSchema.index({loc: '2d'});
 
 var FeedbackSchema = new Schema({
 		feedback : {type: String},
@@ -71,20 +72,20 @@ mikko.save(function(error){
     }
 });
 
-var helsinki_long = 60.17083;
-var turku_long = 60.4500;
+var helsinki_lon = 60.17083;
+var turku_lon = 60.4500;
 var helsinki_lat = 24.9375;
 var turku_lat = 22.2500;
 var story = "Nice boobs!";
 
 
-var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000, longitude: helsinki_long, latitude: helsinki_lat, story: story});
-var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 500, longitude: turku_long, latitude: turku_lat, story: story});
-var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 2000, longitude: helsinki_long, latitude: helsinki_lat, story: story});
-var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 100, longitude: turku_long, latitude: turku_lat, story: story});
-var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 4000, longitude: helsinki_long, latitude: helsinki_lat, story: story});
-var picture6 = new Picture({name: 'images/6.jpg', user: mikko, points: 300, longitude: turku_long, latitude: turku_lat, story: story});
-var picture7 = new Picture({name: 'images/7.jpg', user: mikko, points: 10, longitude: helsinki_long, latitude: helsinki_lat, story: story});
+var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000, loc : {lon: helsinki_lon, lat: helsinki_lat}, story: story});
+var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 500, loc : {lon: helsinki_lon, lat: turku_lat}, story: story});
+var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 2000, loc : {lon: turku_lon, lat: helsinki_lat}, story: story});
+var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 100, loc : {lon: turku_lon, lat: turku_lat}, story: story});
+var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 4000, loc : {lon: turku_lon, lat: helsinki_lat}, story: story});
+var picture6 = new Picture({name: 'images/6.jpg', user: mikko, points: 300, loc : {lon: helsinki_lon, lat: helsinki_lat}, story: story});
+var picture7 = new Picture({name: 'images/7.jpg', user: mikko, points: 10, loc : {lon: helsinki_lon, lat: turku_lat}, story: story});
 
 picture1.save(function(error){
     if(error){

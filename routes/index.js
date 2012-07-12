@@ -29,8 +29,8 @@ exports.location_refresh = function(req, res){
 
 //	console.log(req.query);		
 	
-	var lat = req.query['lat'];
 	var lon = req.query['lon'];
+	var lat = req.query['lat'];
 	var page = req.query['page'];
 
 	//This finds the time. Is used to compare how long ago the picture has been posted
@@ -45,7 +45,7 @@ exports.location_refresh = function(req, res){
 
 	//This is a crude logging mechanism, that writes the date and location of a viewer. is done only on the first load
 	if(page == 0) {
-		console.log(date + " : the location of the viewer " + lat +" latitude and " +  lon + " longitude");
+		console.log(date + " : the location of the viewer " + lon +" longitude and " +  lat + " latitude");
 	}
 	page++;
 	
@@ -83,7 +83,7 @@ exports.location_refresh = function(req, res){
 					title: 'BreakIT', 
 					pictures: result, 
 					lat: lat, 
-					lon: lon, 
+					lon: lon,
 					page: page, 
 					show_comments : null});
 			} else {
@@ -161,8 +161,7 @@ exports.upload = function(req, res) {
 	var picture = new models.Picture({
 			//name: 'images/' + _id + '.jpeg', 
 			headline: req.body.headline,
-			latitude : req.body.latitude,
-			longitude: req.body.longitude,
+			loc: {lon: longitude, lat: latitude},
 			location_name: req.body.location_name,
 			story:req.body.story,
 			user: req.body.user

@@ -29,15 +29,16 @@ models.Picture.allSorted = function(callback) {
 
 // Function that sort the pictures relative to the viewers location
 
-models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_location_lat, page, callback) {	
-	console.log(viewer_location_long, viewer_location_lat, page);
+models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_location_lat, page, callback) {	
+	var lon = parseFloat(viewer_location_lon);
+	var lat = parseFloat(viewer_location_lat);
 	var allPics = [];
 	var relsortedPics = [];
 	
 	async.series(
 		[function(callback){
 			//console.log("waterfall function 1");
-			models.Picture.find().skip((20*page)-20).limit(20).exec(function(err, pics){
+			models.Picture.find({loc: {$near: [lon, lat]}}).skip((20*page)-20).limit(20).exec(function(err, pics){
 				//console.log("waterfall function 1 query");
     		if(err){
     			throw err;
@@ -53,7 +54,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_long, viewer_lo
 			//console.log("waterfall function 2");
 			allPics.forEach(function(pic) {
 				//console.log("waterfall function 2 change score");
-				var relPic = relativePoints(viewer_location_long, viewer_location_lat, pic);
+				var relPic = relativePoints(lon, lat, pic);
 	    	relsortedPics.push(relPic);
 				//console.log("relPic: "+ relPic);
     	});
@@ -106,8 +107,8 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
     var viewerLocationLong = viewerLocationLong;
     var viewerLocationLat = viewerLocationLat;
 
-    var picLocationLongitude = picture.longitude;
-    var picLocationLatitude = picture.latitude;
+    var picLocationLongitude = picture.loc.lon;
+    var picLocationLatitude = picture.loc.lat;
     var R = 6371; // km
 
     var dLat = toRad((viewerLocationLat-picLocationLatitude));
@@ -117,11 +118,6 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 
     // Uses haversine formula to calculate distance from degrees
     // http://www.movable-type.co.uk/scripts/latlong.html
-    // Currently there are two locations that are in the testdata: Helsinki & Turku
-    // The location of the viewer is currently hard coded to be Helsinki
-    // Currently when viewer: Helsinki and pic: Helsinki, the distance is 0km which is correct
-    // TURKU - HELSINKI DISTANCE IS SMTH 7000 which is not correct
-
 
     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
         Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
