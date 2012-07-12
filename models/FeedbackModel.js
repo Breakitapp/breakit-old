@@ -11,7 +11,6 @@ var models = require('../model'),
 	async = require('async');
 
 models.Feedback.allSorted = function(callback) {
-		console.log('searching feedbacks');
     var feedbacks = [];
     models.Feedback.find().sort('date', 'descending').exec(function (err, fbs){
         if(err) {

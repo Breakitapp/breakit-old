@@ -277,7 +277,6 @@ exports.comment = function(req,res) {
 } 
 
 exports.show_feedbacks = function(req, res) {
-	console.log('rendering feedbacks');
 	async.series([
 		function(callback) {
 			var fbs;
