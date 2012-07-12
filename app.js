@@ -55,6 +55,7 @@ app.post('/registration', routes.register_new);
 
 //Feedback
 app.post('/feedback', routes.feedback);
+app.get('/feedbacks', routes.show_feedbacks)
 
 //Comments
 app.get('/picture/:id', routes.get_post);

@@ -9,6 +9,7 @@
 var models = require('../model')
   , async = require('async')
   , picture = require('../models/PictureModel')
+	, feedback = require('../models/FeedbackModel')
   , formidable = require('formidable')
   , format = require('util').format
   , fs = require('fs')
@@ -274,3 +275,20 @@ exports.comment = function(req,res) {
 		}
 	);
 } 
+
+exports.show_feedbacks = function(req, res) {
+	console.log('rendering feedbacks');
+	async.series([
+		function(callback) {
+			var fbs;
+			models.Feedback.allSorted(function(err, results) {
+				if(err) throw err;
+				callback(null, results);
+			});
+		}],
+		function(err, results) {
+			console.log('rendering feedbacks');
+			if(err) throw err;
+			res.render('feedback', {feedbacks: results[0]});
+		});
+}

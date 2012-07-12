@@ -14,7 +14,7 @@ var models = require('../model'),
 
 models.Picture.allSorted = function(callback) {
     var pictures = [];
-    models.Picture.find().sort('points', 'descending').run(function (err, pics){
+    models.Picture.find().sort('points', 'descending').exec(function (err, pics){
         if(err) {
             throw err;
         }
