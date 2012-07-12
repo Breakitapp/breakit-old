@@ -15,7 +15,7 @@ div(class='post fourcol')
     p=picture.story
   div.comments
     a(href='/picture/'+'#{picture._id}')
-      p=picture.comments.length
+      p #{picture.comments.length} comments
     if(show_comments) 
       for comment in picture.comments
         p=comment.date
@@ -25,5 +25,6 @@ div(class='post fourcol')
         label Add your comment
         textarea(name='comment', cols='20', rows='4')
         input(type='Submit', value='Comment')
+      a(href='/') back
     //p(class='votePoints') #{picture.points}
     //a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet
