@@ -30,15 +30,15 @@ models.Picture.allSorted = function(callback) {
 // Function that sort the pictures relative to the viewers location
 
 models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_location_lat, page, callback) {	
-	var lon = parseFloat(viewer_location_lon);
-	var lat = parseFloat(viewer_location_lat);
+	var lon = parseFloat(viewer_location_lon, 10);
+	var lat = parseFloat(viewer_location_lat, 10);
 	var allPics = [];
 	var relsortedPics = [];
 	
 	async.series(
 		[function(callback){
 			//console.log("waterfall function 1");
-			models.Picture.find({loc: {$near: [lon, lat]}}).skip((20*page)-20).limit(20).exec(function(err, pics){
+			models.Picture.find({loc: {$within: {$centerSphere: [[lon, lat], 0.1/6713]}}}).skip((20*page)-20).limit(20).exec(function(err, pics){
 				//console.log("waterfall function 1 query");
     		if(err){
     			throw err;

@@ -103,7 +103,7 @@ exports.location_refresh = function(req, res){
 //Update the score of a pic after a post from front-end. Return the new score
 
 exports.update_score = function(req, res) {
-    var points = parseInt(req.body.points);
+    var points = parseInt(req.body.points, 10);
     var pic = req.body._id;
     var score_ = 0;
 
@@ -156,8 +156,8 @@ exports.upload = function(req, res) {
 	console.log(date + " : the user uploaded a picture, with the specs : ");
 	console.log(req.body);
   
-	var latitude = parseFloat(req.body.latitude);
-	var longitude = parseFloat(req.body.longitude);
+	var latitude = parseFloat(req.body.latitude, 10);
+	var longitude = parseFloat(req.body.longitude, 10);
 	 
 	var picture = new models.Picture({
 			//name: 'images/' + _id + '.jpeg', 
@@ -286,7 +286,6 @@ exports.show_feedbacks = function(req, res) {
 			});
 		}],
 		function(err, results) {
-			console.log('rendering feedbacks');
 			if(err) throw err;
 			res.render('feedback', {feedbacks: results[0]});
 		});
