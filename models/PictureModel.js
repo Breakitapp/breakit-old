@@ -72,18 +72,16 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 		//Changes the distance from meter to km and rounds when needed
 		function(callback) {
 			relsortedPics.forEach(function(pic) {
-				switch(pic.distance) {
-					case(pic.distance < 0.1) :
-						pic.distance = 'under 100 meters';
-						break;
-					case(0.1 < pic.distance < 0.5) :
-						pic.distance = 'under 500 meters';
-						break;
-					case(0.5 < pic.distance < 1) :
-						pic.distance = 'under 1 kilometer';
-						break;
-					default :
-						pic.distance = Math.floor(pic.distance)+' km';
+				if(pic.distance < 0.1) {
+					pic.distance = 'under 100 meters';
+				} else if(0.1 < pic.distance < 0.5) {
+					pic.distance = 'under 500 meters';
+				} else if(0.5 < pic.distance < 1) {
+				vpic.distance = 'under 1 kilometer';
+				} else if(1 < pic.distance < 10) {
+					pic.distance = Math.floor(pic.distance*10) + ' kilometers';
+				} else {
+					pic.distance = Math.floor(pic.distance) + ' kilometers';
 				}
 			});
 			callback(null, relsortedPics);
