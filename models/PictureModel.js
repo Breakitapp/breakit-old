@@ -77,9 +77,9 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 				} else if(0.1 < pic.distance < 0.5) {
 					pic.distance = 'under 500 meters';
 				} else if(0.5 < pic.distance < 1) {
-				vpic.distance = 'under 1 kilometer';
+					pic.distance = 'under 1 kilometer';
 				} else if(1 < pic.distance < 10) {
-					pic.distance = Math.floor(pic.distance*10) + ' kilometers';
+					pic.distance = Math.floor(pic.distance*10)/10 + ' kilometers';
 				} else {
 					pic.distance = Math.floor(pic.distance) + ' kilometers';
 				}
