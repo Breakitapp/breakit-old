@@ -126,7 +126,6 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 
 		var picture_ = picture; 
 		picture_.distance = distance;
-		console.log(picture_);
 
     return picture_;
 };
