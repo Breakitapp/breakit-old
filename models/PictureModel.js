@@ -8,6 +8,7 @@
 // requires the models
 
 var models = require('../model'),
+	mongoose = require('mongoose'),
 	async = require('async');
 
 // Function for finding all pictures sorted by points DEPRECATED
@@ -38,7 +39,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 	async.series(
 		[function(callback){
 			//console.log("waterfall function 1");
-			models.Picture.find({loc: {$within: {$centerSphere: [[lon, lat], 2000/6713]}}}).sort('date': -1).skip((20*page)-20).limit(20).exec(function(err, pics){
+			models.Picture.find({loc: {$within: {$centerSphere: [[lon, lat], 2000/6713]}}}).skip((20*page)-20).limit(20).exec(function(err, pics){
 				//console.log("waterfall function 1 query");
     		if(err){
     			throw err;
@@ -49,9 +50,28 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 				callback(null, allPics);
 			});
 		},
+		//Calculates the distance from the picture to the viewer
+    function(callback) {
+			//console.log("waterfall function 2");
+			allPics.forEach(function(pic) {
+				//console.log("waterfall function 2 change score");
+				var relPic = relativePoints(lon, lat, pic);
+	    	relsortedPics.push(relPic);
+				//console.log("relPic: "+ relPic);
+    	});
+			callback(null, relsortedPics);
+		},
+		function(callback) {
+			relsortedPics.sort(function(a,b) {
+				if(a.distance < b.distance) return -1;
+				if(a.distance < b.distance) return 1;
+				return 0;
+			});
+			callback(null, relsortedPics);
+		},
 		//Changes the distance from meter to km and rounds when needed
 		function(callback) {
-			allPics.forEach(function(pic) {
+			relsortedPics.forEach(function(pic) {
 				switch(pic.distance) {
 					case(pic.distance < 0.1) :
 						pic.distance = 'under 100 meters';
@@ -70,8 +90,8 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 		}
 		],
 		function(err, results) {
-			callback(results[1]);
-			return results[1];
+			callback(results[3]);
+			return results[3];
 		}
 	);
 };
@@ -108,7 +128,7 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 
 		var picture_ = picture; 
 		picture_.distance = distance;
-		console.log('distance from picture' + picture_.distance);
+		console.log(picture_);
 
     return picture_;
 };
