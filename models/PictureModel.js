@@ -40,45 +40,49 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 			//console.log("waterfall function 1");
 			models.Picture.find({loc: {$near: [lon, lat]}}).skip((20*page)-20).limit(20).exec(function(err, pics){
 				//console.log("waterfall function 1 query");
-    		if(err){
-    			throw err;
-    		}
-    		pics.forEach(function(pic) {
-    			allPics.push(pic);
-    		});
+				if(err){
+					throw err;
+				}
+				pics.forEach(function(pic) {
+					allPics.push(pic);
+		});
 				callback(null, allPics);
 			});
 		},
 		//Calculates the distance from the viewer to the picture
-    function(callback) {
+		function(callback) {
 			//console.log("waterfall function 2");
 			allPics.forEach(function(pic) {
 				//console.log("waterfall function 2 change score");
 				var relPic = relativePoints(lon, lat, pic);
-	    	relsortedPics.push(relPic);
+				relsortedPics.push(relPic);
 				//console.log("relPic: "+ relPic);
-    	});
+			});
 			callback(null, relsortedPics);
 		},
-   	 // Orders the pictures again based on distance.
-		 function(callback){
+		// Orders the pictures again based on distance.
+		function(callback){
 			//console.log("waterfall function 3");
 			relsortedPics.sort(function compare(a,b){
 				//console.log("waterfall function 3 sort");
-    		if (a.distance < b.distance)
-    			return -1;
-    		if (a.distance > b.distance)
-    			return 1;
-    		return 0;
-    	})
+				if (a.distance < b.distance)
+					return -1;
+				if (a.distance > b.distance)
+					return 1;
+				return 0;
+			})
 			callback(null, relsortedPics);
 		},
 		//Changes the distance from meter to km and rounds when needed
 		function(callback) {
 			relsortedPics.forEach(function(pic) {
-				if(pic.distance <1){
-					pic.distance = Math.floor(pic.distance*1000)+' meters';
-				}					else if(pic.distance >1 && pic.distance < 10 ){
+				if(pic.distance <0.1){
+					pic.distance = 'under 100 meters';
+				}	else if(0.1<pic.distance <0.5){
+					pic.distance = 'under 500 meters';
+				} else if(pic.distance <1){
+					pic.distance = 'under 1 km';
+				}	else if(pic.distance >1 && pic.distance < 10 ){
 					pic.distance = Math.floor(pic.distance*10)/10 +' km' ;	
 				}
 				else{
