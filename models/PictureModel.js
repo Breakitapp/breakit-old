@@ -29,7 +29,7 @@ models.Picture.allSorted = function(callback) {
 
 // Function that sort the pictures relative to the viewers location
 
-models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_location_lat, page, callback) {	
+models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_location_lat, page, callback) {
 	var lon = parseFloat(viewer_location_lon, 10);
 	var lat = parseFloat(viewer_location_lat, 10);
 	var allPics = [];
@@ -38,7 +38,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 	async.series(
 		[function(callback){
 			//console.log("waterfall function 1");
-			models.Picture.find({loc: {$within: {$centerSphere: [[lon, lat], 0.1/6713]}}}).skip((20*page)-20).limit(20).exec(function(err, pics){
+			models.Picture.find({loc: {$within: {$centerSphere: [[lon, lat], 2000/6713]}}}).sort('date': -1).skip((20*page)-20).limit(20).exec(function(err, pics){
 				//console.log("waterfall function 1 query");
     		if(err){
     			throw err;
@@ -49,48 +49,29 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 				callback(null, allPics);
 			});
 		},
-		//Calculates the distance from the viewer to the picture
-    function(callback) {
-			//console.log("waterfall function 2");
-			allPics.forEach(function(pic) {
-				//console.log("waterfall function 2 change score");
-				var relPic = relativePoints(lon, lat, pic);
-	    	relsortedPics.push(relPic);
-				//console.log("relPic: "+ relPic);
-    	});
-			callback(null, relsortedPics);
-		},
-   	 // Orders the pictures again based on distance.
-		 function(callback){
-			//console.log("waterfall function 3");
-			relsortedPics.sort(function compare(a,b){
-				//console.log("waterfall function 3 sort");
-    		if (a.distance < b.distance)
-    			return -1;
-    		if (a.distance > b.distance)
-    			return 1;
-    		return 0;
-    	})
-			callback(null, relsortedPics);
-		},
 		//Changes the distance from meter to km and rounds when needed
 		function(callback) {
-			relsortedPics.forEach(function(pic) {
-				if(pic.distance <1){
-					pic.distance = Math.floor(pic.distance*1000)+' meters';
-				}					else if(pic.distance >1 && pic.distance < 10 ){
-					pic.distance = Math.floor(pic.distance*10)/10 +' km' ;	
-				}
-				else{
-					pic.distance = Math.floor(pic.distance)+' km';
+			allPics.forEach(function(pic) {
+				switch(pic.distance) {
+					case(pic.distance < 0.1) :
+						pic.distance = 'under 100 meters';
+						break;
+					case(0.1 < pic.distance < 0.5) :
+						pic.distance = 'under 500 meters';
+						break;
+					case(0.5 < pic.distance < 1) :
+						pic.distance = 'under 1 kilometer';
+						break;
+					default :
+						pic.distance = Math.floor(pic.distance)+' km';
 				}
 			});
 			callback(null, relsortedPics);
 		}
 		],
 		function(err, results) {
-			callback(results[3]);
-			return results[3];
+			callback(results[1]);
+			return results[1];
 		}
 	);
 };
@@ -127,9 +108,11 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 
 		var picture_ = picture; 
 		picture_.distance = distance;
+		console.log('distance from picture' + picture_.distance);
 
     return picture_;
 };
 
 exports.allSorted = models.Picture.prototype.allSorted;
 exports.relSorted = models.Picture.prototype.relativeSort;
+

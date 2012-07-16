@@ -62,8 +62,8 @@ exports.Picture = Picture;
 exports.Feedback = Feedback;
 exports.Comment = Comment;
 
-/*
 
+/*
 var mikko = new User({name: 'Mikko Majuri'});
 
 mikko.save(function(error){

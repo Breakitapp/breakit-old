@@ -64,5 +64,5 @@ app.post('/comment', routes.comment)
 // Server startup
 app.listen(3000);
 // Database connection
-mongoose.connect('mongodb://54.247.186.138/breakit');
+mongoose.connect('mongodb://localhost/breakit');
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
