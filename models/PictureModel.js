@@ -5,31 +5,69 @@
  * @type {*}
  */
 
-// requires the models
+//Module and model dependencies
 
-var models = require('../model'),
-	async = require('async');
+var models 	= require('../model')
+	,	async 	= require('async')
+	,	fs			= require('fs')
+	,	dt			=	require('./DateModel');
 
-// Function for finding all pictures sorted by points DEPRECATED
+//Creates a ne picture document and stores it
+models.Picture.prototype.createPicture = function(picData, callback) {
+	var date = dt.getDate();
+	console.log(date + " : the user uploaded a picture, with the specs : ");
+	console.log(picData);
+  
+	var latitude = parseFloat(picData.latitude, 10);
+	var longitude = parseFloat(picData.longitude, 10);
+	 
+	var picture = new models.Picture({
+		headline			:		picData.headline,
+		loc						:		{lon: longitude, lat: latitude},
+		location_name	:		picData.location_name,
+		story					:		picData.story,
+		user					:		picData.user
+	});
 
-models.Picture.allSorted = function(callback) {
-    var pictures = [];
-    models.Picture.find().sort('points', 'descending').exec(function (err, pics){
-        if(err) {
-            throw err;
-        }
-        // push pictures from object to an array
-        pics.forEach(function(pic) {
-            pictures.push(pic);
-        });
-        callback(null, pictures);
-    });
-    return pictures;
-};
+	//TODO Only handles jpegs, needs to inlcude png and gif.
+	picture.name = 'images/' + picture._id + '.jpeg';
+	picture.save(function(err) {
+		if(err) throw err;
+	});
+	callback(picture);
+	return picture;
+}
+
+models.Picture.prototype.addComment = function(comment) {
+	this.comments.push(comment);
+	this.save(function(err) {
+		if(err) throw err;
+	});
+}
+
+//Calculates the timedifference between now and when the picture has been uploaded. 
+models.Picture.prototype.timeDifference = function(pics, callback) {
+	var dt = new Date()
+	for(var i = 0; i < pics.length; i++) {
+		var picDate = new Date(pics[i].date);
+		var timeSincePic = dt - picDate;
+		timeSincePic = Math.floor(timeSincePic/60000);
+		if(timeSincePic >= 60) {
+			timeSincePic = Math.floor(timeSincePic/60) + ' hours';
+		} else if (10 < timeSincePic < 60) {
+			timeSincePic = Math.floor(timeSincePic/5) + ' minutes';
+		} else {
+			timeSincePic += ' minutes';
+		}
+		pics[i].timeSince = timeSincePic;
+	}
+	callback(pics);
+	return pics
+}
 
 // Function that sort the pictures relative to the viewers location
 
-models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_location_lat, page, callback) {	
+models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_location_lat, page, callback) {
 	var lon = parseFloat(viewer_location_lon);
 	var lat = parseFloat(viewer_location_lat);
 	var allPics = [];
@@ -137,3 +175,5 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 
 exports.allSorted = models.Picture.prototype.allSorted;
 exports.relSorted = models.Picture.prototype.relativeSort;
+exports.timeDifference = models.Picture.prototype.timeDifference;
+exports.createPicture = models.Picture.prototype.createPicture;

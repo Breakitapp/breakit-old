@@ -10,7 +10,7 @@
 var models = require('../model'),
 	async = require('async');
 
-models.Feedback.allSorted = function(callback) {
+models.Feedback.prototype.allSorted = function(callback) {
     var feedbacks = [];
     models.Feedback.find().sort('date', 'descending').exec(function (err, fbs){
         if(err) {
