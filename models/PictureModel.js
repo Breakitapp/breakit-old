@@ -10,7 +10,10 @@
 var models 	= require('../model')
 	,	async 	= require('async')
 	,	fs			= require('fs')
-	,	dt			=	require('./DateModel');
+	,	dt			=	require('./DateModel')
+	,	mongoose=	require('mongoose');
+
+console.log('in pictureModel');
 
 //Creates a ne picture document and stores it
 models.Picture.prototype.createPicture = function(picData, callback) {
@@ -65,6 +68,25 @@ models.Picture.prototype.timeDifference = function(pics, callback) {
 	return pics
 }
 
+//Function for finding all pictures inside a distance
+var findInsideRadius = function(lon, lat, minDist, maxDist, callback) {
+	var pictures = []
+	models.Picture.db.db.executeDbCommand({geoNear : 'pictures', near : [lon, lat],  spherical : true,
+		maxDistance : maxDist, distanceMultiplier : 6378160.0}, function(err, pics) {
+			if(err) throw err;
+			console.log('finding inside radius ' + minDist + ' : ' + maxDist);
+			for(pic in pics) {
+				if(pic.dist > minDist) {
+					console.log(pic);
+					pictures.push(pic);
+				}
+		}
+		console.log('all the pictures' + pictures);
+		callback(pictures);
+		return pictures;
+	});
+};
+
 // Function that sort the pictures relative to the viewers location
 
 models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_location_lat, page, callback) {
@@ -73,23 +95,17 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 	var allPics = [];
 	var relsortedPics = [];
 	
-	async.series(
+	async.waterfall(
 		[function(callback){
 			//console.log("waterfall function 1");
-			models.Picture.find({loc: {$near: [lon, lat]}}).skip((20*page)-20).limit(20).exec(function(err, pics){
-				//console.log("waterfall function 1 query");
-				if(err){
-					throw err;
-				}
-				pics.forEach(function(pic) {
-					allPics.push(pic);
-		});
+			findInsideRadius(lon, lat, 0, 5000, function(allPics) {
 				callback(null, allPics);
 			});
 		},
 		//Calculates the distance from the viewer to the picture
-		function(callback) {
+		function(allpics, callback) {
 			//console.log("waterfall function 2");
+			console.log(allPics);
 			allPics.forEach(function(pic) {
 				//console.log("waterfall function 2 change score");
 				var relPic = relativePoints(lon, lat, pic);
@@ -99,7 +115,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 			callback(null, relsortedPics);
 		},
 		// Orders the pictures again based on distance.
-		function(callback){
+		function(relsortedPics, callback){
 			//console.log("waterfall function 3");
 			relsortedPics.sort(function compare(a,b){
 				//console.log("waterfall function 3 sort");
@@ -112,7 +128,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 			callback(null, relsortedPics);
 		},
 		//Changes the distance from meter to km and rounds when needed
-		function(callback) {
+		function(relsortedPics, callback) {
 			relsortedPics.forEach(function(pic) {
 				if(pic.distance <0.1){
 					pic.distance = 'under 100 meters';
@@ -131,8 +147,8 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 		}
 		],
 		function(err, results) {
-			callback(results[3]);
-			return results[3];
+			callback(results);
+			return results;
 		}
 	);
 };
@@ -172,6 +188,7 @@ var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
 
     return picture_;
 };
+
 
 exports.allSorted = models.Picture.prototype.allSorted;
 exports.relSorted = models.Picture.prototype.relativeSort;
