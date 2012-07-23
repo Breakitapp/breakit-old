@@ -70,20 +70,56 @@ models.Picture.prototype.timeDifference = function(pics, callback) {
 var findInsideRadius = function(lon, lat, minDist, maxDist, callback) {
 	var pictures = []
 	models.Picture.db.db.executeDbCommand({geoNear : 'pictures', near : [lon, lat],  spherical : true,
-		maxDistance : maxDist, distanceMultiplier : 6378160.0}, function(err, docs) {
+		maxDistance : maxDist, distanceMultiplier : 6378.16}, function(err, docs) {
 			if(err) throw err;
-			console.log('finding inside radius ' + minDist + ' : ' + maxDist);
 			for(var i = 0; i < docs.documents[0].results.length; i++) {
 				var doc = docs.documents[0].results[i];
 				if(doc.dis > minDist) {
 					var pic = doc.obj;
-					pic.distance = doc.dist;
+					pic.distance = doc.dis;
 					pictures.push(pic);
 				}
 			}
 		callback(pictures);
 		return pictures;
 	});
+};
+
+var compare = function(a,b) {
+	if (a.date < b.date)
+		return -1;
+	if (a.date > b.date)
+		return 1;
+	return 0;
+};
+
+var findAllByRadius = function(lon, lat, callback) {
+	var pictures = [];
+	var dist = [0, 0.1, 0.5, 1, 10, 10000];
+	var j = dist.length-2;
+
+	var cb = function() {
+		callback(pictures);
+		return(pictures);
+	}
+
+	var done = function() {
+		if(j == 0) {
+			cb();
+		} else {
+			j--;
+		}
+	};
+
+	for(var i = 0; i < dist.length-1; i++) {
+		findInsideRadius(lon, lat, dist[i], dist[i+1], function(pics) {
+			pics.sort(compare);
+			for(var k = 0; k < pics.length; k++) {
+				pictures.push(pics[k]);
+			}
+			done();
+		});
+	}
 };
 
 // Function that sort the pictures relative to the viewers location
@@ -97,7 +133,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 	async.waterfall(
 		[function(callback){
 			//console.log("waterfall function 1");
-			findInsideRadius(lon, lat, 0, 5000, function(allPics) {
+			findAllByRadius(lon, lat, function(allPics) {
 				callback(null, allPics);
 			});
 		},
