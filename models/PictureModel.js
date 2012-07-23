@@ -70,16 +70,20 @@ models.Picture.prototype.timeDifference = function(pics, callback) {
 var findInsideRadius = function(lon, lat, minDist, maxDist, callback) {
 	var pictures = []
 	models.Picture.db.db.executeDbCommand({geoNear : 'pictures', near : [lon, lat],  spherical : true,
-		maxDistance : maxDist, distanceMultiplier : 6378.16}, function(err, docs) {
+		maxDistance : (maxDist/6378.16), distanceMultiplier : 6378.16}, function(err, docs) {
 			if(err) throw err;
-			for(var i = 0; i < docs.documents[0].results.length; i++) {
+			console.log('findInsideRadius ' + minDist + ' : ' + maxDist);
+			for(var i = 0; i < docs.documents[0].results.length-1; i++) {
 				var doc = docs.documents[0].results[i];
+				console.log('the doc distance is ' + doc.dis + ' and the minDist is ' + minDist);
 				if(doc.dis > minDist) {
 					var pic = doc.obj;
+					console.log('findInsideRadius ' + pic.name);
 					pic.distance = doc.dis;
 					pictures.push(pic);
 				}
 			}
+		console.log(pictures.length);
 		callback(pictures);
 		return pictures;
 	});
