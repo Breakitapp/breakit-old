@@ -86,9 +86,9 @@ var findInsideRadius = function(lon, lat, minDist, maxDist, callback) {
 };
 
 var compare = function(a,b) {
-	if (a.date < b.date)
-		return -1;
 	if (a.date > b.date)
+		return -1;
+	if (a.date < b.date)
 		return 1;
 	return 0;
 };
