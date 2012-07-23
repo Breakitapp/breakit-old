@@ -13,8 +13,6 @@ var models 	= require('../model')
 	,	dt			=	require('./DateModel')
 	,	mongoose=	require('mongoose');
 
-console.log('in pictureModel');
-
 //Creates a ne picture document and stores it
 models.Picture.prototype.createPicture = function(picData, callback) {
 	var date = dt.getDate();
@@ -72,16 +70,17 @@ models.Picture.prototype.timeDifference = function(pics, callback) {
 var findInsideRadius = function(lon, lat, minDist, maxDist, callback) {
 	var pictures = []
 	models.Picture.db.db.executeDbCommand({geoNear : 'pictures', near : [lon, lat],  spherical : true,
-		maxDistance : maxDist, distanceMultiplier : 6378160.0}, function(err, pics) {
+		maxDistance : maxDist, distanceMultiplier : 6378160.0}, function(err, docs) {
 			if(err) throw err;
 			console.log('finding inside radius ' + minDist + ' : ' + maxDist);
-			for(pic in pics) {
-				if(pic.dist > minDist) {
-					console.log(pic);
+			for(var i = 0; i < docs.documents[0].results.length; i++) {
+				var doc = docs.documents[0].results[i];
+				if(doc.dis > minDist) {
+					var pic = doc.obj;
+					pic.distance = doc.dist;
 					pictures.push(pic);
 				}
-		}
-		console.log('all the pictures' + pictures);
+			}
 		callback(pictures);
 		return pictures;
 	});
@@ -102,34 +101,8 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 				callback(null, allPics);
 			});
 		},
-		//Calculates the distance from the viewer to the picture
-		function(allpics, callback) {
-			//console.log("waterfall function 2");
-			console.log(allPics);
+		function(allPics, callback) {
 			allPics.forEach(function(pic) {
-				//console.log("waterfall function 2 change score");
-				var relPic = relativePoints(lon, lat, pic);
-				relsortedPics.push(relPic);
-				//console.log("relPic: "+ relPic);
-			});
-			callback(null, relsortedPics);
-		},
-		// Orders the pictures again based on distance.
-		function(relsortedPics, callback){
-			//console.log("waterfall function 3");
-			relsortedPics.sort(function compare(a,b){
-				//console.log("waterfall function 3 sort");
-				if (a.distance < b.distance)
-					return -1;
-				if (a.distance > b.distance)
-					return 1;
-				return 0;
-			})
-			callback(null, relsortedPics);
-		},
-		//Changes the distance from meter to km and rounds when needed
-		function(relsortedPics, callback) {
-			relsortedPics.forEach(function(pic) {
 				if(pic.distance <0.1){
 					pic.distance = 'under 100 meters';
 				}	else if(0.1<pic.distance <0.5){
@@ -143,7 +116,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 					pic.distance = Math.floor(pic.distance)+' km';
 				}
 			});
-			callback(null, relsortedPics);
+			callback(null, allPics);
 		}
 		],
 		function(err, results) {
@@ -151,42 +124,6 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 			return results;
 		}
 	);
-};
-
-// A function that calculates the points of a picture relative to the location of the viewer
-
-var relativePoints = function(viewerLocationLong, viewerLocationLat, picture) {
-
-    var toRad = function(deg) {
-        return deg*(Math.PI/180);
-    };
-
-    var absolute_points = picture.points;
-    var viewerLocationLong = viewerLocationLong;
-    var viewerLocationLat = viewerLocationLat;
-
-    var picLocationLongitude = picture.loc.lon;
-    var picLocationLatitude = picture.loc.lat;
-    var R = 6371; // km
-
-    var dLat = toRad((viewerLocationLat-picLocationLatitude));
-    var dLon = toRad((viewerLocationLong-picLocationLongitude));
-    var lat1 = toRad(viewerLocationLat);
-    var lat2 = toRad(picLocationLatitude);
-
-    // Uses haversine formula to calculate distance from degrees
-    // http://www.movable-type.co.uk/scripts/latlong.html
-
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
-
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    var distance = R * c;
-
-		var picture_ = picture; 
-		picture_.distance = distance;
-
-    return picture_;
 };
 
 
