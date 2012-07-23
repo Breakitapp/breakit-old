@@ -117,6 +117,9 @@ var findAllByRadius = function(lon, lat, callback) {
 
 	for(var i = 0; i < dist.length-1; i++) {
 		findInsideRadius(lon, lat, dist[i], dist[i+1], function(pics) {
+			if(pics[i]) {
+				console.log(typeof(pics[i].date));
+			}
 			pics.sort(compare);
 			for(var k = 0; k < pics.length; k++) {
 				pictures.push(pics[k]);
