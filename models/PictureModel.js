@@ -10,8 +10,7 @@
 var models 	= require('../model')
 	,	async 	= require('async')
 	,	fs			= require('fs')
-	,	dt			=	require('./DateModel')
-	,	mongoose=	require('mongoose');
+	,	dt			=	require('./DateModel');
 
 //Creates a ne picture document and stores it
 models.Picture.prototype.createPicture = function(picData, callback) {
@@ -66,29 +65,26 @@ models.Picture.prototype.timeDifference = function(pics, callback) {
 	return pics
 }
 
-//Function for finding all pictures inside a distance
+//Function for finding all pictures inside a radius
 var findInsideRadius = function(lon, lat, minDist, maxDist, callback) {
 	var pictures = []
 	models.Picture.db.db.executeDbCommand({geoNear : 'pictures', near : [lon, lat],  spherical : true,
 		maxDistance : (maxDist/6378.16), distanceMultiplier : 6378.16}, function(err, docs) {
 			if(err) throw err;
-			console.log('findInsideRadius ' + minDist + ' : ' + maxDist);
 			for(var i = 0; i < docs.documents[0].results.length-1; i++) {
 				var doc = docs.documents[0].results[i];
-				console.log('the doc distance is ' + doc.dis + ' and the minDist is ' + minDist);
 				if(doc.dis > minDist) {
 					var pic = doc.obj;
-					console.log('findInsideRadius ' + pic.name);
 					pic.distance = doc.dis;
 					pictures.push(pic);
 				}
 			}
-		console.log(pictures.length);
 		callback(pictures);
 		return pictures;
 	});
 };
 
+//helperfunction to order by date
 var compare = function(a,b) {
 	if (a.date > b.date)
 		return -1;
@@ -96,6 +92,9 @@ var compare = function(a,b) {
 		return 1;
 	return 0;
 };
+
+//finds all pictures and categorizes them first into radia and then orders by time
+//TODO is this needed?
 
 var findAllByRadius = function(lon, lat, callback) {
 	var pictures = [];
@@ -115,13 +114,11 @@ var findAllByRadius = function(lon, lat, callback) {
 		}
 	};
 
+	//call the findInsideRadius-function for all the distances
 	for(var i = 0; i < dist.length-1; i++) {
 		findInsideRadius(lon, lat, dist[i], dist[i+1], function(pics) {
-			if(pics[i]) {
-				console.log(typeof(pics[i].date));
-			}
 			pics.sort(compare);
-			for(var k = 0; k < pics.length; k++) {
+			for(var k = 0; k < pics.length || k < 20 ; k++) {
 				pictures.push(pics[k]);
 			}
 			done();
@@ -136,11 +133,13 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 	var lat = parseFloat(viewer_location_lat);
 	var allPics = [];
 	var relsortedPics = [];
+	var dist = [0, 0.1, 0.5, 1, 10, 10000];
 	
 	async.waterfall(
 		[function(callback){
 			//console.log("waterfall function 1");
-			findAllByRadius(lon, lat, function(allPics) {
+			findInsideRadius(lon, lat, dist[page-1], dist[page], function(allPics) {
+				allPics.sort(compare);
 				callback(null, allPics);
 			});
 		},
@@ -154,8 +153,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 					pic.distance = 'under 1 km';
 				}	else if(pic.distance >1 && pic.distance < 10 ){
 					pic.distance = Math.floor(pic.distance*10)/10 +' km' ;	
-				}
-				else{
+				} else {
 					pic.distance = Math.floor(pic.distance)+' km';
 				}
 			});
