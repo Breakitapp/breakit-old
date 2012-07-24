@@ -71,12 +71,14 @@ var findInsideRadius = function(lon, lat, minDist, maxDist, callback) {
 	models.Picture.db.db.executeDbCommand({geoNear : 'pictures', near : [lon, lat],  spherical : true,
 		maxDistance : (maxDist/6378.16), distanceMultiplier : 6378.16}, function(err, docs) {
 			if(err) throw err;
-			for(var i = 0; i < docs.documents[0].results.length-1; i++) {
-				var doc = docs.documents[0].results[i];
-				if(doc.dis > minDist) {
-					var pic = doc.obj;
-					pic.distance = doc.dis;
-					pictures.push(pic);
+			if(docs) {
+				for(var i = 0; i < docs.documents[0].results.length-1; i++) {
+					var doc = docs.documents[0].results[i];
+					if(doc.dis > minDist) {
+						var pic = doc.obj;
+						pic.distance = doc.dis;
+						pictures.push(pic);
+					}
 				}
 			}
 		callback(pictures);
@@ -134,6 +136,9 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 	var allPics = [];
 	var relsortedPics = [];
 	var dist = [0, 0.1, 0.5, 1, 10, 10000];
+	if(page==6) {
+		return;
+	}
 	
 	async.waterfall(
 		[function(callback){

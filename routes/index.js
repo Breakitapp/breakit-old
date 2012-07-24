@@ -30,6 +30,7 @@ exports.location_refresh = function(req, res){
 	var lon = req.query['lon'];
 	var lat = req.query['lat'];
 	var page = req.query['page'];
+	console.log('page is ' + page);
 	var date = dt.getDate();
 
 	//This is a crude logging mechanism, that writes the date and location of a viewer. is done only on the first load
