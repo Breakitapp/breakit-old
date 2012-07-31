@@ -12,6 +12,7 @@ var models			= require('../model')
 	,	comment			=	require('../models/CommentModel')
 	, feedback		= require('../models/FeedbackModel')
   , formidable	= require('formidable')
+	, mailer			= require('nodemailer')
   , format			= require('util').format
   , fs 					= require('fs')
 	,	url 				= require('url')
@@ -179,9 +180,36 @@ exports.signup = function(req, res) {
 }
 
 exports.signup_post = function(req, res) {
-	res.send('thank you for registering for our beta, you should recieve a confirmation mail soon');
-}
+	var email = req.body.email;
+  var user = new models.User({
+		email		:		email
+  });
+	user.save(function(err) {
+		if(err) throw err;
+	});
 
+	var transport = mailer.createTransport('SES', {
+		AWSAccesKeyID : 'AKIAJD3WZOFBSHHZCIYQ',
+		AWSSecretKey : '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'
+	});
+
+	var mailOptions = {
+		from : 'Breakit Info <info@breakitapp.com>',
+		to: email,
+		subject:  'Thank you for registering for Breakit beta',
+		generateTextFromHTML: true,
+		html: '<h1>Welcome to test the Breakit beta</h1>, <p>we’re thrilled to have you on board!<br>  We’ll notify you as soon as Breakit is ready for testing. All the feedback that you could possibly come up with at this stage, and later, will be much appreciated. We are not building this service for us personally, it´s being built for you guys out there so do pitch in your ideas for development!<br><br> In the meantime keep updated by checking out our FB page <a href="http://www.facebook.com/breakitstories"Breakit</a> and follow us on Twitter #Breakitapp!<br><br> Soon you’ll be able to both share and see things that are happening around you.<br><br> Cheers, <br><br>Breakit team Jolle, Mikko, Marko, Binit, Mohammad and Seb'
+	}
+	
+	transport.sendMail(mailOptions, function(err, response) {
+		if(err){
+			console.log(err);
+		}else{
+			console.log("Message sent: " + response.message);
+			res.send('thank you for registering for our beta, you should recieve a confirmation mail soon');
+		}
+	});
+};
 //Update the score of a pic after a post from front-end. Return the new score
 //LEGACY
 exports.update_score = function(req, res) {
