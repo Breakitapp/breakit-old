@@ -17,9 +17,10 @@ html
 					form(action='/signup', method='post', name='signup')
 						label email : 
 						input(type='email', name='email')
+						br
 						label your phone :
 						select(name='phone')
 							option(value='iPhone') iPhone
 							option(value='android') Android
 							option(value='wm') Windows
-						input(type='submit', value='Sign Up For Beta')
+						input(type='submit', value='Sign Up For Beta', id='submit')
