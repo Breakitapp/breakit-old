@@ -48,6 +48,10 @@ app.get('/test', routes.test);
 app.get('/upload', routes.picture);
 app.post('/upload', routes.upload);
 
+//Beta signup
+app.get('/signup', routes.signup);
+app.post('/signup', routes.signup_post)
+
 //User registration
 app.get('/registration', routes.registration);
 app.post('/registration', routes.register_new);

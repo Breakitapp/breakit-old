@@ -1,0 +1,25 @@
+!!! 5
+html
+	head
+		title Breakit beta-signup
+		link(rel='stylesheet', href='/stylesheets/signup.css')
+	body
+		div#container
+			div#signup_box
+				div#breakit_logo
+					img(src='/images/logos/logo_notext.png')
+			div#signup_tab
+				div#story_tab
+					p 
+						strong Breakit 
+						– See what’s happening around you. A place where you can share pictures and short stories of current stuff that you know interests more than just your friends or followers. Sign up now and be the first to know.
+				div#signup_form
+					form(action='/signup', method='post', name='signup')
+						label email : 
+						input(type='email', name='email')
+						label your phone :
+						select(name='phone')
+							option(value='iPhone') iPhone
+							option(value='android') Android
+							option(value='wm') Windows
+						input(type='submit', value='Sign Up For Beta')
