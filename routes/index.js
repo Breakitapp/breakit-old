@@ -189,7 +189,7 @@ exports.signup_post = function(req, res) {
 	});
 
 	var transport = mailer.createTransport('SES', {
-		AWSAccesKeyID : 'AKIAJD3WZOFBSHHZCIYQ',
+		AWSAccessKeyID : 'AKIAJD3WZOFBSHHZCIYQ',
 		AWSSecretKey : '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'
 	});
 
