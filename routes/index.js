@@ -174,6 +174,14 @@ exports.show_feedbacks = function(req, res) {
 		});
 }
 
+exports.signup = function(req, res) {
+	res.render('signup');
+}
+
+exports.signup_post = function(req, res) {
+	res.send('thank you for registering for our beta, you should recieve a confirmation mail soon');
+}
+
 //Update the score of a pic after a post from front-end. Return the new score
 //LEGACY
 exports.update_score = function(req, res) {
