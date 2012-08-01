@@ -12,11 +12,17 @@ div(class='post fourcol')
     div.location
       img(src='/images/clock.png') 
       p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
-  img.stream(src=picture.name)
-  div.story 
-    p=picture.story
-  div.comments
-    a(href='/picture/'+'#{picture._id}')
-      p #{picture.comments.length} comments
+  div.stream
+    img(src=picture.name)
+  div.footer_bar
+    div.controls
+      img(src='/images/up.png')
+      img(src='/images/down.png')
+      a(href='/picture/'+'#{picture._id}')
+        img(src='/images/comments.png')
+      img(src='/images/share.png')
+    p.story=picture.story
+      
     //p(class='votePoints') #{picture.points}
     //a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet
+//div.comment #{picture.comments.length}

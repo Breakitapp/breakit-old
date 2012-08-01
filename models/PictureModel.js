@@ -53,7 +53,7 @@ models.Picture.prototype.timeDifference = function(pics, callback) {
 		var timeSincePic = dt - picDate;
 		timeSincePic = Math.floor(timeSincePic/60000);
 		if(timeSincePic >= 1440) {
-			timeSincePic = Math.floor(timeSincePic/1440) + 'days';
+			timeSincePic = Math.floor(timeSincePic/1440) + 'd';
 		} else if(timeSincePic >= 60) {
 			timeSincePic = Math.floor(timeSincePic/60) + 'h';
 		} else if (10 < timeSincePic < 60) {
