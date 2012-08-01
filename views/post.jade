@@ -1,15 +1,17 @@
 div(class='post fourcol')
   if(picture.headline)
-    h1=picture.headline
-    if(picture.location_name)
-      h3 Happened near #{picture.location_name}
-    p #{picture.distance} away from you
-    p #{picture.timeSince}  ago
+    div.headline
+      p=picture.headline
+  if(picture.location_name)
+    div.location
+      img(src='/images/clock.png') 
+      p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
   else
-    h1 HEADLINE OF PICTURE
-    h3 PICTURE LOCATION
-    p #{picture.distance} away from you
-    p #{picture.timeSince}  ago
+    div.headline
+      p HEADLINE OF PICTURE
+    div.location
+      img(src='/images/clock.png') 
+      p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
   img.stream(src=picture.name)
   div.story 
     p=picture.story
