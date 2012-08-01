@@ -154,7 +154,7 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 			allPics.forEach(function(pic) {
 				if(pic.distance <0.1){
 					pic.distance = '< 100m';
-				}	else if(0.1 <pic.distance  && <0.5){
+				}	else if(0.1 <pic.distance && pic.distance <0.5){
 					pic.distance = '< 500m';
 				} else if(pic.distance <1){
 					pic.distance = 'under 1km';
