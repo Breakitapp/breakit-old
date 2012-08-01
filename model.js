@@ -21,7 +21,8 @@ var UserSchema = new Schema({
     nName    :   {type: String},
 		email	   :   {type: String, set: toLower},
     date		 :	 {type: Date, default: Date.now},
-		beta		 :	 {type: Boolean, default: false}
+		beta		 :	 {type: Boolean, default: false},
+		phone		 :	 {type: String}
 });
 
 //TODO link picture with user.

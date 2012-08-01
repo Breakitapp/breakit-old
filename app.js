@@ -62,7 +62,10 @@ app.get('/feedbacks', routes.show_feedbacks)
 
 //Comments
 app.get('/picture/:id', routes.get_post);
-app.post('/comment', routes.comment)
+app.post('/comment', routes.comment);
+
+//Beta users
+app.get('/beta-users', routes.get_betausers);
 
 // Server startup
 app.listen(3000);

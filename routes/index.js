@@ -182,10 +182,14 @@ exports.signup = function(req, res) {
 exports.signup_post = function(req, res) {
 	var email = req.body.email;
   var user = new models.User({
-		email		:		email
+		email		:		email,
+		beta		:		'true',
+		phone		:		req.body.phone
   });
 	user.save(function(err) {
 		if(err) throw err;
+		console.log('new beta user: ');
+		console.log(user);
 	});
 
 	var transport = mailer.createTransport('SES', {
@@ -206,10 +210,14 @@ exports.signup_post = function(req, res) {
 			console.log(err);
 		}else{
 			console.log("Message sent: " + response.message);
-			res.send('thank you for registering for our beta, you should recieve a confirmation mail soon');
 		}
 	});
+	res.render('signup_confirm');
 };
+
+exports.get_betausers = function(req, res) {
+
+}
 //Update the score of a pic after a post from front-end. Return the new score
 //LEGACY
 exports.update_score = function(req, res) {
