@@ -52,12 +52,14 @@ models.Picture.prototype.timeDifference = function(pics, callback) {
 		var picDate = new Date(pics[i].date);
 		var timeSincePic = dt - picDate;
 		timeSincePic = Math.floor(timeSincePic/60000);
-		if(timeSincePic >= 60) {
-			timeSincePic = Math.floor(timeSincePic/60) + ' hours';
+		if(timeSincePic >= 1440) {
+			timeSincePic = Math.floor(timeSincePic/3600) + ' days';
+		} else if(timeSincePic >= 60) {
+			timeSincePic = Math.floor(timeSincePic/60) + ' H';
 		} else if (10 < timeSincePic < 60) {
-			timeSincePic = Math.floor(timeSincePic/5) + ' minutes';
+			timeSincePic = Math.floor(timeSincePic/5) + ' M';
 		} else {
-			timeSincePic += ' minutes';
+			timeSincePic += ' m';
 		}
 		pics[i].timeSince = timeSincePic;
 	}
