@@ -53,11 +53,11 @@ models.Picture.prototype.timeDifference = function(pics, callback) {
 		var timeSincePic = dt - picDate;
 		timeSincePic = Math.floor(timeSincePic/60000);
 		if(timeSincePic >= 1440) {
-			timeSincePic = Math.floor(timeSincePic/3600) + ' days';
+			timeSincePic = Math.floor(timeSincePic/1440) + 'days';
 		} else if(timeSincePic >= 60) {
-			timeSincePic = Math.floor(timeSincePic/60) + ' H';
+			timeSincePic = Math.floor(timeSincePic/60) + 'h';
 		} else if (10 < timeSincePic < 60) {
-			timeSincePic = Math.floor(timeSincePic/5) + ' M';
+			timeSincePic = Math.floor(timeSincePic/5) + 'm';
 		} else {
 			timeSincePic += ' m';
 		}
@@ -153,15 +153,15 @@ models.Picture.prototype.relativeSort = function(viewer_location_lon, viewer_loc
 		function(allPics, callback) {
 			allPics.forEach(function(pic) {
 				if(pic.distance <0.1){
-					pic.distance = 'under 100 meters';
-				}	else if(0.1<pic.distance <0.5){
-					pic.distance = 'under 500 meters';
+					pic.distance = '< 100m';
+				}	else if(0.1 <pic.distance  && <0.5){
+					pic.distance = '< 500m';
 				} else if(pic.distance <1){
-					pic.distance = 'under 1 km';
+					pic.distance = 'under 1km';
 				}	else if(pic.distance >1 && pic.distance < 10 ){
-					pic.distance = Math.floor(pic.distance*10)/10 +' km' ;	
+					pic.distance = Math.floor(pic.distance*10)/10 +'km' ;	
 				} else {
-					pic.distance = Math.floor(pic.distance)+' km';
+					pic.distance = Math.floor(pic.distance)+'km';
 				}
 			});
 			callback(null, allPics);
