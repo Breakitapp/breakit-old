@@ -1,27 +1,30 @@
-link(rel='stylesheet', href='../stylesheets/style.css')
-div(class='post')
-  if(picture.headline)
-    h1=picture.headline
-    if(picture.location_name)
-      h3 Happened near #{picture.location_name}
-    p #{picture.distance} away from you
-    p #{picture.timeSince}  ago
-  else
-    h1 HEADLINE OF PICTURE
-    p PICTURE LOCATION
-    p #{picture.distance} away from you
-    p #{picture.timeSince}  ago
-  img.stream(src='../'+'#{picture.name}')
-  div.story 
-    p=picture.story
-  div.comments
-    for comment in picture.comments
-      p=comment.date
-      p=comment.comment
-    form(action='/comment', method='post')
-      input(type='hidden', name='pic_id', value='#{picture._id}')
-      label Add your comment
-      br
-      textarea(name='comment', cols='200', rows='4')
-      br
-      input(type='Submit', value='Comment')
+extends layout
+block contents
+  div(class='post')
+    if(picture.headline)
+      div.headline
+        p=picture.headline
+      if(picture.location_name)
+        h3 Happened near #{picture.location_name}
+      p #{picture.distance} away from you
+      p #{picture.timeSince}  ago
+    else
+      div.headline
+        p HEADLINE OF PICTURE
+      div.location
+        img(src='/images/clock.png') 
+        p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
+    img.stream(src='../'+'#{picture.name}')
+    div.story 
+      p=picture.story
+    div.comments
+      for comment in picture.comments
+        p=comment.date
+        p=comment.comment
+      form(action='/comment', method='post')
+        input(type='hidden', name='pic_id', value='#{picture._id}')
+        label Add your comment
+        br
+        textarea(name='comment', cols='34', rows='4')
+        br
+        input(type='Submit', value='Comment')

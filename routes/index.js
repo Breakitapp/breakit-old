@@ -131,7 +131,7 @@ exports.get_post = function(req, res) {
 		}
 	],
 		function(err, results) {
-			res.render('comment', {picture : results[0]});
+			res.render('comment', {picture : results[0], title : 'Picture commenting'});
 		}
 	);
 }
