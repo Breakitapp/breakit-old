@@ -14,13 +14,23 @@ block contents
       div.location
         img(src='/images/clock.png') 
         p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
-    img.stream(src='../'+'#{picture.name}')
-    div.story 
-      p=picture.story
+    div.stream
+      img(src='../'+'#{picture.name}')
+    div.footer_bar
+      div.controls
+        img(src='/images/up.png')
+        img(src='/images/down.png')
+        img(src='/images/share.png')
+      p.story=picture.story
     div.comments
-      for comment in picture.comments
-        p=comment.date
-        p=comment.comment
+      table
+        for comment in picture.comments
+          tr
+            td
+              img(src='/images/user.png')
+            td
+              h1=comment.date
+              p=comment.comment
       form(action='/comment', method='post')
         input(type='hidden', name='pic_id', value='#{picture._id}')
         label Add your comment
