@@ -18,7 +18,7 @@ div(class='post fourcol')
     div.controls
       img(src='/images/up.png')
       img(src='/images/down.png')
-      a(href='/picture/'+'#{picture._id}')
+      a(href='/picture/?id='+'#{picture._id}'+'&time='+'#{picture.timeSince}'+'&dist='+'#{picture.distance}'+'&loc='+'#{picture.location_name}')
         img(src='/images/comments.png', class='down')
       img(src='/images/share.png')
     p.story=picture.story

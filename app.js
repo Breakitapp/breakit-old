@@ -61,7 +61,7 @@ app.post('/feedback', routes.feedback);
 app.get('/feedbacks', routes.show_feedbacks)
 
 //Comments
-app.get('/picture/:id', routes.get_post);
+app.get('/picture', routes.get_post);
 app.post('/comment', routes.comment);
 
 //Beta users

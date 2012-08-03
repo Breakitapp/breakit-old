@@ -122,16 +122,22 @@ exports.feedback = function(req, res) {
 
 // Get a post
 exports.get_post = function(req, res) {
+	var dist = req.query['dist'];
+	var loc = req.query['loc'];
+	var time = req.query['time'];
+	var id = req.query['id'];
+	console.log(id);
 	async.series([
 		function(callback) {
-			models.Picture.findById(req.params.id, function(err, pic){
+			models.Picture.findById(id, function(err, pic){
 				if(err) throw err;
+				console.log(pic);
 				callback(null, pic);
 			});
 		}
 	],
 		function(err, results) {
-			res.render('comment', {picture : results[0], title : 'Picture commenting'});
+			res.render('comment', {picture : results[0], title : 'Picture commenting', dist : dist, loc : loc, time : time});
 		}
 	);
 }

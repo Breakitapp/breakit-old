@@ -6,13 +6,13 @@ block contents
         p=picture.headline
       div.location
         img(src='/images/clock.png') 
-        p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
+        p #{time}  #{dist} away @ #{loc}
     else
       div.headline
         p HEADLINE OF PICTURE
       div.location
         img(src='/images/clock.png') 
-        p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
+        p #{time}  #{dist} away @ #{loc}
     div.stream
       img(src='../'+'#{picture.name}')
     div.footer_bar
