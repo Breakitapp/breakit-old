@@ -146,9 +146,13 @@ exports.comment = function(req,res) {
 	async.series([
 		function(callback) {
 			console.log(req.body.comment);
-			comment.createComment(req.body.comment, function(comment) {
-				callback(null, comment);
-			});
+			if(req.body.comment !== '') {
+				comment.createComment(req.body.comment, function(comment) {
+					callback(null, comment);
+				});
+			} else {
+				res.redirect('back');
+			}
 		},
 		function(callback) {
 			models.Picture.findById(req.body.pic_id, function(err, pic){
