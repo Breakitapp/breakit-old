@@ -21,7 +21,7 @@ div(class='post fourcol')
       a(href='/picture/?id='+'#{picture._id}'+'&time='+'#{picture.timeSince}'+'&dist='+'#{picture.distance}'+'&loc='+'#{picture.location_name}')
         img(src='/images/comments.png', class='down')
       img(src='/images/share.png')
-  div.comment 
+  div.comment_number 
     a(href='/picture/?id='+'#{picture._id}'+'&time='+'#{picture.timeSince}'+'&dist='+'#{picture.distance}'+'&loc='+'#{picture.location_name}') #{picture.comments.length}
   div.story
     p.story=picture.story
