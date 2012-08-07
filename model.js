@@ -12,7 +12,7 @@ function toLower (v) {
 
 var CommentSchema = new Schema({
 		comment		: 	{type: String},
-		date		  :		{type: Date, default: Date.now}
+		date		  :		{type: String}
 });
 
 var UserSchema = new Schema({

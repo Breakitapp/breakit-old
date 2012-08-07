@@ -162,7 +162,6 @@ exports.comment = function(req,res) {
 		}
 	],
 		function(err, results) {
-			results[0].date = dt.getDate();
 			console.log(results[1], results[0]);
 			results[1].addComment(results[0]);
 			res.redirect('back');
