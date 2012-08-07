@@ -15,7 +15,7 @@ exports.dateForComment = function () {
 	var dt = new Date();
 	var second = dt.getSeconds();
 	var minute = dt.getMinutes();
-	if(parseInt(minute) < 10) {
+	if(parseInt(minute, 10) < 10) {
 		minute = '0' + minute;
 	}
 	var hour = dt.getHours()+3;
