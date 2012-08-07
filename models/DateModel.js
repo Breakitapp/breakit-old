@@ -19,8 +19,7 @@ exports.dateForComment = function () {
 	var month = dt.getMonth()+1;
 	var day = dt.getDate();
 	var year = dt.getFullYear();
-	var date = dt.toLocaleDateString() +  ' ' + dt.toLocaleTimeString();
-	console.log('date for commenting ' + date);
+	var date = dt.toLocaleDateString() +  ' ' + hour + ':' + minute;
 	
 	return date;
 }
