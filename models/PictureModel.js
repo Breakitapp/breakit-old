@@ -105,7 +105,7 @@ var compare = function(a,b) {
 //Find stuff for media
 models.Picture.prototype.findHBL = function(callback) {
 	var hbl = [];
-	models.Picture.find({"tag":"HBL"}).sort("date":"descending").exec(function(err, pics) {
+	models.Picture.find({"tag":"HBL"}).sort("date","descending").exec(function(err, pics) {
 		if(err) throw err;
 		pics.forEach(function(pic) {
 			hbl.push(pic);
@@ -197,4 +197,4 @@ exports.allSorted = models.Picture.prototype.allSorted;
 exports.relSorted = models.Picture.prototype.relativeSort;
 exports.timeDifference = models.Picture.prototype.timeDifference;
 exports.createPicture = models.Picture.prototype.createPicture;
-exports.findHBL = models.Picture.prototyep.findHBL;
+exports.findHBL = models.Picture.prototype.findHBL;
