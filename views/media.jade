@@ -1,0 +1,7 @@
+extends layout
+
+block contents
+  div#newsfeed
+    if (pictures)
+      for picture in pictures
+        include post
