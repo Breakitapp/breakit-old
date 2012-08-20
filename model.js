@@ -36,6 +36,7 @@ var PictureSchema = new Schema({
 		location_name	:			{type: String},	 
     story					:			{type: String, index: true},
 		date		 			:			{type: Date, default: Date.now},
+		tags					:			{type: String},
 		comments			:			[Comment]
 });
 

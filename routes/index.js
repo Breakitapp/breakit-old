@@ -228,6 +228,12 @@ exports.signup_post = function(req, res) {
 exports.get_betausers = function(req, res) {
 
 }
+
+exports.get_media = function(req, res) {
+	picture.findHBL(function(err, pics) {
+		res.render('media', {title: 'Breakit - Pictures from Red Bull mäkiautoGP', pictures : pics});
+	});
+}
 //Update the score of a pic after a post from front-end. Return the new score
 //LEGACY
 exports.update_score = function(req, res) {

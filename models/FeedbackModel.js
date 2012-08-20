@@ -7,8 +7,7 @@
 
 // requires the models
 
-var models = require('../model'),
-	async = require('async');
+var models = require('../model');
 
 models.Feedback.prototype.allSorted = function(callback) {
     var feedbacks = [];

@@ -15,6 +15,10 @@ var models 	= require('../model')
 //Creates a ne picture document and stores it
 models.Picture.prototype.createPicture = function(picData, callback) {
 	var date = dt.getDate();
+	var tag;
+	if(picData.tag) {
+		tag = picData.tag;
+	}
 	console.log(date + " : the user uploaded a picture, with the specs : ");
 	console.log(picData);
   
@@ -26,6 +30,7 @@ models.Picture.prototype.createPicture = function(picData, callback) {
 		loc						:		{lon: longitude, lat: latitude},
 		location_name	:		picData.location_name,
 		story					:		picData.story,
+		tags					:		tag,
 		user					:		picData.user
 	});
 
@@ -96,6 +101,19 @@ var compare = function(a,b) {
 		return 1;
 	return 0;
 };
+
+//Find stuff for media
+models.Picture.prototype.findHBL = function(callback) {
+	var hbl = [];
+	models.Picture.find({"tag":"HBL"}).sort("date":"descending").exec(function(err, pics) {
+		if(err) throw err;
+		pics.forEach(function(pic) {
+			hbl.push(pic);
+		});
+		callback(null, hbl);
+	});
+	return hbl;
+}
 
 //finds all pictures and categorizes them first into radia and then orders by time
 //TODO is this needed?
@@ -179,3 +197,4 @@ exports.allSorted = models.Picture.prototype.allSorted;
 exports.relSorted = models.Picture.prototype.relativeSort;
 exports.timeDifference = models.Picture.prototype.timeDifference;
 exports.createPicture = models.Picture.prototype.createPicture;
+exports.findHBL = models.Picture.prototyep.findHBL;
