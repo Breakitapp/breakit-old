@@ -1,17 +1,24 @@
 div(class='post threecol')
-  if(picture.headline)
-    div.headline
-      p=picture.headline
-  if(picture.location_name)
-    div.location
-      img(src='/images/clock.png') 
-      p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
-  else
-    div.headline
-      p HEADLINE OF PICTURE
-    div.location
-      img(src='/images/clock.png') 
-      p #{picture.timeSince}  #{picture.distance} away @ #{picture.location_name}
+  div(class='topDiv')
+    div(class='leftDiv')
+      div(class='picDiv')
+        img(src='/images/user.png')
+      div(class='nameDiv')
+        p Name
+      div(class='headlineDiv')
+      if(picture.headline)
+        p=picture.headline
+      else
+        p headline
+    div(class='rightDiv')
+      div(class='timeDiv')
+        img(src='/images/clock.png')
+        p=picture.timeSince
+      div(class='distanceDiv')
+        p=picture.distance
+      div(class='addressDiv')
+        img(src='/images/location.png')
+        p=picture.location_name
   div.stream
     img(src=picture.name)
   div.footer_bar
@@ -26,6 +33,3 @@ div(class='post threecol')
   div.story
     p.story=picture.story
       
-    //p(class='votePoints') #{picture.points}
-    //a(href="https://twitter.com/share", class="twitter-share-button", data-via="me", data-url=picture.url(req), data-hashtags="breakit", data-lang="fi") Tweet
-

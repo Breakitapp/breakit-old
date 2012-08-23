@@ -37,6 +37,7 @@ var PictureSchema = new Schema({
     story					:			{type: String, index: true},
 		date		 			:			{type: Date, default: Date.now},
 		tags					:			{type: String},
+		publish				:			{type: Boolean, default: false},
 		comments			:			[Comment]
 });
 
@@ -81,10 +82,10 @@ var turku_lat = 22.2500;
 var story = "Nice boobs!";
 
 
-var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000, loc : {lon: helsinki_lon, lat: helsinki_lat}, story: story});
+var picture1 = new Picture({name: 'images/1.jpg', user: mikko, points: 1000, loc : {lon: helsinki_lon, lat: helsinki_lat}, story: story, tag : "HBL"});
 var picture2 = new Picture({name: 'images/2.jpg', user: mikko, points: 500, loc : {lon: helsinki_lon, lat: turku_lat}, story: story});
 var picture3 = new Picture({name: 'images/3.jpg', user: mikko, points: 2000, loc : {lon: turku_lon, lat: helsinki_lat}, story: story});
-var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 100, loc : {lon: turku_lon, lat: turku_lat}, story: story});
+var picture4 = new Picture({name: 'images/4.jpg', user: mikko, points: 100, loc : {lon: turku_lon, lat: turku_lat}, story: story, tag : "HBL"});
 var picture5 = new Picture({name: 'images/5.jpg', user: mikko, points: 4000, loc : {lon: turku_lon, lat: helsinki_lat}, story: story});
 var picture6 = new Picture({name: 'images/6.jpg', user: mikko, points: 300, loc : {lon: helsinki_lon, lat: helsinki_lat}, story: story});
 var picture7 = new Picture({name: 'images/7.jpg', user: mikko, points: 10, loc : {lon: helsinki_lon, lat: turku_lat}, story: story});
