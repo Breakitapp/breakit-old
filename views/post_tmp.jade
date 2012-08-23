@@ -1,22 +1,22 @@
 div(class='post threecol')
-  div(class='topDiv')
-    div(class='leftDiv')
-      div(class='picDiv')
+  div.topDiv
+    div.leftDiv
+      div.picDiv
         img(src='/images/user.png')
-      div(class='nameDiv')
+      div.nameDiv
         p Name
-      div(class='headlineDiv')
+      div.headlineDiv
       if(picture.headline)
         p=picture.headline
       else
         p headline
-    div(class='rightDiv')
-      div(class='timeDiv')
+    div.rightDiv
+      div.timeDiv
         img(src='/images/clock.png')
         p=picture.timeSince
-      div(class='distanceDiv')
+      div.distanceDiv
         p=picture.distance
-      div(class='addressDiv')
+      div.addressDiv
         img(src='/images/location.png')
         p=picture.location_name
   div.stream
