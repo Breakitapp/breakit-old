@@ -65,7 +65,7 @@ app.get('/picture', routes.get_post);
 app.post('/comment', routes.comment);
 
 //Media
-app.get('/media', routes.get_media);
+app.get('/signup/media', routes.get_media);
 
 //Beta users
 app.get('/beta-users', routes.get_betausers);
