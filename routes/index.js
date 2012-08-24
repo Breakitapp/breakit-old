@@ -47,7 +47,7 @@ exports.location_refresh = function(req, res){
 	},
 	function(pics, callback){
 		picture.timeDifference(pics, function(pics) {
-			callback(null, pics)
+			callback(null, pics);
 		});
 	}
 	],
@@ -230,12 +230,12 @@ exports.get_betausers = function(req, res) {
 }
 
 exports.get_media = function(req, res) {
-	async.waterfall([
+	async.waterfall([function(callback)
 			picture.findHBL(function(err, pics) {
 				if(err) throw err;
 				callback(null, pics);
-		});
-	},
+			});
+		}s,
 	function(pics, callback){
 		picture.timeDifference(pics, function(pics) {
 			callback(null, pics)
