@@ -13,14 +13,14 @@ div(class='post threecol')
         p=picture.headline
       else
         p headline
+      div.addressDiv
+        img(src='/images/location.png')
+        p=picture.location_name
     div.rightDiv
       div.timeDiv
         img(src='/images/clock.png')
         p=picture.timeSince
       br
-      div.addressDiv
-        img(src='/images/location.png')
-        p=picture.location_name
   div.stream
     a(href='http://46.137.122.206/#{picture.name}')
       img(src='http://46.137.122.206/#{picture.name}')
