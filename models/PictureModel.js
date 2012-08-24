@@ -106,11 +106,8 @@ var compare = function(a,b) {
 models.Picture.prototype.findHBL = function(callback) {
 	var hbl = [];
 	models.Picture.find({'tags':'Red Bull'}).sort("date","descending").exec(function(err, pics) {
-		console.log('finding all with Red Bull-tag');
-		console.log(pics);
 		if(err) throw err;
 		pics.forEach(function(pic) {
-			console.log(pic);
 			hbl.push(pic);
 		});
 		callback(null, hbl);
