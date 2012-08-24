@@ -243,7 +243,7 @@ exports.get_media = function(req, res) {
 	], 
 		function(err, results) {
 			if(err) throw err;
-			res.render('media', {title: 'Breakit - Pictures from Red Bull mäkiautoGP', pictures : pics});
+			res.render('media', {title: 'Breakit - Pictures from Red Bull mäkiautoGP', pictures : results});
 		}
 	);
 }
