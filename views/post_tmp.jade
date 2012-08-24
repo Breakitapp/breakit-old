@@ -4,9 +4,6 @@ div(class='post threecol')
       div.picDiv
         img(src='/images/user.png')
       div.nameDiv
-        if(picture.user)
-          p=picture.user
-        else
           p Anonymous
       div.headlineDiv
       if(picture.headline)
@@ -24,15 +21,6 @@ div(class='post threecol')
   div.stream
     a(href='http://46.137.122.206/#{picture.name}')
       img(src='http://46.137.122.206/#{picture.name}')
-  div.footer_bar
-    div.controls
-      img(src='/images/up.png')
-      img(src='/images/down.png')
-      a(href='/picture/?id='+'#{picture._id}'+'&time='+'#{picture.timeSince}'+'&dist='+'#{picture.distance}'+'&loc='+'#{picture.location_name}')
-        img(src='/images/comments.png', class='down')
-      img(src='/images/share.png')
-  div.comment_number 
-    a(href='/picture/?id='+'#{picture._id}'+'&time='+'#{picture.timeSince}'+'&dist='+'#{picture.distance}'+'&loc='+'#{picture.location_name}') #{picture.comments.length}
   div.story
     p.story=picture.story
       
