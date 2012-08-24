@@ -52,6 +52,7 @@ models.Picture.prototype.addComment = function(comment) {
 
 //Calculates the timedifference between now and when the picture has been uploaded. 
 models.Picture.prototype.timeDifference = function(pics, callback) {
+	console.log('finding out the timedifference');
 	var dt = new Date()
 	for(var i = 0; i < pics.length; i++) {
 		var picDate = new Date(pics[i].date);
