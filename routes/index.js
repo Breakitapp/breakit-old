@@ -230,7 +230,7 @@ exports.get_betausers = function(req, res) {
 }
 
 exports.get_media = function(req, res) {
-	async.waterfall([function(callback)
+	async.waterfall([function(callback) {
 			picture.findHBL(function(err, pics) {
 				if(err) throw err;
 				callback(null, pics);
