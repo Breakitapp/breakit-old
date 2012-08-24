@@ -16,8 +16,8 @@ var models 	= require('../model')
 models.Picture.prototype.createPicture = function(picData, callback) {
 	var date = dt.getDate();
 	var tag;
-	if(picData.tag) {
-		tag = picData.tag;
+	if(picData.tags) {
+		tag = picData.tags;
 	}
 	console.log(date + " : the user uploaded a picture, with the specs : ");
 	console.log(picData);
@@ -107,6 +107,7 @@ models.Picture.prototype.findHBL = function(callback) {
 	var hbl = [];
 	models.Picture.find({'tags':'Red Bull'}).sort("date","descending").exec(function(err, pics) {
 		console.log('finding all with Red Bull-tag');
+		console.log(pics);
 		if(err) throw err;
 		pics.forEach(function(pic) {
 			console.log(pic);
