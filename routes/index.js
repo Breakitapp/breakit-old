@@ -231,6 +231,7 @@ exports.get_betausers = function(req, res) {
 
 exports.get_media = function(req, res) {
 	picture.findHBL(function(err, pics) {
+		if(err) throw err;
 		res.render('media', {title: 'Breakit - Pictures from Red Bull mäkiautoGP', pictures : pics});
 	});
 }
