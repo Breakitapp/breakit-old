@@ -230,10 +230,22 @@ exports.get_betausers = function(req, res) {
 }
 
 exports.get_media = function(req, res) {
-	picture.findHBL(function(err, pics) {
-		if(err) throw err;
-		res.render('media', {title: 'Breakit - Pictures from Red Bull mäkiautoGP', pictures : pics});
-	});
+	async.waterfall([
+			findHBL(function(err, pics) {
+				if(err) throw err;
+				callback(null, pics);
+		});
+	},
+	function(pics, callback){
+		picture.timeDifference(pics, function(pics) {
+			callback(null, pics)
+		});
+	], 
+		function(err, results) {
+			if(err) throw err;
+			res.render('media', {title: 'Breakit - Pictures from Red Bull mäkiautoGP', pictures : pics});
+		}
+	);
 }
 //Update the score of a pic after a post from front-end. Return the new score
 //LEGACY

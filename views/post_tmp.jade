@@ -4,7 +4,10 @@ div(class='post threecol')
       div.picDiv
         img(src='/images/user.png')
       div.nameDiv
-        p Name
+        if(picture.user)
+          p=picture.user
+        else
+          p Anonymous
       div.headlineDiv
       if(picture.headline)
         p=picture.headline
@@ -14,9 +17,6 @@ div(class='post threecol')
       div.timeDiv
         img(src='/images/clock.png')
         p=picture.timeSince
-      br
-      div.distanceDiv
-        p=picture.distance
       br
       div.addressDiv
         img(src='/images/location.png')
