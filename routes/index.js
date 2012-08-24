@@ -240,6 +240,7 @@ exports.get_media = function(req, res) {
 		picture.timeDifference(pics, function(pics) {
 			callback(null, pics)
 		});
+	}
 	], 
 		function(err, results) {
 			if(err) throw err;
