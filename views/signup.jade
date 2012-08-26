@@ -20,23 +20,20 @@ html
 		div#container
 			div#signup_box
 				div#breakit_logo
-					img(src='/images/logos/logo_notext.png')
+					img(src='/images/logos/logo_text.png')
 			div#signup_tab
-				div#story_tab
-					p 
-						strong Breakit 
-						– See what’s happening around you. A place where you can share pictures and short stories of current stuff that you know interests more than just your friends or followers. Sign up now and be the first to know.
+				h1 See what's happening around you!
+				p Sign up for our beta and be the first to know!
 				div#signup_form
 					form(action='/signup', method='post', name='signup')
-						label email : 
-						input(type='email', name='email', id='email')
+						label Email : 
+						input(type='email', name='email', id='email', value='Enter your email')
 						br
-						label your phone :
+						label Select your phone :
 						select(name='phone')
 							option(value='iPhone') iPhone
 							option(value='android') Android
 							option(value='wm') Windows
-						input(type='submit', value='Sign Up For Beta', id='submit')
-			div#copyright
-				p CC by 
-					a(href='http://www.flickr.com/people/vestman/') Vestman
+						input(type='submit', value='Go', id='submit')
+					div#hire
+						a(href='http://www.arcticstartup.com/jobs/778') We're hiring!
